@@ -7,8 +7,14 @@ import "@/common/style/index.scss";
 import Axios from "axios";
 import echarts from "echarts";
 import { NavBar } from "vant";
-// import Vant from "vant";
+import { Toast } from "vant";
+import { Swipe, SwipeItem } from "vant";
+import { Divider } from "vant";
 Vue.use(NavBar);
+Vue.use(Toast);
+Vue.use(Swipe);
+Vue.use(SwipeItem);
+Vue.use(Divider);
 
 Vue.config.productionTip = false;
 

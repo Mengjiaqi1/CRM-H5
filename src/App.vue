@@ -5,6 +5,12 @@
 </template>
 
 <style lang="scss">
+* {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.14rem;
+}
 #app {
   width: 100%;
   height: 100%;

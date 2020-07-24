@@ -1,4 +1,5 @@
 const path = require("path");
+const IS_PRO = ["production", "test"].includes(process.env.NODE_ENV);
 module.exports = {
     publicPath: "/",
     // 输出文件目录
@@ -56,7 +57,9 @@ module.exports = {
     productionSourceMap: true,
     css: {
         // 是否使用css分离插件 ExtractTextPlugin
-        extract: true,
+        // 是否使用css分离插件 ExtractTextPlugin
+        extract: IS_PRO,
+        // extract: true,
         // 开启 CSS source maps?是否在构建样式地图，false将提高构建速度
         sourceMap: false,
         // css预设器配置项
@@ -91,5 +94,8 @@ module.exports = {
         },
         // 代理转发配置，用于调试环境
         disableHostCheck: true
+    },
+    chainWebpack: config => {
+        config.resolve.symlinks(true); // 修复热更新失效
     }
 };
