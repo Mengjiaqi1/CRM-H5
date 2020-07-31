@@ -72,7 +72,7 @@ module.exports = {
     devServer: {
         // open: process.platform === 'darwin',
         open: true,
-        host: "0.0.0.0",
+        host: "localhost",
         port: 8081,
         https: false,
         hotOnly: false,
@@ -83,12 +83,12 @@ module.exports = {
         proxy: {
             "/api": {
                 // 目标 API 地址
-                target: process.env.VUE_APP_URL,
+                target: "http://192.168.100.7:8080",
                 // 如果要代理 websockets
                 ws: false,
                 changeOrigin: true, // 允许websockets跨域
                 pathRewrite: {
-                    "/api/proxy": ""
+                    "^/api/": ""
                 }
             }
         },

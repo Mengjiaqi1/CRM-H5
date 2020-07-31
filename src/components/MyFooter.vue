@@ -35,6 +35,7 @@ export default {
 footer {
   width: 100%;
   height: 0.5rem;
+  padding-bottom: 0.04rem;
   position: fixed;
   left: 0;
   bottom: 0;
@@ -45,7 +46,6 @@ footer {
   box-shadow: 0rem 0.03rem 0.12rem 0rem rgba(0, 0, 0, 0.08);
   .footer_item {
     flex: 1;
-    // font-size: 0.1rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -57,7 +57,6 @@ footer {
       display: block;
       width: 0.28rem;
       height: 0.28rem;
-      //   margin: 0.08rem auto 0.07rem;
       background-repeat: no-repeat;
       &.home {
         background-image: url("../common/images/home.png");

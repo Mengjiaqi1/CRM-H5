@@ -17,10 +17,17 @@
             :key="element.order"
           >
             <p>
-              <img src="@/assets/cut.png" alt="" @click="removeAt(idx)" />
+              <img
+                src="../common/images/reducer_card.png"
+                alt=""
+                class="reducer"
+                @click="removeAt(idx)"
+              />
               <span class="text">{{ element.name }} </span>
             </p>
-            <span class="badge">{{ element.order }}</span>
+            <span class="badge">
+              <img src="../common/images/c_order.png" class="sort" alt="" />
+            </span>
           </li>
         </transition-group>
       </draggable>
@@ -120,6 +127,14 @@ export default {
 .text {
   margin-left: 0.1rem;
 }
+.reducer {
+  width: 0.19rem;
+  height: 0.19rem;
+}
+.sort {
+  width: 0.24rem;
+  height: 0.24rem;
+}
 .flip-list-move {
   transition: transform 0.5s;
 }
@@ -133,8 +148,13 @@ export default {
 .list-group {
   min-height: 20px;
 }
-.list-group-item {
+li.list-group-item {
   cursor: move;
+  border-bottom: 0.01rem solid #eceff2;
+  &:nth-last-child(1) {
+    background: red;
+    border_bottom: none;
+  }
 }
 .list-group-item i {
   cursor: pointer;

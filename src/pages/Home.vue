@@ -47,10 +47,12 @@
             <img src="../common/images/bar.png" alt="" />
             <div class="board_text">
               <p><span>部门：</span><span>营销中心</span></p>
-              <p><span>时间：</span><span>上周</span></p>
+              <router-link tag="p" to="/selection">
+                <span>时间：</span><span>上周</span>
+              </router-link>
             </div>
           </div>
-          <router-link to="/selection" class="board_right">
+          <router-link to="/customHome" class="board_right">
             <img src="../common/images/right.png" alt="" />
           </router-link>
         </div>
@@ -88,10 +90,10 @@
               <img src="../common/images/customer.png" alt="" />
               <span>全部客户</span>
             </li>
-            <li>
+            <router-link tag="li" to="/commonForms">
               <img src="../common/images/set.png" alt="" />
               <span>设置</span>
-            </li>
+            </router-link>
           </div>
         </div>
       </div>
@@ -192,6 +194,7 @@
         </div>
       </div>
       <div class="none"></div>
+      <!-- PK榜 -->
       <div class="pk briefing">
         <div class="b_tit">
           <div class="b_tit_l">
@@ -280,7 +283,7 @@
           </van-swipe-item>
         </van-swipe>
         <div>
-          <van-divider>查看详情</van-divider>
+          <van-divider @click="pkDetails">查看详情</van-divider>
         </div>
       </div>
       <div class="remind">
@@ -329,6 +332,7 @@
         </div>
       </div>
       <div class="none"></div>
+      <!-- 资金管理 -->
       <div class="capital briefing">
         <div class="b_tit">
           <div class="b_tit_l">
@@ -360,6 +364,7 @@
             </div>
           </div>
         </div>
+        <!-- 净流水 -->
         <div class="clean_water">
           <div class="cw_header">
             <p class="cw_text">净流水</p>
@@ -554,8 +559,10 @@ export default {
         position: "center"
       });
       this.toastFlag = !this.toastFlag;
-      console.log(this.$refs.bH);
       this.$refs.bH.style.marginTop = 1.03 + "rem";
+    },
+    pkDetails() {
+      this.$router.push({ path: "/" });
     }
   },
   mounted() {},
@@ -796,7 +803,7 @@ export default {
   main {
     flex: 1;
     overflow: scroll;
-    margin-bottom: 1rem;
+    margin-bottom: 0.6rem;
     .b_tit {
       width: 100%;
       height: 0.44rem;
@@ -981,7 +988,8 @@ export default {
       align-items: center;
       box-sizing: border-box;
       padding-right: 0.12rem;
-
+      padding-left: 0.2rem;
+      position: relative;
       .reminds {
         width: 100%;
         height: 0.34rem;
@@ -994,13 +1002,15 @@ export default {
         .r_img {
           width: 0.58rem;
           height: 0.58rem;
-          position: relative;
-          top: 0;
+          position: absolute;
+          top: 50%;
           left: 0;
+          margin-top: -0.29rem;
         }
         .r_left {
           display: flex;
           align-items: center;
+          overflow: hidden;
 
           .r_text {
             display: flex;
@@ -1009,6 +1019,7 @@ export default {
             font-weight: 400;
             color: rgba(255, 146, 1, 1);
             line-height: 0.17rem;
+            margin-left: 0.38rem;
           }
         }
         .r_right {
@@ -1024,6 +1035,7 @@ export default {
           img {
             width: 0.11rem;
             height: 0.11rem;
+            padding-right: 0.1rem;
           }
         }
       }
@@ -1080,6 +1092,7 @@ export default {
           background: rgba(1, 124, 255, 1);
           display: flex;
           justify-content: space-between;
+          position: relative;
           .balance {
             flex: 3;
             p {
@@ -1135,15 +1148,10 @@ export default {
             .d_imgBox {
               width: 100%;
               height: 100%;
-              //   background: orange;
-              //   background: url("../common/images/d.png") no-repeat center center;
-              z-index: 99;
               img {
-                width: 1.26rem;
-                height: 1.25rem;
-                position: relative;
+                position: absolute;
                 top: 0;
-                left: 0;
+                right: 0;
               }
             }
           }

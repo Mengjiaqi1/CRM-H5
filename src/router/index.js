@@ -7,6 +7,8 @@ import Work from "../pages/Work.vue";
 import Mine from "../pages/Mine.vue";
 import News from "../pages/News.vue";
 import Selection from "../pages/Selection";
+import CommonForms from "../pages/CommonForms";
+import CustomHome from "../pages/CustomHome";
 
 Vue.use(VueRouter);
 
@@ -44,6 +46,16 @@ const routes = [{
         path: "/selection",
         name: "Selection",
         component: Selection
+    },
+    {
+        path: "/commonForms",
+        name: "CommonForms",
+        component: CommonForms
+    },
+    {
+        path: "/customHome",
+        name: "CustomHome",
+        component: CustomHome
     },
     {
         path: "/about",

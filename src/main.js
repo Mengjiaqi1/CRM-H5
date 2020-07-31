@@ -4,17 +4,27 @@ import router from "./router";
 import store from "./store";
 import "@/common/js/flexible.js";
 import "@/common/style/index.scss";
+import "./assets/iconfont/iconfont.css";
 import Axios from "axios";
 import echarts from "echarts";
-import { NavBar } from "vant";
-import { Toast } from "vant";
-import { Swipe, SwipeItem } from "vant";
-import { Divider } from "vant";
+import {
+    NavBar,
+    Toast,
+    Swipe,
+    SwipeItem,
+    Divider,
+    Tab,
+    Tabs,
+    Checkbox
+} from "vant";
 Vue.use(NavBar);
 Vue.use(Toast);
 Vue.use(Swipe);
 Vue.use(SwipeItem);
 Vue.use(Divider);
+Vue.use(Tab);
+Vue.use(Tabs);
+Vue.use(Checkbox);
 
 Vue.config.productionTip = false;
 

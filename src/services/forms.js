@@ -1,0 +1,22 @@
+import {get, post, put } from "./http.js";
+
+export function getTreeselect() {
+    return get("/app/formsettings/treeselect/0", {});
+}
+
+//新增表单
+export function getCreate(userId, name, icon, type, id) {
+    return post("/app/customIndex/create", { userId, name, icon, type, id });
+}
+// // 修改表单
+// export function getUpdate(userId, json = {}) {
+//     return put("/app/customIndex/update", {
+//         userId,
+//         json
+//     });
+// }
+
+// 修改表单
+export function getcustomIndex() {
+    return get("/app/customIndex/0", {});
+}
