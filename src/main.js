@@ -15,7 +15,10 @@ import {
     Divider,
     Tab,
     Tabs,
-    Checkbox
+    Checkbox,
+    Popup,
+    DatetimePicker,
+    Field,
 } from "vant";
 Vue.use(NavBar);
 Vue.use(Toast);
@@ -25,6 +28,9 @@ Vue.use(Divider);
 Vue.use(Tab);
 Vue.use(Tabs);
 Vue.use(Checkbox);
+Vue.use(Popup);
+Vue.use(DatetimePicker);
+Vue.use(Field);
 
 Vue.config.productionTip = false;
 

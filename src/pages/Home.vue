@@ -103,7 +103,10 @@
         </p>
         <div class="kit_center">
           <p>销售大区2020年6月简报</p>
-          <span class="btn">查阅详情</span>
+<!--          <p>查看详情</p>-->
+          <router-link tag="li" to="/brief">
+            <span class="btn">查阅详情</span>
+          </router-link>
         </div>
       </div>
     </header>
@@ -121,11 +124,13 @@
         </div>
         <div class="b_list">
           <li>
+            <router-link tag="p" to="/custom">
             <p class="num">1234</p>
             <p class="icon">
               <img src="../common/images/customers.png" alt="" />
               <span>当前客户数</span>
             </p>
+            </router-link>
           </li>
           <li>
             <p class="num">1234</p>
@@ -283,7 +288,9 @@
           </van-swipe-item>
         </van-swipe>
         <div>
-          <van-divider @click="pkDetails">查看详情</van-divider>
+          <router-link tag="li" to="/PkDetalis">
+            <van-divider @click="pkDetails">查看详情</van-divider>
+          </router-link>
         </div>
       </div>
       <div class="remind">
@@ -313,8 +320,10 @@
         </div>
         <div class="c_nums">
           <li>
-            <p class="c_num">1234</p>
-            <p class="c_text">当前客户数</p>
+            <router-link tag="p" to="/custom">
+              <p class="c_num">1234</p>
+              <p class="c_text">当前客户数</p>
+            </router-link>
           </li>
           <li>
             <p class="c_num c_news">1234</p>
@@ -562,7 +571,7 @@ export default {
       this.$refs.bH.style.marginTop = 1.03 + "rem";
     },
     pkDetails() {
-      this.$router.push({ path: "/" });
+      // this.$router.push({ path: "/" });
     }
   },
   mounted() {},

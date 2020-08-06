@@ -7,9 +7,11 @@ import Work from "../pages/Work.vue";
 import Mine from "../pages/Mine.vue";
 import News from "../pages/News.vue";
 import Selection from "../pages/Selection";
+import Brief  from "../pages/Brief.vue";
+import PKdetalis  from "../pages/PKdetalis.vue";
+import Custom from "../pages/Custom";
 import CommonForms from "../pages/CommonForms";
 import CustomHome from "../pages/CustomHome";
-
 Vue.use(VueRouter);
 
 const routes = [{
@@ -56,6 +58,24 @@ const routes = [{
         path: "/customHome",
         name: "CustomHome",
         component: CustomHome
+    },
+    // 简报详情
+    {
+        path: "/brief",
+        name: "Brief",
+        component: Brief
+    },
+    // PK详情
+    {
+        path: "/PkDetalis",
+        name: "PKdetalis",
+        component: PKdetalis
+    },
+    // 当前客户数
+    {
+        path: "/custom",
+        name: "Custom",
+        component: Custom
     },
     {
         path: "/about",
