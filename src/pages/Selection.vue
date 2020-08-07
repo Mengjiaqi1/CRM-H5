@@ -25,25 +25,28 @@
           <span class="selec_tit_empty" @click="changeTimeEmpty">清空</span>
         </div>
         <div class="selec_content">
+<!--          <div-->
+<!--            v-for="(each, index) in timeData"-->
+<!--            :key="index"-->
+<!--            v-if="index<num"-->
+<!--            :class="timeSelec == index ? 'active' : 'each'"-->
+<!--          >-->
+<!--            <span @click="changeTime(index)" v-if="index<num">{{each.time}}</span>-->
+<!--          </div>-->
+<!--          &lt;!&ndash; {{showList}} &ndash;&gt;-->
+<!--          <span  v-if="timeData.length>5" style="margin-right: 11%;margin-top: 0.1rem" @click="showMore">{{isShow?'更多':'收起'}}</span>-->
+
+
           <div
-            v-for="(each, index) in timeData"
-            :key="index"
-            v-if="index<num"
-            :class="timeSelec == index ? 'active' : 'each'"
+                  v-for="(each, index) in timeData"
+                  :key="index"
+                  :class="timeSelec == index ? 'active' : 'each'"
           >
-            <span @click="changeTime(index)" v-if="index<num">{{each.time}}</span>
+            <span @click="changeTime(index)">{{each.time}}</span>
           </div>
           <!-- {{showList}} -->
-          <span  v-if="timeData.length>5" style="margin-right: 11%;margin-top: 0.1rem" @click="showMore">{{isShow?'更多':'收起'}}</span>
+<!--          <span  v-if="timeData.length>5" style="margin-right: 11%;margin-top: 0.1rem" @click="showMore">{{isShow?'更多':'收起'}}</span>-->
 
-<!--          <div-->
-<!--                  v-for="(each, index) in timeData"-->
-<!--                  :key="index"-->
-<!--                  v-if="timeData.length>5"-->
-<!--                  :class="timeSelec == index ? 'active' : 'each'"-->
-<!--          >-->
-<!--              <span  v-if="timeData.length>5" @click="showMore">{{isShow?'更多':'收起'}}</span>-->
-<!--          </div>-->
         </div>
       </div>
     </main>
@@ -59,13 +62,13 @@
       </div>
       <div class="selecBox">
         <div
-          :class="[cancelShow == 1 ? 'selecActive' : 'confirm']"
+          :class="[cancelShow == 2 ? 'selecActive' : 'confirm']"
           @click="changeCancel()"
         >
           取消
         </div>
         <div
-          :class="[cancelShow == 2 ? 'selecActive' : 'confirm']"
+          :class="[cancelShow == 1 ? 'selecActive' : 'confirm']"
           @click="changeConfirm()"
         >
           确认
@@ -186,11 +189,10 @@
 </template>
 <script>
 import { getData } from "../services/getData";
-import {getCreate} from "../services/forms";
 export default {
   data() {
     return {
-      selectFlag: true,
+      // selectFlag: true,
       checked: false,
       RadioSelec: 1,
       timeSelec: 1,
@@ -221,8 +223,19 @@ export default {
       // 更多收起
       num: 5,
       isShow:true,
+      // 参数
+      type:'',
+      year:'',
+      newYears:'',
+      newYear:'',
+      yearMonth:'',
+      yearMonths:'',
+      yearMonthb:'',
 
-      deptType:0,
+      beginTime:'',
+      endTime:'',
+      timeBetween:'',
+      // timeDiff:'',
 
       inputData:{
         start_Time:'',
@@ -340,7 +353,7 @@ export default {
     changeTime(ind) {
       this.timeSelec = ind;
       this.flag = !this.flag
-      console.log(ind);
+      // console.log(ind,'11111');
       if (ind == '6'){
         this.isYearShow = true;
       };
@@ -368,16 +381,94 @@ export default {
     changeCancel() {
       this.cancelShow = 1;
     },
+    // 确定
     changeConfirm() {
       this.cancelShow = 2;
-      console.log(111)
-      // getData(deptType:0,).then(res => {
-      //     // if (res.code == "200") {
-      //     //     // this.queryMenuData = res && res.data;
-      //     //     // this.getcustomIndex();
-      //     //     // this.treeselect();
-      //     // }
-      // });
+
+      if(this.timeSelec =='0'){
+          this.type ="0"
+      }
+      if(this.timeSelec =='1'){
+          this.type ="1"
+      }
+      if(this.timeSelec =='2'){
+          this.type ="2"
+      }
+      if(this.timeSelec =='3'){
+          this.type ="3"
+      }
+      if(this.timeSelec =='4'){
+          this.type ="4"
+      }
+      if(this.timeSelec =='5'){
+          this.type ="5"
+      }
+      // 年份
+      if(this.timeSelec =='6'){
+         this.newYear = this.timeData[6].time;
+         this.newYears = this.newYear.substring(0,this.newYear.length-1);
+      }
+      // 半年
+      if(this.timeSelec =='7'){
+        this.$toast({
+          message: "请选择年份",
+          position: "center"
+        });
+        if(this.timeHalf=="0"){
+            this.beginTime = "1-6"
+        }
+        if(this.timeHalf=="1"){
+            this.endTime = "7-12"
+        }
+      }
+      // 季度
+      if(this.timeSelec =='8'){
+          this.$toast({
+              message: "请选择年份",
+              position: "center"
+          });
+          if(this.timeQuarter=="0"){
+              this.beginTime = "1-3"
+          }
+          if(this.timeQuarter=="1"){
+              this.endTime = "4-6"
+          }
+          if(this.timeQuarter=="2"){
+              this.beginTime = "7-9"
+          }
+          if(this.timeQuarter=="3"){
+              this.endTime = "10-12"
+          }
+      }
+      // 年月
+      if(this.timeSelec =='9'){
+          this.yearMonth = this.timeData[9].time;
+          this.yearMonths = this.yearMonth.replace(/[年]/g,"-");
+          this.yearMonthb = this.yearMonths.replace(/[月]/,"");
+          console.log(this.timeData[9].time,this.yearMonthb,'我是谁')
+      }
+      // 自定义
+      if(this.timeSelec =='10'){
+          this.timeBetween = this.timeData[10].time
+          this.beginTime = this.timeBetween.substring(0,10);
+          this.endTime = this.timeBetween.substring(11,21);
+          console.log(this.beginTime,this.endTime,'我是我是')
+      }
+
+      let Data = {
+          deptType:this.RadioSelec,
+          type:this.type,
+          year:this.newYears,
+          yearMonth:this.yearMonthb,
+          beginTime:this.beginTime,
+          endTime:this.endTime,
+
+      }
+      getData(Data).then(res => {
+        if (res.code == "200") {
+            this.$router.push({ path: "/" });
+        }
+      });
 
     },
     // 年份
@@ -407,7 +498,13 @@ export default {
       this.isHalfYear = false;
     },
     halfConfirm(){
-      this.timeData[7].time =  this.half;
+      if(this.half == '') {
+        this.timeData[7].time='上半年';
+      }
+      if(this.half){
+        this.timeData[7].time =  this.half;
+      }
+
       this.isHalfYear = false;
     },
     // 季度
@@ -421,7 +518,12 @@ export default {
       this.isQuarter = false;
     },
     quarterConfirm(){
-      this.timeData[8].time =  this.quarter;
+      if(this.quarter == '') {
+          this.timeData[8].time='第一季度';
+      }
+      if(this.quarter){
+          this.timeData[8].time =  this.half;
+      }
       this.isQuarter = false;
     },
     // 年月
@@ -444,7 +546,6 @@ export default {
       this.isPopShow = true;
       this.datePicker = picker;
       this.showTime =true;
-      console.log(this.showTime)
     },
     showDatePickers(picker) { //弹出层并显示时间选择器
       this.isPop = true;
@@ -468,7 +569,8 @@ export default {
       var timer = date.getFullYear() + "-" + m + "-" + d
       this.inputData.start_Time = timer;
       this.isPopShow = false;
-      this.datePicker = "";
+      // this.datePicker = "";
+        console.log(this.timeData[10].time);
     },
     cancelPickers() { // 选择器取消按钮点击事件
       this.isPop = false;
@@ -493,15 +595,32 @@ export default {
       this.isCustom = false;
     },
     changeConfirmTime() {
-      this.isCustom = false;
-      this.timeData[10].time = this.inputData.start_Time +'\n'+ this.inputData.end_Time ;
+      if(this.inputData.start_Time==''||this.inputData.end_Time==''){
+        this.isCustom = true;
+        this.$toast({
+            message: "请选择有效日期",
+            position: "center"
+        });
+      }else{
+          this.isCustom = false;
+          this.timeData[10].time = this.inputData.start_Time +'\n'+ this.inputData.end_Time ;
+
+      }
+
 
     },
-     // 更多收起
-    showMore() {
-        this.isShow = !this.isShow
-        this.num = this.isShow ? 5 : this.timeData.length;
-    },
+    //开始时间结束时间
+    // timeDiffs(){
+    //    timeDiff = (stringTime, type) => {
+    //       if (type == 'start') {
+    //           var timestamp2 = Date.parse(new Date(stringTime + ' 0:0:0')) / 1000;
+    //       } else if (type == 'end') {
+    //           var timestamp2 = Date.parse(new Date(stringTime + ' 0:0:0')) / 1000 + 24 * 60 * 60 - 1;
+    //       }
+    //       timestamp2 = timestamp2;
+    //       return timestamp2
+    //     }
+    // }
   },
   components: {
 
