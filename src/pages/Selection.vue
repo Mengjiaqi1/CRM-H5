@@ -25,27 +25,16 @@
           <span class="selec_tit_empty" @click="changeTimeEmpty">清空</span>
         </div>
         <div class="selec_content">
-<!--          <div-->
-<!--            v-for="(each, index) in timeData"-->
-<!--            :key="index"-->
-<!--            v-if="index<num"-->
-<!--            :class="timeSelec == index ? 'active' : 'each'"-->
-<!--          >-->
-<!--            <span @click="changeTime(index)" v-if="index<num">{{each.time}}</span>-->
-<!--          </div>-->
-<!--          &lt;!&ndash; {{showList}} &ndash;&gt;-->
-<!--          <span  v-if="timeData.length>5" style="margin-right: 11%;margin-top: 0.1rem" @click="showMore">{{isShow?'更多':'收起'}}</span>-->
-
-
           <div
-                  v-for="(each, index) in timeData"
-                  :key="index"
-                  :class="timeSelec == index ? 'active' : 'each'"
+            v-for="(each, index) in timeData"
+            :key="index"
+            v-if="index<num"
+            :class="timeSelec == index ? 'active' : 'each'"
           >
-            <span @click="changeTime(index)">{{each.time}}</span>
+            <span @click="changeTime(index)" v-if="index<num">{{each.time}}</span>
           </div>
           <!-- {{showList}} -->
-<!--          <span  v-if="timeData.length>5" style="margin-right: 11%;margin-top: 0.1rem" @click="showMore">{{isShow?'更多':'收起'}}</span>-->
+          <span  v-if="timeData.length>5" class="more_show" @click="showMore">{{isShow?'更多':'收起'}}</span>
 
         </div>
       </div>
@@ -235,6 +224,8 @@ export default {
       beginTime:'',
       endTime:'',
       timeBetween:'',
+      start_time:'',
+      end_Time:'',
       // timeDiff:'',
 
       inputData:{
@@ -344,6 +335,10 @@ export default {
   },
   creates() {},
   methods: {
+    showMore() {
+        this.isShow = !this.isShow
+        this.num = this.isShow ? 5 : this.timeData.length;
+    },
     changeSeCempty() {
       this.RadioSelec = 4;
     },
@@ -353,7 +348,7 @@ export default {
     changeTime(ind) {
       this.timeSelec = ind;
       this.flag = !this.flag
-      // console.log(ind,'11111');
+      console.log(this.timeSelec,'我是张展');
       if (ind == '6'){
         this.isYearShow = true;
       };
@@ -373,9 +368,10 @@ export default {
     changeTimeEmpty() {
       this.timeSelec = "a";
       this.timeData[6].time='年份';
+      this.timeData[7].time='半年';
+      this.timeData[8].time='季度';
       this.timeData[9].time='月份';
       this.timeData[10].time='自定义';
-
     },
 
     changeCancel() {
@@ -407,6 +403,14 @@ export default {
       if(this.timeSelec =='6'){
          this.newYear = this.timeData[6].time;
          this.newYears = this.newYear.substring(0,this.newYear.length-1);
+        if(this.timeHalf=="0"){
+            this.beginTime = "1"
+            this.endTime='6'
+        }
+        if(this.timeHalf=="1"){
+            this.beginTime = "7"
+            this.endTime='12'
+        }
       }
       // 半年
       if(this.timeSelec =='7'){
@@ -415,10 +419,12 @@ export default {
           position: "center"
         });
         if(this.timeHalf=="0"){
-            this.beginTime = "1-6"
+          this.beginTime = "1"
+          this.endTime='6'
         }
         if(this.timeHalf=="1"){
-            this.endTime = "7-12"
+          this.beginTime = "7"
+          this.endTime='12'
         }
       }
       // 季度
@@ -428,16 +434,20 @@ export default {
               position: "center"
           });
           if(this.timeQuarter=="0"){
-              this.beginTime = "1-3"
+              this.beginTime = "1"
+              this.endTime='3'
           }
           if(this.timeQuarter=="1"){
-              this.endTime = "4-6"
+              this.beginTime = "4"
+              this.endTime='6'
           }
           if(this.timeQuarter=="2"){
-              this.beginTime = "7-9"
+              this.beginTime = "7"
+              this.endTime='9'
           }
           if(this.timeQuarter=="3"){
-              this.endTime = "10-12"
+              this.beginTime = "10"
+              this.endTime='12'
           }
       }
       // 年月
@@ -445,14 +455,12 @@ export default {
           this.yearMonth = this.timeData[9].time;
           this.yearMonths = this.yearMonth.replace(/[年]/g,"-");
           this.yearMonthb = this.yearMonths.replace(/[月]/,"");
-          console.log(this.timeData[9].time,this.yearMonthb,'我是谁')
       }
       // 自定义
       if(this.timeSelec =='10'){
           this.timeBetween = this.timeData[10].time
           this.beginTime = this.timeBetween.substring(0,10);
           this.endTime = this.timeBetween.substring(11,21);
-          console.log(this.beginTime,this.endTime,'我是我是')
       }
 
       let Data = {
@@ -462,13 +470,15 @@ export default {
           yearMonth:this.yearMonthb,
           beginTime:this.beginTime,
           endTime:this.endTime,
-
       }
-      getData(Data).then(res => {
-        if (res.code == "200") {
-            this.$router.push({ path: "/" });
-        }
-      });
+      if(this.timeSelec =='0'||this.timeSelec =='1'||this.timeSelec =='2'||this.timeSelec =='3'||this.timeSelec =='4'||this.timeSelec =='5'||this.timeSelec =='6'||(this.timeSelec =='7'&&this.timeSelec =='6')||(this.timeSelec =='8'&&this.timeSelec =='6')||this.timeSelec =='9'||this.timeSelec =='10'){
+        getData(Data).then(res => {
+            if (res.code == "200") {
+                this.$router.push({ path: "/" });
+            }
+        });
+      }
+
 
     },
     // 年份
@@ -491,8 +501,8 @@ export default {
     changeHalfTime(ind,name){
       this.timeHalf = ind;
       this.flag = !this.flag
-      console.log(ind,name,this.halfTime,'111');
       this.half = name;
+      console.log(ind,name,this.halfTime,'111');
     },
     halfCancel(){
       this.isHalfYear = false;
@@ -504,15 +514,14 @@ export default {
       if(this.half){
         this.timeData[7].time =  this.half;
       }
-
       this.isHalfYear = false;
     },
     // 季度
     changeQuarterTime(ind,name) {
       this.timeQuarter = ind;
       this.flag = !this.flag
-      console.log(ind, name,this.quarterTime, '222');
-      this.quarter = name
+      this.quarter = name;
+      console.log(ind,name,this.quarter,'111');
     },
     quarterCancel(){
       this.isQuarter = false;
@@ -522,7 +531,7 @@ export default {
           this.timeData[8].time='第一季度';
       }
       if(this.quarter){
-          this.timeData[8].time =  this.half;
+          this.timeData[8].time = this.quarter;
       }
       this.isQuarter = false;
     },
@@ -547,14 +556,12 @@ export default {
       this.datePicker = picker;
       this.showTime =true;
     },
-    showDatePickers(picker) { //弹出层并显示时间选择器
+    showDatePickers() { //弹出层并显示时间选择器
       this.isPop = true;
-      this.datePicker = picker;
       this.showTime =true;
     },
     cancelPicker() { // 选择器取消按钮点击事件
       this.isPopShow = false;
-      this.datePicker = "";
     },
     confirmPicker(value) {// 确定按钮，时间格式化并显示在页面上
       var date = value;
@@ -569,12 +576,9 @@ export default {
       var timer = date.getFullYear() + "-" + m + "-" + d
       this.inputData.start_Time = timer;
       this.isPopShow = false;
-      // this.datePicker = "";
-        console.log(this.timeData[10].time);
     },
     cancelPickers() { // 选择器取消按钮点击事件
       this.isPop = false;
-      this.datePicker = "";
     },
     confirmPickers(value) {// 确定按钮，时间格式化并显示在页面上
       var dates = value;
@@ -602,25 +606,22 @@ export default {
             position: "center"
         });
       }else{
-          this.isCustom = false;
-          this.timeData[10].time = this.inputData.start_Time +'\n'+ this.inputData.end_Time ;
+          let start_Time = this.inputData.start_Time;
+          let start = new Date(start_Time).getTime();
+          let end_Time = this.inputData.end_Time;
+          let end = new Date(end_Time).getTime();
+          if(start>end){
+            this.$toast({
+                message: "开始时间不能大于结束时间",
+                position: "center"
+            });
+          }else{
+            this.isCustom = false;
+            this.timeData[10].time = this.inputData.start_Time +'\n'+ this.inputData.end_Time ;
+          }
 
       }
-
-
     },
-    //开始时间结束时间
-    // timeDiffs(){
-    //    timeDiff = (stringTime, type) => {
-    //       if (type == 'start') {
-    //           var timestamp2 = Date.parse(new Date(stringTime + ' 0:0:0')) / 1000;
-    //       } else if (type == 'end') {
-    //           var timestamp2 = Date.parse(new Date(stringTime + ' 0:0:0')) / 1000 + 24 * 60 * 60 - 1;
-    //       }
-    //       timestamp2 = timestamp2;
-    //       return timestamp2
-    //     }
-    // }
   },
   components: {
 
@@ -712,6 +713,10 @@ export default {
         outline:none;
         color: rgba(0, 106, 255, 1) !important;
       }
+      .more_show{
+        width: 31%;
+        margin-top: 0.1rem;
+      }
     }
   }
   footer {
@@ -736,7 +741,9 @@ export default {
       line-height: 0.32rem;
       border: 0.01rem solid #ccc;
       margin-bottom: 0.2rem;
-
+    }
+    input::-webkit-input-placeholder{
+      padding-left: 0.1rem;
     }
 
   }
