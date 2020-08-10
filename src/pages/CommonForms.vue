@@ -1,5 +1,5 @@
 <template>
-  <div class="wrap">
+  <div class="wrap" v-if="isReoladAlive">
     <myHeader>
       <div class="h_center">常用表单</div>
       <div class="h_right"></div>
@@ -16,7 +16,6 @@
             v-for="(el, index) in queryMenuData"
             :key="index"
             @click="changeQueryData(el.name, el.icon, el.id)"
-            v-cloak
           >
             <div class="my_forms_top">
               <img src="../common/images/forms_customer.png" alt="" />
@@ -69,8 +68,14 @@
 <script>
 import { getTreeselect, getcustomIndex, getCreate } from "../services/forms";
 export default {
+  provide() {
+    return {
+      reload: this.reload
+    };
+  },
   data() {
     return {
+      isReoladAlive: true,
       active: 2,
       typeFlag: false,
       type: "", // 0 增 1减
@@ -101,15 +106,16 @@ export default {
     }
 
     this.changeQueryData();
+    this.reload();
   },
   mounted() {},
   methods: {
     //我的表单 删除表单
     changeQueryData(name, icon, id) {
-      console.log(this.count);
       getCreate(0, name, icon, (this.type = "1"), id).then(res => {
         if (res.code == "200") {
-          this.queryMenuData = res && res.data;
+          this.queryMenuData = res.data;
+          this.delMenuData = res.data;
           this.getcustomIndex();
           this.treeselect();
         }
@@ -118,7 +124,7 @@ export default {
     //查询我的表单
     getcustomIndex() {
       getcustomIndex().then(res => {
-        if (res.code == "200") {
+        if (res && res.code == "200") {
           this.queryMenuData = res && res.data;
           for (var i = 0; i < this.queryMenuData.length; i++) {
             this.count = this.queryMenuData.length;
@@ -137,8 +143,8 @@ export default {
     // 获取表单
     treeselect() {
       getTreeselect().then(res => {
-        if (res.code == "200") {
-          this.MenuData = res.data && res.data;
+        if (res && res.code == "200") {
+          this.MenuData = res.data;
         }
       });
     },
@@ -192,23 +198,32 @@ export default {
           }
         });
       }
+    },
+
+    // 刷新数据页面闪动问题
+    reload() {
+      this.isReoladAlive = false;
+      this.$nextTick(() => {
+        this.isReoladAlive = true;
+      });
     }
   }
 };
 </script>
 <style lang="scss" scoped>
+[v-cloak] {
+  display: none !important;
+}
 .wrap {
   width: 100%;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
-  [v-cloak] {
-    display: none !important;
-  }
+
   main {
     flex: 1;
     overflow: scroll;
-
+    margin-top: 0.44rem;
     .none {
       width: 100%;
       height: 0.12rem;
@@ -217,6 +232,7 @@ export default {
     .my_forms {
       width: 100%;
       box-sizing: border-box;
+
       .my_forms_tit {
         width: 100%;
         height: 0.32rem;
@@ -234,6 +250,7 @@ export default {
     }
     .my_forms_list {
       width: 100%;
+
       padding-bottom: 0.2rem;
       display: flex;
       flex-wrap: wrap;
@@ -241,10 +258,12 @@ export default {
       box-sizing: border-box;
       .my_forms_listEven {
         width: 25%;
+
         margin-top: 0.23rem;
         display: flex;
         flex-direction: column;
         align-items: center;
+
         .my_forms_top {
           width: 0.4rem;
           height: 0.4rem;
