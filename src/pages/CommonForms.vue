@@ -16,6 +16,7 @@
             v-for="(el, index) in queryMenuData"
             :key="index"
             @click="changeQueryData(el.name, el.icon, el.id)"
+            v-cloak
           >
             <div class="my_forms_top">
               <img src="../common/images/forms_customer.png" alt="" />
@@ -67,7 +68,6 @@
 </template>
 <script>
 import { getTreeselect, getcustomIndex, getCreate } from "../services/forms";
-
 export default {
   data() {
     return {
@@ -99,6 +99,7 @@ export default {
     if (this.typeFlag == false) {
       this.changeForms();
     }
+
     this.changeQueryData();
   },
   mounted() {},
@@ -124,7 +125,7 @@ export default {
             if (this.queryMenuData.length > 7 && this.count > 7) {
               this.count = 7;
               this.$toast({
-                message: "最多添加7个表单",
+                message: "最多添加8个表单",
                 position: "center"
               });
             }
@@ -162,7 +163,7 @@ export default {
                       }
                       if (this.count > 7) {
                         this.$toast({
-                          message: "最多添加7个表单",
+                          message: "最多添加8个表单",
                           position: "center"
                         });
                         this.count = 7;
@@ -201,9 +202,13 @@ export default {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  [v-cloak] {
+    display: none !important;
+  }
   main {
     flex: 1;
     overflow: scroll;
+
     .none {
       width: 100%;
       height: 0.12rem;

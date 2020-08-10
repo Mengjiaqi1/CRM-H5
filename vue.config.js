@@ -72,7 +72,7 @@ module.exports = {
     devServer: {
         // open: process.platform === 'darwin',
         open: true,
-        host: "localhost",
+        host: "0.0.0.0",
         port: 8081,
         https: false,
         hotOnly: false,
@@ -83,7 +83,7 @@ module.exports = {
         proxy: {
             "/api": {
                 // 目标 API 地址
-                target: "http://192.168.100.7:8080",
+                target: "http://192.168.100.7:8088",
                 // 如果要代理 websockets
                 ws: false,
                 changeOrigin: true, // 允许websockets跨域
@@ -91,7 +91,15 @@ module.exports = {
                     "^/api/": ""
                 }
             }
+            // "/app": {
+            //     // 目标 API 地址
+            //     target: "http://192.168.100.10:8088",
+            //     // 如果要代理 websockets
+            //     ws: false,
+            //     changeOrigin: true // 允许websockets跨域
+            // }
         },
+
         // 代理转发配置，用于调试环境
         disableHostCheck: true
     },

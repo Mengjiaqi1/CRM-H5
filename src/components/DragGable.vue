@@ -11,17 +11,13 @@
         @end="isDragging = false"
       >
         <transition-group type="transition" :name="'flip-list'">
-          <li
-            class="list-group-item"
-            v-for="(element, idx) in list"
-            :key="element.order"
-          >
+          <li class="list-group-item" v-for="(element, idx) in list" :key="idx">
             <p>
               <img
-                src="../common/images/reducer_card.png"
+                :src="forms_reduce"
                 alt=""
                 class="reducer"
-                @click="removeAt(idx)"
+                @click="removeAt(element.id, element.name)"
               />
               <span class="text">{{ element.name }} </span>
             </p>
@@ -37,6 +33,7 @@
 
 <script>
 import draggable from "vuedraggable";
+import { getCreatemneu, getquery } from "../services/custom";
 const message = [
   "vue.draggable",
   "draggable",
@@ -53,21 +50,53 @@ export default {
   components: {
     draggable
   },
+  created() {
+    this.removeAt();
+  },
+  mounted() {
+    // console.log(this.menu, "i");
+    // console.log(this.list2, "9");
+  },
   data() {
     return {
       list: message.map((name, index) => {
         return { name, order: index + 1, fixed: false };
       }),
-      list2: [],
+      list2: "",
       editable: true,
       isDragging: false,
-      delayedDragging: false
+      delayedDragging: false,
+      type: 0,
+      typeFlag: false,
+      forms_add: require("../assets/forms_add.png"),
+      forms_reduce: require("../assets/forms_reduce.png"),
+      custommenu: "" // 更多卡片数据
     };
   },
   methods: {
-    removeAt(idx) {
-      this.list.splice(idx, 1);
+    removeAt(id, name) {
+      //   this.menu &&
+      //     this.menu.map(each => {
+      //       if (each.menuId == id && each.checked == false) {
+      //         this.type = 0;
+      //         this.typeFlag = true;
+      //       }
+      //       if (each.menuId == id && each.checked == true) {
+      //         this.type = 1;
+      //         this.typeFlag = false;
+      //       }
+      //     });
+
+      getCreatemneu(0, id, name, this.type).then(res => {
+        if (res.code == 200) {
+          console.log(res);
+        }
+        // console.log(this.$emit("onChange"), "emit");
+      });
+
+      //   this.list.splice(id, 1);
     },
+
     orderList() {
       this.list = this.list.sort((one, two) => {
         return one.order - two.order;
@@ -128,8 +157,8 @@ export default {
   margin-left: 0.1rem;
 }
 .reducer {
-  width: 0.19rem;
-  height: 0.19rem;
+  width: 0.15rem;
+  height: 0.15rem;
 }
 .sort {
   width: 0.24rem;
