@@ -20,7 +20,10 @@ import {
     Divider,
     Tab,
     Tabs,
-    Checkbox
+    Checkbox,
+    Popup,
+    DatetimePicker,
+    Field,
 } from "vant";
 
 Vue.use(NavBar);
@@ -33,6 +36,9 @@ Vue.use(Tabs);
 Vue.use(Checkbox);
 Vue.use(vConsole);
 Vue.use(VueCookies);
+Vue.use(Popup);
+Vue.use(DatetimePicker);
+Vue.use(Field);
 
 Vue.config.productionTip = false;
 Vue.config.isToken = true;
