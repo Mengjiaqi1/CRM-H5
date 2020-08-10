@@ -12,7 +12,7 @@
             <img src="../common/images/add.png" @click="changeAdd" alt="" />
           </div>
         </div>
-        <div>个人信息部分</div>
+        <div>个人信息部分--</div>
       </div>
       <div class="list_box">
         <div class="list_center">
