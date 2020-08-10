@@ -64,7 +64,11 @@ export default {
     return {};
   },
   created() {},
-  methods: {},
+  methods: {
+    changeAdd(){
+
+    }
+  },
   mounted() {},
   computed: {},
   components: {
