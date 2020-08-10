@@ -1,13 +1,13 @@
 <template>
   <div class="wrap">
     <myHeader>
-      <div class="h_center">PK榜</div>
+      <div class="h_center">{{titleName}}PK榜</div>
       <div class="h_right"></div>
     </myHeader>
     <main>
       <div class="PK_title">
         <div class="PK_category_left fl" @click="changeCategory">
-          <p class="category_left_text">合同回款</p>
+          <p class="category_left_text">{{titleName}}</p>
           <div class="PK_category_triangle"></div>
         </div>
         <div class="PK_category_right fr">
@@ -103,6 +103,7 @@ export default {
       // PK类别
       isCategory:false,
       timeCategory:0,
+        titleName: '合同金额',
       categoryData: [
         {
           name: "合同金额",
@@ -166,6 +167,7 @@ export default {
       this.flag = !this.flag
       console.log(ind, name,this.categoryData, '222');
       this.quarter = name
+        this.titleName = name
     },
     categoryCancel(){
       this.isCategory = false;

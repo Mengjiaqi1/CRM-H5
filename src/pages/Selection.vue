@@ -213,7 +213,7 @@ export default {
       num: 5,
       isShow:true,
       // 参数
-      type:'',
+      type:1,
       year:'',
       newYears:'',
       newYear:'',
@@ -340,7 +340,7 @@ export default {
         this.num = this.isShow ? 5 : this.timeData.length;
     },
     changeSeCempty() {
-      this.RadioSelec = 4;
+      this.RadioSelec = null;
     },
     changeSection(ind) {
       this.RadioSelec = ind;
@@ -349,6 +349,31 @@ export default {
       this.timeSelec = ind;
       this.flag = !this.flag
       console.log(this.timeSelec,'我是张展');
+      if(ind>=0 && ind<=5) { //今日至上周--清除的是年份和月份，自定义、半年、季度的值
+          this.type = ind;
+          this.newYears= ''
+          this.yearMonthb = ''
+          this.beginTime = ''
+          this.endTime = ''
+      }
+      if(ind == 9){ //月份--清楚年份和季度，半年、自定义的值
+          this.newYears= ''
+          this.beginTime = ''
+          this.endTime = ''
+      }
+      if(ind == 10) { //自定义--清楚的是年份和月份的值
+          this.newYears = ''
+          this.yearMonthb = ''
+      }
+        //年份、半年、季度、自定义--清除的是月份的值
+        if(ind == 6 || ind == 7 || ind == 8 || ind == 10){
+            this.yearMonthb = ''
+        }
+      // ind->index 控制type的值是否为空，如果index的范围不再0-5之间type值为空
+      if(ind>=6&&ind<=10) {
+          this.type = ''
+      }
+      // 控制弹窗
       if (ind == '6'){
         this.isYearShow = true;
       };
@@ -363,10 +388,28 @@ export default {
       };
       if (ind == '10'){
         this.isCustom = true;
+        this.inputData.start_Time='';
+        this.inputData.end_Time='';
+      }
+      // 控制恢复选中框内的汉字
+      if((ind>=0&&ind<=5)||ind=='9'||ind=='10'||ind=='7') {
+          this.timeData[6].time='年份';
+          this.timeData[7].time='半年';
+          this.timeData[8].time='季度';
+          this.timeData[10].time='自定义'
+      }
+      if(ind==6||ind==7||ind==8||(ind>=0&&ind<=5)||ind==10){
+          this.timeData[9].time='月份'
+          this.timeData[10].time='自定义'
+      }
+      if(ind==8) {
+          this.timeData[6].time='年份';
+          this.timeData[7].time='半年';
       }
     },
     changeTimeEmpty() {
-      this.timeSelec = "a";
+      this.timeSelec = null;
+      this.type = ''
       this.timeData[6].time='年份';
       this.timeData[7].time='半年';
       this.timeData[8].time='季度';
@@ -375,80 +418,28 @@ export default {
     },
 
     changeCancel() {
+        console.log(this.timeSelec,111)
       this.cancelShow = 1;
+        this.timeSelec = 1
+        this.type = 1
+      this.RadioSelec=1;
     },
     // 确定
     changeConfirm() {
       this.cancelShow = 2;
-
-      if(this.timeSelec =='0'){
-          this.type ="0"
-      }
-      if(this.timeSelec =='1'){
-          this.type ="1"
-      }
-      if(this.timeSelec =='2'){
-          this.type ="2"
-      }
-      if(this.timeSelec =='3'){
-          this.type ="3"
-      }
-      if(this.timeSelec =='4'){
-          this.type ="4"
-      }
-      if(this.timeSelec =='5'){
-          this.type ="5"
-      }
-      // 年份
-      if(this.timeSelec =='6'){
-         this.newYear = this.timeData[6].time;
-         this.newYears = this.newYear.substring(0,this.newYear.length-1);
-        if(this.timeHalf=="0"){
-            this.beginTime = "1"
-            this.endTime='6'
-        }
-        if(this.timeHalf=="1"){
-            this.beginTime = "7"
-            this.endTime='12'
-        }
-      }
       // 半年
       if(this.timeSelec =='7'){
         this.$toast({
           message: "请选择年份",
           position: "center"
         });
-        if(this.timeHalf=="0"){
-          this.beginTime = "1"
-          this.endTime='6'
-        }
-        if(this.timeHalf=="1"){
-          this.beginTime = "7"
-          this.endTime='12'
-        }
       }
       // 季度
       if(this.timeSelec =='8'){
-          this.$toast({
-              message: "请选择年份",
-              position: "center"
-          });
-          if(this.timeQuarter=="0"){
-              this.beginTime = "1"
-              this.endTime='3'
-          }
-          if(this.timeQuarter=="1"){
-              this.beginTime = "4"
-              this.endTime='6'
-          }
-          if(this.timeQuarter=="2"){
-              this.beginTime = "7"
-              this.endTime='9'
-          }
-          if(this.timeQuarter=="3"){
-              this.beginTime = "10"
-              this.endTime='12'
-          }
+        this.$toast({
+          message: "请选择年份",
+          position: "center"
+        });
       }
       // 年月
       if(this.timeSelec =='9'){
@@ -462,7 +453,6 @@ export default {
           this.beginTime = this.timeBetween.substring(0,10);
           this.endTime = this.timeBetween.substring(11,21);
       }
-
       let Data = {
           deptType:this.RadioSelec,
           type:this.type,
@@ -471,15 +461,20 @@ export default {
           beginTime:this.beginTime,
           endTime:this.endTime,
       }
-      if(this.timeSelec =='0'||this.timeSelec =='1'||this.timeSelec =='2'||this.timeSelec =='3'||this.timeSelec =='4'||this.timeSelec =='5'||this.timeSelec =='6'||(this.timeSelec =='7'&&this.timeSelec =='6')||(this.timeSelec =='8'&&this.timeSelec =='6')||this.timeSelec =='9'||this.timeSelec =='10'){
-        getData(Data).then(res => {
+      if(this.RadioSelec!=null){
+        if((this.timeSelec>=0 && this.timeSelec<=5)||this.timeSelec =='6'||(this.timeSelec =='7'&&this.timeSelec =='6')||(this.timeSelec =='8'&&this.timeSelec =='6')||this.timeSelec =='9'||this.timeSelec =='10'){
+          getData(Data).then(res => {
             if (res.code == "200") {
-                this.$router.push({ path: "/" });
+              this.$router.push({ path: "/" });
             }
+          });
+        }
+      }else{
+        this.$toast({
+            message: "请选择部门",
+            position: "center"
         });
       }
-
-
     },
     // 年份
     cancelPickerYear() { // 选择器取消按钮点击事件
@@ -490,6 +485,8 @@ export default {
       var date = value;
       var timer = date.getFullYear() + "年"
       this.timeData[6].time = timer;//月份的index值是6，直接给timeData下标为6的time赋值当前选中的日期的值
+      this.newYear = timer;
+      this.newYears = this.newYear.substring(0,this.newYear.length-1);
       this.isYearShow = false;
     },
     formatter(type, val) {
@@ -514,6 +511,14 @@ export default {
       if(this.half){
         this.timeData[7].time =  this.half;
       }
+      if(this.timeHalf=="0"){
+          this.beginTime = "1"
+          this.endTime='6'
+      }
+      if(this.timeHalf=="1"){
+          this.beginTime = "7"
+          this.endTime='12'
+      }
       this.isHalfYear = false;
     },
     // 季度
@@ -533,6 +538,22 @@ export default {
       if(this.quarter){
           this.timeData[8].time = this.quarter;
       }
+        if(this.timeQuarter=="0"){
+            this.beginTime = "1"
+            this.endTime='3'
+        }
+        if(this.timeQuarter=="1"){
+            this.beginTime = "4"
+            this.endTime='6'
+        }
+        if(this.timeQuarter=="2"){
+            this.beginTime = "7"
+            this.endTime='9'
+        }
+        if(this.timeQuarter=="3"){
+            this.beginTime = "10"
+            this.endTime='12'
+        }
       this.isQuarter = false;
     },
     // 年月
@@ -548,7 +569,9 @@ export default {
       }
       var timer = date.getFullYear() + "年" + m + "月"
       this.timeData[9].time = timer;//月份的index值是9，直接给timeData下标为9的time赋值当前选中的日期的值
-      this.isMouthshow = false;
+        this.beginTime = ""
+        this.endTime=""
+        this.isMouthshow = false;
     },
     // 自定义
     showDatePicker(picker) { //弹出层并显示时间选择器
@@ -575,6 +598,8 @@ export default {
       }
       var timer = date.getFullYear() + "-" + m + "-" + d
       this.inputData.start_Time = timer;
+        this.beginTime = ""
+        this.endTime=""
       this.isPopShow = false;
     },
     cancelPickers() { // 选择器取消按钮点击事件
@@ -716,6 +741,7 @@ export default {
       .more_show{
         width: 31%;
         margin-top: 0.1rem;
+        color: #666;
       }
     }
   }

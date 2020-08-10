@@ -10,6 +10,7 @@ import Selection from "../pages/Selection";
 import Brief  from "../pages/Brief.vue";
 import PKdetalis  from "../pages/PKdetalis.vue";
 import Custom from "../pages/Custom";
+import Collection from "../pages/Collection";
 import CommonForms from "../pages/CommonForms";
 import CustomHome from "../pages/CustomHome";
 Vue.use(VueRouter);
@@ -76,6 +77,12 @@ const routes = [{
         path: "/custom",
         name: "Custom",
         component: Custom
+    },
+    // 计划收款
+    {
+        path: "/collection",
+        name: "Collection",
+        component: Collection
     },
     {
         path: "/about",

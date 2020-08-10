@@ -331,8 +331,10 @@
           </li>
 
           <li>
-            <p class="c_num">1234</p>
-            <p class="c_text">当前客户数</p>
+            <router-link tag="p" to="/collection">
+              <p class="c_num">3120</p>
+              <p class="c_text">新增机会金额</p>
+            </router-link>
           </li>
           <li>
             <p class="c_num">1234</p>
