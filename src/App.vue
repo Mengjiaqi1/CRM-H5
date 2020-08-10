@@ -1,8 +1,61 @@
 <template>
   <div id="app">
     <router-view />
+    <input type="text" v-model="inp" ref="text" id="inp" />
   </div>
 </template>
+<script>
+import { getLogin } from "./services/login";
+import * as dd from "dingtalk-jsapi";
+import router from "./router";
+export default {
+  data() {
+    return {
+      ddCode: null,
+      inp: ""
+    };
+  },
+  async created() {
+    if (dd.env.platform != "notInDingTalk") {
+      await this.getDDCode();
+    } else {
+      localStorage.setItem(
+        "token",
+        "eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6ImZlMDIyYzFlLWE1NWQtNGNmNi04NmNhLTQ2ZmM2NTZjOWQyNSJ9.PeCYalbL95k878h2lw2qHek5hLkXSijvt38YuY7HmLPFpXQhLFQ0eC-yPtMCBEkp9GC5LN7vW6D21rrehU4uRw"
+      );
+      this.getDDCode();
+    }
+  },
+  methods: {
+    getDDCode() {
+      return new Promise((resolve, reject) => {
+        dd.ready(function() {
+          dd.runtime.permission.requestAuthCode({
+            corpId: "ding4549e680a3f82a1c35c2f4657eb6378f", // 企业id
+            onSuccess: function(info) {
+              const tempCode = info.code;
+              getLogin(tempCode).then(res => {
+                if (res.code == 200 && res.token) {
+                  localStorage.setItem("token", res.token);
+                  router.push("/");
+                }
+              });
+              resolve();
+            },
+            onFail: function(err) {
+              console.log(err);
+              this.toast({
+                message: "获取code失败，请退出重试"
+              });
+              reject(err);
+            }
+          });
+        });
+      });
+    }
+  }
+};
+</script>
 
 <style lang="scss">
 * {

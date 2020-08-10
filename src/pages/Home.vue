@@ -305,6 +305,7 @@
           </div>
         </div>
       </div>
+      <!-- 客户数据 -->
       <div class="customer briefing">
         <div class="b_tit">
           <div class="b_tit_l">
@@ -552,6 +553,7 @@
 import MyFooter from "@/components/MyFooter.vue";
 import Dashboard from "@/components/Dashboard.vue";
 import BarEchart from "@/components/BarEchart.vue";
+
 export default {
   data() {
     return {
@@ -559,7 +561,7 @@ export default {
       toastFlag: true
     };
   },
-  creates() {},
+  created() {},
   methods: {
     changeAdd: function() {
       this.flag = !this.flag;
@@ -1247,13 +1249,14 @@ export default {
         flex-wrap: wrap;
         justify-content: space-between;
         li {
-          width: 48%;
+          width: 47%;
           margin-top: 0.1rem;
           background: rgba(251, 251, 251, 1);
           display: flex;
           flex-direction: column;
           justify-content: flex-start;
           padding-left: 0.06rem;
+          padding-bottom: 0.12rem;
           img {
             width: 0.4rem;
             height: 0.4rem;
