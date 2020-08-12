@@ -218,6 +218,7 @@ export default {
       newYears:'',
       newYear:'',
       yearMonth:'',
+      yearState:'',
       yearMonths:'',
       yearMonthb:'',
 
@@ -460,6 +461,8 @@ export default {
           yearMonth:this.yearMonthb,
           beginTime:this.beginTime,
           endTime:this.endTime,
+          yearState:this.half, //新
+          quarter:this.quarter,   //新
       }
       if(this.RadioSelec!=null){
         if((this.timeSelec>=0 && this.timeSelec<=5)||this.timeSelec =='6'||(this.timeSelec =='7'&&this.timeSelec =='6')||(this.timeSelec =='8'&&this.timeSelec =='6')||this.timeSelec =='9'||this.timeSelec =='10'){
@@ -512,12 +515,15 @@ export default {
         this.timeData[7].time =  this.half;
       }
       if(this.timeHalf=="0"){
-          this.beginTime = "1"
-          this.endTime='6'
+          // this.beginTime = "1"
+          // this.endTime='6'
+          this.half ='1' //新
+          console.log(this.timeHalf,'777');
       }
       if(this.timeHalf=="1"){
-          this.beginTime = "7"
-          this.endTime='12'
+          // this.beginTime = "7"
+          // this.endTime='12'
+          this.half ='2' //新
       }
       this.isHalfYear = false;
     },
@@ -539,20 +545,25 @@ export default {
           this.timeData[8].time = this.quarter;
       }
         if(this.timeQuarter=="0"){
-            this.beginTime = "1"
-            this.endTime='3'
+            // this.beginTime = "1"
+            // this.endTime='3'
+            this.quarter = '1' //新
+            console.log(this.quarter,'000')
         }
         if(this.timeQuarter=="1"){
-            this.beginTime = "4"
-            this.endTime='6'
+            // this.beginTime = "4"
+            // this.endTime='6'
+            this.quarter = '2' //新
         }
         if(this.timeQuarter=="2"){
-            this.beginTime = "7"
-            this.endTime='9'
+            // this.beginTime = "7"
+            // this.endTime='9'
+            this.quarter = '3' //新
         }
         if(this.timeQuarter=="3"){
-            this.beginTime = "10"
-            this.endTime='12'
+            // this.beginTime = "10"
+            // this.endTime='12'
+            this.quarter = '4' //新
         }
       this.isQuarter = false;
     },

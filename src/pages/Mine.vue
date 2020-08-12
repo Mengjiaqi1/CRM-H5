@@ -12,7 +12,13 @@
             <img src="../common/images/add.png" @click="changeAdd" alt="" />
           </div>
         </div>
-        <div>个人信息部分</div>
+        <div class="mine-msg">
+          <div class="mine_msg_icon">
+            <img src="../common/images/cover.png" alt="">
+          </div>
+          <p class="mine_name">刘立讯<span>CEO</span></p>
+          <p class="mine_position">市场营销一部</p>
+        </div>
       </div>
       <div class="list_box">
         <div class="list_center">
@@ -42,13 +48,13 @@
               <p class="text_mine">关于我们</p>
               <p><img src="../common/images/arrow.png" alt="" class="icon_mine"></p>
             </li>
+            <router-link tag="p" to="/setting">
             <li>
-<!--            <router-link tag="li" to="/commonForms">-->
               <p><img src="../common/images/setting.png" alt="" class="icon_mine"/></p>
               <p class="text_mine">我的设置</p>
               <p><img src="../common/images/arrow.png" alt="" class="icon_mine"></p>
-<!--            </router-link>-->
             </li>
+            </router-link>
           </ul>
         </div>
       </div>
@@ -87,7 +93,8 @@ export default {
       position: relative;
       .header_box {
         width: 100%;
-        height: 2.8rem;
+        /*height: 2.8rem;*/
+        height: 2.36rem;
         box-sizing: border-box;
         background: url("../common/images/BG.png") no-repeat center center;
         background-size: 100%;
@@ -113,14 +120,57 @@ export default {
             margin-right: 0.1rem;
           }
         }
-      }
 
+      }
+      .mine-msg{
+        /*display: flex;*/
+        /*justify-content: center;*/
+        .mine_msg_icon{
+          width: 100%;
+          width: 0.8rem;
+          height: 0.8rem;
+          background: #fff;
+          border-radius: 50%;
+          line-height: 0.8rem;
+          text-align: center;
+          margin-left: 1.48rem;
+          margin-bottom: 0.09rem;
+          img{
+            width: 0.7rem;
+            height: 0.7rem;
+            border-radius: 50%;
+            margin-top: 0.05rem;
+          }
+        }
+        .mine_name{
+          font-size:0.18rem;
+          font-weight:600;
+          color:rgba(255,255,255,1);
+          line-height:0.25rem;
+          margin-bottom: 0.02rem;
+          span{
+            height:0.18rem;
+            line-height: 0.18rem;
+            padding: 0rem 0.04rem;
+            background:rgba(255,176,0,1);
+            border-radius:0.04rem;
+            margin-left: 0.06rem;
+          }
+        }
+        .mine_position{
+          font-size:0.12rem;
+          font-weight:400;
+          color:rgba(255,255,255,1);
+          line-height:0.17rem;
+        }
+      }
       .list_box {
         width: 100%;
         box-sizing: border-box;
         padding: 0 0.15rem;
         position: absolute;
-        top: 2.5rem;
+        /*top: 2.5rem;*/
+        top: 2rem;
         left: 0;
       }
       .list_center {
@@ -144,6 +194,7 @@ export default {
             width: 33.33%;
             display: flex;
             flex-wrap: wrap;
+            color: #333333;
             .icon_mine{
               width: 0.22rem;
               height: 0.22rem;
@@ -172,6 +223,11 @@ export default {
         li:last-child{
           margin-bottom: 0rem;
         }
+      }
+    }
+    footer{
+      .router-link-active[data-v-cbeb59d2]{
+        color: #666 !important;
       }
     }
   }

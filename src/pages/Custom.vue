@@ -3,10 +3,7 @@
     <myHeader />
     <main>
       <!--顶部-->
-      <div class="custom_top">
-        <p class="custom_name">客户总数</p>
-        <p class="custom_company"><span class="custom_company_text">全公司</span><span class="custom_company_time">截止 2020-06-21 18:43:21 </span></p>
-      </div>
+      <msgHeader :msg="{title,name}"></msgHeader>
       <div class="space"></div>
       <!--内容-->
       <div class="custom_content">
@@ -34,12 +31,24 @@
   </div>
 </template>
 <script>
-    export default {
-        data() {
-            return {};
-        },
-        methods: {}
-    };
+  import msgHeader from '../components/msg-header'
+  export default {
+    components: {
+        msgHeader
+    },
+    data() {
+      return {
+        title: '客户总数',
+        name: '全公司',
+        time: null,
+        list: []
+      };
+    },
+    methods: {
+    // this.time = res.data.data.time
+    // this.list = res.data.data.list
+    }
+  };
 </script>
 <style lang="scss" scoped>
   .wrap{
@@ -66,31 +75,7 @@
         clear: both;
         visibility: hidden;
       }
-      /*顶部样式*/
-      .custom_top{
-        padding: 0.16rem 0.12rem;
-        .custom_name{
-          font-size: 0.21rem;
-          color: #333;
-          margin-bottom: 0.09rem;
-        }
-        .custom_company{
-          .custom_company_text{
-            border:0.01rem solid #006aff;
-            border-radius: 0.02rem;
-            background: #006aff;
-            color: #fff;
-            font-size: 0.02rem;
-            padding: 0.02rem 0.09rem;
-          }
-          .custom_company_time{
-            margin-left: 0.08rem;
-            color: #666;
-            font-size: 0.16rem;
-            vertical-align: middle;
-          }
-        }
-      }
+
       .space{
         height: 0.12rem;
         background: #F8F9FA;
@@ -127,6 +112,7 @@
               /*justify-content: center;*/
               color: #666666;
               font-size: 0.12rem;
+              line-height: 0.17rem;
             }
             p:nth-child(1){
               width: 35%;

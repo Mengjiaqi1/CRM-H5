@@ -19,6 +19,7 @@
   /*顶部样式*/
   .custom_top{
     padding: 0.16rem 0.12rem;
+    font-family:PingFangSC-Regular,PingFang SC;
     .custom_name{
       font-size: 0.21rem;
       color: #333;
@@ -26,18 +27,19 @@
     }
     .custom_company{
       .custom_company_text{
-        border:0.01rem solid #006aff;
         border-radius: 0.02rem;
         background: #006aff;
         color: #fff;
         font-size: 0.02rem;
         padding: 0.02rem 0.09rem;
+        line-height: 0.17rem;
+        margin-top: 0.01rem;
       }
       .custom_company_time{
         margin-left: 0.08rem;
         color: #666;
         font-size: 0.16rem;
-        vertical-align: middle;
+        line-height:0.22rem;
       }
     }
   }

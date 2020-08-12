@@ -24,6 +24,7 @@ import {
     Popup,
     DatetimePicker,
     Field,
+    ShareSheet,
 } from "vant";
 
 Vue.use(NavBar);
@@ -39,6 +40,7 @@ Vue.use(VueCookies);
 Vue.use(Popup);
 Vue.use(DatetimePicker);
 Vue.use(Field);
+Vue.use(ShareSheet);
 
 Vue.config.productionTip = false;
 Vue.config.isToken = true;

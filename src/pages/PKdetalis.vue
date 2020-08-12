@@ -312,6 +312,7 @@ export default {
             .pk_detalis_amount,.pk_detalis_money{
               font-size: 0.18rem;
               color: #333333;
+              font-weight: 600;
               .pk_detalis_money{
                 margin-left: 0.08rem;
               }
