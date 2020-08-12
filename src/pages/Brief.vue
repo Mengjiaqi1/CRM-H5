@@ -111,16 +111,23 @@
           justify-content: space-between;
           padding: 0rem 0.12rem;
           background: #fff;
+          font-family:PingFangSC-Regular,PingFang SC;
           li{
             width: 33%;
             display: flex;
             flex-wrap: wrap;
             /*justify-content: center;*/
             padding: 0.04rem 0rem 0.04rem 0rem;
+            color: #666666;
+            font-size:0.13rem;
+            line-height:0.18rem;
           }
           .line{
             border-bottom: 0.01rem solid #DBE4EF;
             padding: 0.14rem 0rem 0.1rem 0rem;
+            color: #333333;
+            font-size: 0.14rem;
+            line-height:0.2rem;
           }
           li:nth-child(1){
             width: 45%;

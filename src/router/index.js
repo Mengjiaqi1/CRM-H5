@@ -13,6 +13,7 @@ import Custom from "../pages/Custom";
 import Collection from "../pages/Collection";
 import CommonForms from "../pages/CommonForms";
 import CustomHome from "../pages/CustomHome";
+import Setting from "../pages/Setting";
 Vue.use(VueRouter);
 
 const routes = [{
@@ -83,6 +84,12 @@ const routes = [{
         path: "/collection",
         name: "Collection",
         component: Collection
+    },
+    // 设置
+    {
+        path: "/setting",
+        name: "Setting",
+        component: Setting
     },
     {
         path: "/about",
