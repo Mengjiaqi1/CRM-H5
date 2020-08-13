@@ -65,12 +65,22 @@
 </template>
 <script>
 import MyFooter from "@/components/MyFooter.vue";
+import {getUserData} from "../services/mine";
 export default {
   data() {
     return {};
   },
-  created() {},
+  created() {
+      this.getUserInfo();
+  },
   methods: {
+    getUserInfo(){
+        getUserData().then(res => {
+          if (res.code == 200) {
+              console.log(res);
+          }
+      });
+    },
     changeAdd(){
 
     }
