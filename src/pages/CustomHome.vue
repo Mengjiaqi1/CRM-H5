@@ -30,33 +30,36 @@
               <draggable
                 class="list-group"
                 tag="ul"
-                handle=".handle"
+                handle=".mover"
                 :name="'flip-list'"
+                @start="onStart"
+                @end="onEnd"
               >
-                <li
-                  class="list-group-item"
-                  v-for="element in addCard"
-                  :key="element.menuId"
-                >
-                  <p>
-                    <img
-                      :src="forms_reduce"
-                      alt=""
-                      class="reducer"
-                      @click="removeAdd(element.menuId, element.name)"
-                    />
-                    <span class="text">{{ element.name }} </span>
-                  </p>
-                  <span class="badge">
-                    <img
-                      src="../common/images/c_order.png"
-                      class="sort"
-                      alt=""
-                    />
-                  </span>
-                </li>
+                <transition-group>
+                  <li
+                    class="list-group-item"
+                    v-for="element in addCard"
+                    :key="element.menuId"
+                  >
+                    <p>
+                      <img
+                        :src="forms_reduce"
+                        alt=""
+                        class="reducer"
+                        @click="removeAdd(element.menuId, element.name)"
+                      />
+                      <span class="text">{{ element.name }} </span>
+                    </p>
+                    <span class="badge mover">
+                      <img
+                        src="../common/images/c_order.png"
+                        class="sort"
+                        alt=""
+                      />
+                    </span>
+                  </li>
+                </transition-group>
               </draggable>
-              <!-- <rawDisplayer class="col-3" :value="addCard" title="flip-list" /> -->
             </div>
           </div>
         </div>
@@ -66,30 +69,31 @@
         <div class="more_card">
           <div class="fluid container">
             <div class="col-md-3">
-              <draggable class="list-group" tag="ul">
-                <li
-                  class="list-group-item"
-                  v-for="element in custommenu"
-                  :key="element.menuId"
-                  handle=".handle"
-                >
-                  <p>
-                    <img
-                      :src="element.checked ? forms_reduce : forms_add"
-                      alt=""
-                      class="reducer"
-                      @click="removeAt(element.menuId, element.name)"
-                    />
-                    <span class="text">{{ element.name }} </span>
-                  </p>
-                  <span class="badge">
-                    <img
-                      src="../common/images/c_order.png"
-                      class="sort"
-                      alt=""
-                    />
-                  </span>
-                </li>
+              <draggable class="list-group" tag="ul" handle=".mover">
+                <transition-group>
+                  <li
+                    class="list-group-item"
+                    v-for="element in custommenu"
+                    :key="element.menuId"
+                  >
+                    <p>
+                      <img
+                        :src="element.checked ? forms_reduce : forms_add"
+                        alt=""
+                        class="reducer"
+                        @click="removeAt(element.menuId, element.name)"
+                      />
+                      <span class="text">{{ element.name }} </span>
+                    </p>
+                    <span class="badge mover">
+                      <img
+                        src="../common/images/c_order.png"
+                        class="sort"
+                        alt=""
+                      />
+                    </span>
+                  </li>
+                </transition-group>
               </draggable>
             </div>
           </div>
@@ -99,52 +103,32 @@
   </div>
 </template>
 <script>
-import DragGable from "../components/DragGable.vue";
 import { getCustommenu, getCreatemneu, getquery } from "../services/custom";
 import draggable from "vuedraggable";
-// import rawDisplayer from "rawDisplayer";
-const message = [
-  "vue.draggable",
-  "draggable",
-  "component",
-  "for",
-  "vue.js 2.0",
-  "based",
-  "on",
-  "Sortablejs"
-];
+
 export default {
   name: "wrap",
-  display: "Handle",
   data() {
     return {
       type: "a",
-      dragging: false,
       chartFlag: false,
       flag: false,
-      list: message.map((name, index) => {
-        return { name, order: index + 1, fixed: false };
-      }),
-      list2: "",
       editable: true,
-      isDragging: false,
-      isDragging1: false,
-      delayedDragging: false,
       typeCode: 0,
       typeFlag: true,
-      forms_add: require("../assets/forms_add.png"),
-      forms_reduce: require("../assets/forms_reduce.png"),
+      forms_add: require("../common/images/home_add.png"),
+      forms_reduce: require("../common/images/home_reducer.png"),
       custommenu: "", // 更多卡片数据
       addCard: "", // 已添加卡片
-      count: 1
+      count: 1,
+      startIndex: "",
+      endIndex: ""
     };
   },
   mounted() {
     if (this.count <= 1) {
       this.typeFlag = true;
     }
-    console.log(this.count);
-    console.log(this.typeFlag, "false");
     if (this.count >= 1) {
       this.removeAdd();
       this.getqueryData();
@@ -162,7 +146,6 @@ export default {
     // 查询已添加的卡片
     getqueryData() {
       getquery().then(res => {
-        // console.log(res, "22");
         if (res.code == 200) {
           this.addCard = res.data;
           for (var i = 0; i < this.addCard.length; i++) {
@@ -188,7 +171,6 @@ export default {
               position: "center"
             });
           }
-          console.log((this.count = 2), "count");
           this.getCustomData();
           this.getqueryData();
         }
@@ -201,7 +183,6 @@ export default {
           if (each.menuId == id && each.checked == false) {
             this.typeCode = 0;
             this.count++;
-            console.log(this.count, "+");
             if (this.count > 1) {
               this.typeFlag = true;
             }
@@ -209,7 +190,6 @@ export default {
           if (each.menuId == id && each.checked == true) {
             this.typeCode = 1;
             this.count -= 1;
-            console.log(this.count, "-");
             if (this.count >= 2) {
               this.count = 2;
               this.typeFlag = false;
@@ -230,74 +210,31 @@ export default {
     getCustomData() {
       getCustommenu().then(res => {
         if (res.code == 200) {
-          console.log(res);
           this.custommenu = res.data;
         }
       });
     },
-    orderList1() {
-      this.list = this.list.sort((one, two) => {
-        return one.order - two.order;
+    onStart(e) {
+      this.startIndex = e.oldIndex;
+    },
+    onEnd(e) {
+      getCreatemneu("", "", "", "", this.startIndex, e.newIndex).then(res => {
+        if (res.code == 200) {
+          this.getCustomData();
+        }
       });
-    },
-    orderList() {
-      this.list = this.list.sort((one, two) => {
-        return one.order - two.order;
-      });
-    },
-    onMove1({ relatedContext, draggedContext }) {
-      const relatedElement = relatedContext.element;
-      const draggedElement = draggedContext.element;
-      return (
-        (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed
-      );
-    },
-    onMove({ relatedContext, draggedContext }) {
-      const relatedElement = relatedContext.element;
-      const draggedElement = draggedContext.element;
-      return (
-        (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed
-      );
     }
   },
   computed: {
-    draggingInfo() {
-      return this.dragging ? "under drag" : "";
-    },
-
-    dragOptions1() {
-      return {
-        animation: 0,
-        group: "description",
-        disabled: !this.editable,
-        ghostClass: "ghost"
-      };
-    },
-    dragOptions() {
-      return {
-        animation: 0,
-        group: "description",
-        disabled: !this.editable,
-        ghostClass: "ghost"
-      };
-    }
+    // draggingInfo() {
+    //   return this.dragging ? "under drag" : "";
+    // }
   },
   components: {
-    DragGable,
     draggable
     // rawDisplayer
   },
-  watch: {
-    isDragging(newValue) {
-      if (newValue) {
-        this.delayedDragging = true;
-        return;
-      }
-      this.$nextTick(() => {
-        this.delayedDragging = false;
-      });
-    }
-  }
+  watch: {}
 };
 </script>
 <style lang="scss" scoped>
@@ -419,9 +356,20 @@ li.list-group-item {
 .list-group-item i {
   cursor: pointer;
 }
+.more_card {
+  box-sizing: border-box;
+}
+.col-md-3 {
+  box-sizing: border-box;
+}
+.mover {
+  //   background-color: #fdfdfd;
+  //   cursor: move;
+  //   padding: 0.03rem 0.6rem;
+}
 .handle {
-  float: left;
-  padding-top: 0.08rem;
-  padding-bottom: 0.08rem;
+  background-color: #fdfdfd;
+  cursor: move;
+  padding: 0.03rem 0.6rem;
 }
 </style>

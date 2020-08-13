@@ -7,8 +7,8 @@ import Work from "../pages/Work.vue";
 import Mine from "../pages/Mine.vue";
 import News from "../pages/News.vue";
 import Selection from "../pages/Selection";
-import Brief  from "../pages/Brief.vue";
-import PKdetalis  from "../pages/PKdetalis.vue";
+import Brief from "../pages/Brief.vue";
+import PKdetalis from "../pages/PKdetalis.vue";
 import Custom from "../pages/Custom";
 import Collection from "../pages/Collection";
 import CommonForms from "../pages/CommonForms";
@@ -18,8 +18,10 @@ Vue.use(VueRouter);
 
 const routes = [{
         path: "/",
-        name: "Home",
-        component: Home
+        redirect: "/home",
+        meta: {
+            title: "首页"
+        }
     },
     {
         path: "/work",
@@ -92,14 +94,14 @@ const routes = [{
         component: Setting
     },
     {
-        path: "/about",
-        name: "About",
+        path: "/home",
+        name: "Home",
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         // 按需加载模式
         component: () =>
-            import ( /* webpackChunkName: "about" */ "../views/About.vue")
+            import ( /* webpackChunkName: "about" */ "../pages/Home.vue")
     }
 ];
 

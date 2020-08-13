@@ -34,12 +34,18 @@ export default {
             corpId: "ding4549e680a3f82a1c35c2f4657eb6378f", // 企业id
             onSuccess: function(info) {
               const tempCode = info.code;
-              getLogin(tempCode).then(res => {
-                if (res.code == 200 && res.token) {
-                  localStorage.setItem("token", res.token);
-                  router.push("/");
-                }
-              });
+              if (
+                localStorage.getItem("token") == null ||
+                localStorage.getItem("token") == undefined
+              ) {
+                getLogin(tempCode).then(res => {
+                  if (res.code == 200 && res.token) {
+                    localStorage.setItem("token", res.token);
+                    router.push("/");
+                  }
+                });
+              }
+
               resolve();
             },
             onFail: function(err) {

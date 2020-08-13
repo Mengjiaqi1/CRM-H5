@@ -6,8 +6,15 @@ export function getCustommenu() {
 }
 
 // 新增删除自定义菜单
-export function getCreatemneu(userId, id, name, type) {
-    return post("/app/customHome/create", { userId, id, name, type });
+export function getCreatemneu(userId, id, name, type, frontIndex, startIndex) {
+    return post("/app/customHome/create", {
+        userId,
+        id,
+        name,
+        type,
+        frontIndex,
+        startIndex
+    });
 }
 
 // 查询自定义菜单
