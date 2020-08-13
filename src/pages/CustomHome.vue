@@ -5,7 +5,7 @@
       <div class="h_right"></div>
     </myHeader>
     <main>
-      <div class="chart_type">
+      <div class="chart_type" v-if="changeFlag()">
         <div class="custom_tit">选择数据图形类型</div>
         <div class="chart_box">
           <div
@@ -105,14 +105,14 @@
 <script>
 import { getCustommenu, getCreatemneu, getquery } from "../services/custom";
 import draggable from "vuedraggable";
-
+import store from "../store";
 export default {
   name: "wrap",
   data() {
     return {
       type: "a",
       chartFlag: false,
-      flag: false,
+      flag: true,
       editable: true,
       typeCode: 0,
       typeFlag: true,
@@ -137,9 +137,14 @@ export default {
     }
   },
 
-  created() {},
+  created() {
+    this.changeFlag();
+  },
 
   methods: {
+    changeFlag() {
+      return store.state.Flag;
+    },
     changeChart() {
       this.chartFlag = !this.chartFlag;
     },
@@ -149,9 +154,14 @@ export default {
         if (res.code == 200) {
           this.addCard = res.data;
           for (var i = 0; i < this.addCard.length; i++) {
-            console.log(this.addCard.length);
+            console.log(this.addCard.length, "lens");
             this.count = this.addCard.length;
-            if (this.count <= 1) {
+            console.log(this.count, "count");
+            if (this.addCard.length <= 1 && this.count <= 1) {
+              this.$toast({
+                message: "必须保留一条卡片",
+                position: "center"
+              });
               this.typeFlag = false;
             }
           }

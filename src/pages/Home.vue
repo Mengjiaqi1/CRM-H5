@@ -103,7 +103,7 @@
         </p>
         <div class="kit_center">
           <p>销售大区2020年6月简报</p>
-<!--          <p>查看详情</p>-->
+          <!--          <p>查看详情</p>-->
           <router-link tag="li" to="/brief">
             <span class="btn">查阅详情</span>
           </router-link>
@@ -125,11 +125,11 @@
         <div class="b_list">
           <li>
             <router-link tag="p" to="/custom">
-            <p class="num">1234</p>
-            <p class="icon">
-              <img src="../common/images/customers.png" alt="" />
-              <span>当前客户数</span>
-            </p>
+              <p class="num">1234</p>
+              <p class="icon">
+                <img src="../common/images/customers.png" alt="" />
+                <span>当前客户数</span>
+              </p>
             </router-link>
           </li>
           <li>
@@ -561,7 +561,9 @@ export default {
       toastFlag: true
     };
   },
-  created() {},
+  created() {
+    console.log(this.$router);
+  },
   methods: {
     changeAdd: function() {
       this.flag = !this.flag;

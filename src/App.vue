@@ -41,7 +41,7 @@ export default {
                 getLogin(tempCode).then(res => {
                   if (res.code == 200 && res.token) {
                     localStorage.setItem("token", res.token);
-                    router.push("/");
+                    router.push("/home");
                   }
                 });
               }

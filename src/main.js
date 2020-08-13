@@ -24,7 +24,7 @@ import {
     Popup,
     DatetimePicker,
     Field,
-    ShareSheet,
+    ShareSheet
 } from "vant";
 
 Vue.use(NavBar);
@@ -49,8 +49,6 @@ Axios.defaults.headers["Content-Type"] = "application/x-www-form-urlencoded";
 Vue.prototype.$http = Axios;
 Vue.prototype.$echarts = echarts;
 Vue.prototype.$cookies = VueCookies;
-
-// Vue.prototype.$store = store;
 
 Vue.component("myHeader", () => {
     return import ("@/components/my-header");

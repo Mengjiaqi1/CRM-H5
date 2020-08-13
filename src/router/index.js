@@ -1,7 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import MyHome from "../views/Home.vue";
-import Home from "../pages/Home.vue";
 import Visitor from "../pages/Visitor.vue";
 import Work from "../pages/Work.vue";
 import Mine from "../pages/Mine.vue";
@@ -14,14 +13,16 @@ import Collection from "../pages/Collection";
 import CommonForms from "../pages/CommonForms";
 import CustomHome from "../pages/CustomHome";
 import Setting from "../pages/Setting";
+import ShortcutForms from "../pages/ShortcutKeyForm";
+import store from "../store";
 Vue.use(VueRouter);
 
 const routes = [{
         path: "/",
-        redirect: "/home",
-        meta: {
-            title: "首页"
-        }
+        redirect: "/home"
+            // meta: {
+            //     title: "首页"
+            // }
     },
     {
         path: "/work",
@@ -53,15 +54,23 @@ const routes = [{
         name: "Selection",
         component: Selection
     },
+
+    {
+        path: "/customHome",
+        name: "CustomHome",
+        component: CustomHome
+    },
+    // 表单设置
     {
         path: "/commonForms",
         name: "CommonForms",
         component: CommonForms
     },
+    // 快捷键表单设置
     {
-        path: "/customHome",
-        name: "CustomHome",
-        component: CustomHome
+        path: "/shortcutForms",
+        name: "ShortcutForms",
+        component: ShortcutForms
     },
     // 简报详情
     {
@@ -108,7 +117,13 @@ const routes = [{
 const router = new VueRouter({
     routes
 });
+
 router.beforeEach((to, from, next) => {
+    if (to.path == "/home") {
+        store.commit("set_flag", true);
+    } else if (to.path == "/setting") {
+        store.commit("set_flag", false);
+    }
     if (to.path === "/") {
         next();
     } else {

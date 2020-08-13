@@ -1,7 +1,7 @@
 <template>
   <div class="wrap" v-if="isReoladAlive">
     <myHeader>
-      <div class="h_center">常用表单</div>
+      <div class="h_center">快捷键表单设置</div>
       <div class="h_right"></div>
     </myHeader>
     <main>
@@ -63,7 +63,12 @@
   </div>
 </template>
 <script>
-import { getTreeselect, getcustomIndex, getCreate } from "../services/forms";
+import {
+  gettreeselectQuick,
+  getQuickInfo,
+  getaddQuick
+} from "../services/forms";
+
 export default {
   provide() {
     return {
@@ -101,7 +106,6 @@ export default {
     if (this.typeFlag == false) {
       this.changeForms();
     }
-
     this.changeQueryData();
     this.reload();
   },
@@ -109,18 +113,18 @@ export default {
   methods: {
     //我的表单 删除表单
     changeQueryData(name, icon, id) {
-      getCreate(0, name, icon, (this.type = "1"), id).then(res => {
+      getaddQuick(0, name, icon, (this.type = "1"), id).then(res => {
         if (res.code == "200") {
           this.queryMenuData = res.data;
           this.delMenuData = res.data;
-          this.getcustomIndex();
+          this.getQuickInfoData();
           this.treeselect();
         }
       });
     },
     //查询我的表单
-    getcustomIndex() {
-      getcustomIndex().then(res => {
+    getQuickInfoData() {
+      getQuickInfo().then(res => {
         if (res && res.code == "200") {
           this.queryMenuData = res && res.data;
           for (var i = 0; i < this.queryMenuData.length; i++) {
@@ -139,7 +143,7 @@ export default {
 
     // 获取表单
     treeselect() {
-      getTreeselect().then(res => {
+      gettreeselectQuick().then(res => {
         if (res && res.code == "200") {
           this.MenuData = res.data;
         }
@@ -147,7 +151,6 @@ export default {
     },
 
     // 修改自定义表单 增加删除表单
-
     changeForms(name, icon, id) {
       this.MenuData &&
         this.MenuData.map(each => {
@@ -188,9 +191,9 @@ export default {
           }
         });
       if (this.typeFlag == false) {
-        getCreate(0, name, icon, this.type, id).then(res => {
+        getaddQuick(0, name, icon, this.type, id).then(res => {
           if (res.code == "200") {
-            this.getcustomIndex();
+            this.getQuickInfoData();
             this.treeselect();
           }
         });

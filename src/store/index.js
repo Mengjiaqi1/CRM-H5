@@ -6,13 +6,15 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         token: "qwe",
-        data: 1
+        Flag: true
     },
     mutations: {
         set_token(state, token) {
-            console.log(token, "token");
             state.token = token;
             localStorage.setItem("token", token);
+        },
+        set_flag(state, flag) {
+            state.Flag = flag;
         }
     },
     actions: {
