@@ -140,9 +140,6 @@ export default {
     };
   },
   mounted() {
-    // this.list = this.custommenu.map((name, index) => {
-    //   return { name, order: index + 1, fixed: false };
-    // });
     if (this.count <= 1) {
       this.typeFlag = true;
     }
