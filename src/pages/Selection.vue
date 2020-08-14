@@ -30,8 +30,9 @@
             :key="index"
             v-if="index<num"
             :class="timeSelec == index ? 'active' : 'each'"
+            @click="changeTime(index)"
           >
-            <span @click="changeTime(index)" v-if="index<num">{{each.time}}</span>
+            <span v-if="index<num">{{each.time}}</span>
           </div>
           <!-- {{showList}} -->
           <span  v-if="timeData.length>5" class="more_show" @click="showMore">{{isShow?'更多':'收起'}}</span>
@@ -85,9 +86,14 @@
              v-for="(each, index) in halfTime"
              :key="index"
              :class="timeHalf == index ? 'activeText' : 'eachText'"
+             @click="changeHalfTime(index,each.name,each.id)"
       >
-        <span @click="changeHalfTime(index,each.name)">{{each.name}}</span>
+        <span style="float: left">{{each.name}}</span>
+        <span v-if="checkedId==each.id" style="float: right;">
+          <img src="../common/images/checked.png" alt="" style="width: 0.28rem;height: 0.28rem">
+        </span>
       </div>
+
     </van-popup>
     <!--季度-->
     <van-popup v-model="isQuarter" position="bottom" :style="{ height: '35%' }">
@@ -99,8 +105,12 @@
              v-for="(each, index) in quarterTime"
              :key="index"
              :class="timeQuarter == index ? 'activeText' : 'eachText'"
+             @click="changeQuarterTime(index,each.name,each.id)"
       >
-        <span @click="changeQuarterTime(index,each.name)">{{each.name}}</span>
+        <span style="float: left">{{each.name}}</span>
+        <span v-if="checkedIds==each.id" style="float: right;">
+          <img src="../common/images/checked.png" alt="" style="width: 0.28rem;height: 0.28rem">
+        </span>
       </div>
     </van-popup>
     <!--月份-->
@@ -123,6 +133,7 @@
                   placeholder="请选择"
                   ref="termEnd"
                   @click="showDatePicker('termStart')"
+                  @blur="handleBlur"
                   v-model="inputData.start_Time"
                   readonly="readonly" />
           <p class="custom_content-text">结束日期</p>
@@ -132,6 +143,7 @@
             ref="termEnd"
             v-model="inputData.end_Time"
             @click="showDatePickers('termEnd')"
+            @blur="handleBlur"
             readonly="readonly" />
           <div class="selecBox">
 
@@ -194,9 +206,11 @@ export default {
       // 半年
       isHalfYear:false,
       half:'',
+      halfId:'',
       // 季度
       isQuarter:false,
       quarter:'',
+      quarterId:'',
       // 年月
       isMouthshow:false,
       currentDate: new Date(),
@@ -228,6 +242,9 @@ export default {
       start_time:'',
       end_Time:'',
       // timeDiff:'',
+      // 半年选中图片
+      checkedId:null,
+      checkedIds:null,
 
       inputData:{
         start_Time:'',
@@ -271,10 +288,6 @@ export default {
           time: "上周",
           id: "4"
         },
-        // {
-        //   time: "更多",
-        //   id: "98"
-        // },
         {
           time: "上月",
           id: "5"
@@ -299,37 +312,33 @@ export default {
           time: "自定义",
           id: "10"
         },
-        // {
-        //   time: "收起",
-        //   id: "180"
-        // }
       ],
       halfTime: [
         {
           name: "上半年",
-          id: "0"
+          id: "1"
         },
         {
           name: "下半年",
-          id: "1"
+          id: "2"
         }
       ],
       quarterTime: [
         {
           name: "第一季度",
-          id: "0"
-        },
-        {
-          name: "第二季度",
           id: "1"
         },
         {
-          name: "第三季度",
+          name: "第二季度",
           id: "2"
         },
         {
-          name: "第四季度",
+          name: "第三季度",
           id: "3"
+        },
+        {
+          name: "第四季度",
+          id: "4"
         }
       ],
     };
@@ -349,27 +358,66 @@ export default {
     changeTime(ind) {
       this.timeSelec = ind;
       this.flag = !this.flag
-      console.log(this.timeSelec,'我是张展');
       if(ind>=0 && ind<=5) { //今日至上周--清除的是年份和月份，自定义、半年、季度的值
           this.type = ind;
           this.newYears= ''
           this.yearMonthb = ''
           this.beginTime = ''
           this.endTime = ''
+          this.quarterId ='' //新
+          this.halfId='' //新
       }
       if(ind == 9){ //月份--清楚年份和季度，半年、自定义的值
           this.newYears= ''
           this.beginTime = ''
           this.endTime = ''
+          this.quarterId ='' //新
+          this.halfId='' //新
       }
       if(ind == 10) { //自定义--清楚的是年份和月份的值
           this.newYears = ''
           this.yearMonthb = ''
+          this.quarterId ='' //新
+          this.halfId = '' //新
+          this.type = '';//新
       }
-        //年份、半年、季度、自定义--清除的是月份的值
-        if(ind == 6 || ind == 7 || ind == 8 || ind == 10){
-            this.yearMonthb = ''
-        }
+      //年份、半年、季度、自定义--清除的是月份的值
+      // if(ind == 6 || ind == 7 || ind == 8 || ind == 10){
+      //     this.yearMonthb = ''
+      // }
+      if(ind == 6){ //年份
+          this.type = '';//新
+          this.yearMonthb = ''; //新
+          this.beginTime = '';//新
+          this.endTime = '';//新
+          this.newYears = this.newYear.substring(0,this.newYear.length-1);
+          this.half  =  name;
+          this.quarter = name;
+          console.log(this.half,this.timeData[7].time,this.newYears,'woshishui')
+
+      }
+      if(ind == 7){ //半年
+          this.type = '';//新
+          this.yearMonthb = '' //新
+          this.beginTime = ''//新
+          this.endTime = ''//新
+          this.quarterId ='' //新
+      }
+      if(ind == 8){ //季度
+          this.type = '';//新
+          this.yearMonthb = '' //新
+          this.beginTime = ''//新
+          this.endTime = ''//新
+          this.halfId ='' //新
+      }
+      if(ind == 9){ //年月
+          this.type = '';//新
+          this.year = '' //新
+          this.beginTime = ''//新
+          this.endTime = ''//新
+          this.quarterId ='' //新
+          this.halfId ='' //新
+      }
       // ind->index 控制type的值是否为空，如果index的范围不再0-5之间type值为空
       if(ind>=6&&ind<=10) {
           this.type = ''
@@ -461,9 +509,10 @@ export default {
           yearMonth:this.yearMonthb,
           beginTime:this.beginTime,
           endTime:this.endTime,
-          yearState:this.half, //新
-          quarter:this.quarter,   //新
+          yearState:this.halfId, //新
+          quarter:this.quarterId,   //新
       }
+      console.log(Data,'hjfdshjfdsfdj')
       if(this.RadioSelec!=null){
         if((this.timeSelec>=0 && this.timeSelec<=5)||this.timeSelec =='6'||(this.timeSelec =='7'&&this.timeSelec =='6')||(this.timeSelec =='8'&&this.timeSelec =='6')||this.timeSelec =='9'||this.timeSelec =='10'){
           getData(Data).then(res => {
@@ -498,73 +547,62 @@ export default {
       }
     },
     // 半年
-    changeHalfTime(ind,name){
+    changeHalfTime(ind,name,id){
       this.timeHalf = ind;
       this.flag = !this.flag
       this.half = name;
-      console.log(ind,name,this.halfTime,'111');
+      this.halfId = id;
+      if(this.checkedId = id){
+            console.log(this.checkedId,'123');//选中图片id
+      }
+      console.log(ind,name,this.halfId,id,'我是张桑拿网无');
     },
     halfCancel(){
       this.isHalfYear = false;
     },
     halfConfirm(){
-      if(this.half == '') {
-        this.timeData[7].time='上半年';
-      }
       if(this.half){
         this.timeData[7].time =  this.half;
       }
       if(this.timeHalf=="0"){
-          // this.beginTime = "1"
-          // this.endTime='6'
-          this.half ='1' //新
-          console.log(this.timeHalf,'777');
+          this.halfId ='1' //新
       }
       if(this.timeHalf=="1"){
-          // this.beginTime = "7"
-          // this.endTime='12'
-          this.half ='2' //新
+
+          this.halfId ='2' //新
       }
       this.isHalfYear = false;
     },
     // 季度
-    changeQuarterTime(ind,name) {
+    changeQuarterTime(ind,name,id) {
       this.timeQuarter = ind;
       this.flag = !this.flag
       this.quarter = name;
-      console.log(ind,name,this.quarter,'111');
+      this.quarterId = id;
+      if(this.checkedIds = id){
+          console.log(this.checkedIds,'123');//选中图片id
+      }
+      console.log(ind,name,this.quarter,id,'111');
     },
     quarterCancel(){
       this.isQuarter = false;
     },
     quarterConfirm(){
-      if(this.quarter == '') {
-          this.timeData[8].time='第一季度';
-      }
       if(this.quarter){
           this.timeData[8].time = this.quarter;
       }
-        if(this.timeQuarter=="0"){
-            // this.beginTime = "1"
-            // this.endTime='3'
-            this.quarter = '1' //新
-            console.log(this.quarter,'000')
-        }
-        if(this.timeQuarter=="1"){
-            // this.beginTime = "4"
-            // this.endTime='6'
-            this.quarter = '2' //新
-        }
-        if(this.timeQuarter=="2"){
-            // this.beginTime = "7"
-            // this.endTime='9'
-            this.quarter = '3' //新
-        }
-        if(this.timeQuarter=="3"){
-            // this.beginTime = "10"
-            // this.endTime='12'
-            this.quarter = '4' //新
-        }
+      if(this.timeQuarter=="0"){
+          this.quarterId = '1' //新
+      }
+      if(this.timeQuarter=="1"){
+          this.quarterId = '2' //新
+      }
+      if(this.timeQuarter=="2"){
+          this.quarterId = '3' //新
+      }
+      if(this.timeQuarter=="3"){
+          this.quarterId = '4' //新
+      }
       this.isQuarter = false;
     },
     // 年月
@@ -657,6 +695,9 @@ export default {
           }
 
       }
+    },
+    handleBlur(){
+        document.body.scrollTop = document.documentElement.scrollTop = 0;
     },
   },
   components: {
@@ -840,7 +881,7 @@ export default {
     height: 44px;
     line-height: 44px;
     text-align: left;
-    margin-left: 0.2rem;
+    padding: 0rem 0.2rem;
   }
   .half_year_text{
     height: 44px;
@@ -859,8 +900,8 @@ export default {
   .activeText{
      color: #333;
    }
-  .eachText{
-    color: #6666;
-  }
+  /*.eachText{*/
+  /*  color: #6666;*/
+  /*}*/
 }
 </style>

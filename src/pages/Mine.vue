@@ -16,7 +16,7 @@
           <div class="mine_msg_icon">
             <img src="../common/images/cover.png" alt="">
           </div>
-          <p class="mine_name">刘立讯<span>CEO</span></p>
+          <p class="mine_name">{{userInfo?userInfo.nickName:''}}<span>CEO</span></p>
           <p class="mine_position">市场营销一部</p>
         </div>
       </div>
@@ -68,17 +68,19 @@ import MyFooter from "@/components/MyFooter.vue";
 import {getUserData} from "../services/mine";
 export default {
   data() {
-    return {};
+    return {
+        userInfo:{},
+    };
   },
   created() {
-      this.getUserInfo();
+    this.getUserInfo();
   },
   methods: {
     getUserInfo(){
-        getUserData().then(res => {
-          if (res.code == 200) {
-              console.log(res);
-          }
+      getUserData().then(res => {
+        if (res.code == 200) {
+            this.userInfo = res.data;
+        }
       });
     },
     changeAdd(){
