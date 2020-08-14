@@ -59,7 +59,7 @@ footer {
       height: 0.28rem;
       background-repeat: no-repeat;
       &.home {
-        background-image: url("../common/images/home.png");
+        background-image: url("../common/images/home_back.png");
         background-size: 0.28rem 0.28rem;
       }
       &.visitor {
@@ -75,7 +75,7 @@ footer {
         background-size: 0.28rem 0.28rem;
       }
       &.mine {
-        background-image: url("../common/images/mine_back.png");
+        background-image: url("../common/images/mine.png");
         background-size: 0.28rem 0.28rem;
       }
     }
@@ -86,9 +86,9 @@ footer {
     }
   }
   .router-link-active {
-    color: #cf995f;
+    color: #666666;
     i.home {
-      background-image: url("../common/images/home_back.png");
+      background-image: url("../common/images/home.png");
       background-size: 0.28rem 0.28rem;
     }
     i.visitor {
@@ -104,7 +104,7 @@ footer {
       background-size: 0.28rem 0.28rem;
     }
     i.mine {
-      background-image: url("../common/images/mine.png");
+      background-image: url("../common/images/mine_back.png");
       background-size: 0.28rem 0.28rem;
     }
   }

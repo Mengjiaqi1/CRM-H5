@@ -30,10 +30,10 @@ axios.interceptors.request.use(config => {
     } else {
         config.headers.Authorization = tokenStr;
     }
-
     return config;
 });
-// // http request 拦截器
+
+// http request 拦截器
 axios.interceptors.response.use(
     response => {
         // console.log(response);
@@ -44,6 +44,8 @@ axios.interceptors.response.use(
             if (data.code != 200) {
                 logoutFun();
             }
+        } else if (response.data.token) {
+            localStorage.setItem("token", response.data.token);
         }
         return response;
     },

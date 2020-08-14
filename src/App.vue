@@ -21,7 +21,7 @@ export default {
     } else {
       localStorage.setItem(
         "token",
-        "eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6ImZlMDIyYzFlLWE1NWQtNGNmNi04NmNhLTQ2ZmM2NTZjOWQyNSJ9.PeCYalbL95k878h2lw2qHek5hLkXSijvt38YuY7HmLPFpXQhLFQ0eC-yPtMCBEkp9GC5LN7vW6D21rrehU4uRw"
+        "eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6ImUyOTE3YWM2LTFlNjgtNDhkZC05MzA3LWFmMTgyNTljMDgzZCJ9.woD-WvM-_tQVs0VacNNAIQJa5qxuX3vknuzmWDvDcFWlnfMZWxMwyPe7XAnSPDZjnzERgCEidrk17BqcmFLKjA"
       );
       this.getDDCode();
     }
@@ -34,12 +34,18 @@ export default {
             corpId: "ding4549e680a3f82a1c35c2f4657eb6378f", // 企业id
             onSuccess: function(info) {
               const tempCode = info.code;
-              getLogin(tempCode).then(res => {
-                if (res.code == 200 && res.token) {
-                  localStorage.setItem("token", res.token);
-                  router.push("/");
-                }
-              });
+              if (
+                localStorage.getItem("token") == null ||
+                localStorage.getItem("token") == undefined
+              ) {
+                getLogin(tempCode).then(res => {
+                  if (res.code == 200 && res.token) {
+                    localStorage.setItem("token", res.token);
+                    router.push("/home");
+                  }
+                });
+              }
+
               resolve();
             },
             onFail: function(err) {

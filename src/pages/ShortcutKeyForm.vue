@@ -1,8 +1,8 @@
 <template>
-  <div class="wrap">
+  <div class="wrap" v-if="isReoladAlive">
     <myHeader>
-      <div class="h_center">常用表单</div>
-      <div class="h_right"></div>
+      <div class="h_center">快捷键表单设置</div>
+      <div class="h_right" @click="show = true">新建</div>
     </myHeader>
     <main>
       <div class="my_forms">
@@ -60,10 +60,32 @@
         </div>
       </div>
     </main>
+    <van-overlay :show="show" @click="show = false">
+      <div class="wrapper">
+        <div class="my_forms_list">
+          <div
+            class="my_forms_listEven"
+            v-for="(el, index) in queryMenuData"
+            :key="index"
+            @click="changeQueryData(el.name, el.icon, el.id)"
+          >
+            <div class="my_forms_top">
+              <img src="../common/images/forms_customer.png" alt="" />
+            </div>
+            <span class="my_forms_text">{{ el.name }}</span>
+          </div>
+        </div>
+      </div>
+    </van-overlay>
   </div>
 </template>
 <script>
-import { getTreeselect, getcustomIndex, getCreate } from "../services/forms";
+import {
+  gettreeselectQuick,
+  getQuickInfo,
+  getaddQuick
+} from "../services/forms";
+
 export default {
   provide() {
     return {
@@ -72,6 +94,7 @@ export default {
   },
   data() {
     return {
+      show: false,
       isReoladAlive: true,
       active: 0,
       typeFlag: false,
@@ -101,7 +124,6 @@ export default {
     if (this.typeFlag == false) {
       this.changeForms();
     }
-
     this.changeQueryData();
     this.reload();
   },
@@ -114,16 +136,17 @@ export default {
           this.queryMenuData.splice(ind, 1);
         }
       });
-      getCreate(0, name, icon, (this.type = "1"), id).then(res => {
+
+      getaddQuick(0, name, icon, (this.type = "1"), id).then(res => {
         if (res.code == "200") {
-          this.getcustomIndex();
+          this.getQuickInfoData();
           this.treeselect();
         }
       });
     },
     //查询我的表单
-    getcustomIndex() {
-      getcustomIndex().then(res => {
+    getQuickInfoData() {
+      getQuickInfo().then(res => {
         if (res && res.code == "200") {
           this.queryMenuData = res && res.data;
           for (var i = 0; i < this.queryMenuData.length; i++) {
@@ -142,7 +165,7 @@ export default {
 
     // 获取表单
     treeselect() {
-      getTreeselect().then(res => {
+      gettreeselectQuick().then(res => {
         if (res && res.code == "200") {
           this.MenuData = res.data;
         }
@@ -150,7 +173,6 @@ export default {
     },
 
     // 修改自定义表单 增加删除表单
-
     changeForms(name, icon, id) {
       this.MenuData &&
         this.MenuData.map(each => {
@@ -191,18 +213,30 @@ export default {
           }
         });
       if (this.typeFlag == false) {
-        getCreate(0, name, icon, this.type, id).then(res => {
+        getaddQuick(0, name, icon, this.type, id).then(res => {
           if (res.code == "200") {
-            this.getcustomIndex();
+            this.getQuickInfoData();
             this.treeselect();
           }
         });
       }
+    },
+
+    // 刷新数据页面闪动问题
+    reload() {
+      this.isReoladAlive = false;
+      this.$nextTick(() => {
+        this.isReoladAlive = true;
+      });
     }
   }
 };
 </script>
 <style lang="scss" scoped>
+[v-cloak] {
+  display: none !important;
+}
+
 .wrap {
   width: 100%;
   display: flex;
@@ -221,6 +255,7 @@ export default {
     .my_forms {
       width: 100%;
       box-sizing: border-box;
+
       .my_forms_tit {
         width: 100%;
         height: 0.32rem;
@@ -238,6 +273,7 @@ export default {
     }
     .my_forms_list {
       width: 100%;
+
       padding-bottom: 0.2rem;
       display: flex;
       flex-wrap: wrap;
@@ -245,7 +281,6 @@ export default {
       box-sizing: border-box;
       .my_forms_listEven {
         width: 25%;
-
         margin-top: 0.23rem;
         display: flex;
         flex-direction: column;
@@ -330,6 +365,73 @@ export default {
       }
       /deep/.van-tabs__line {
         background-color: #006aff;
+      }
+    }
+  }
+  .wrapper {
+    height: 100%;
+    .my_forms_list {
+      display: flex;
+      flex-wrap: wrap;
+      box-sizing: border-box;
+      height: 100%;
+      margin-top: 0.45rem;
+    }
+
+    .my_forms_listEven {
+      width: 33%;
+      height: 0.7rem;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .my_forms_top {
+        width: 0.4rem;
+        height: 0.4rem;
+        margin-top: 0.1rem;
+        // border: 0.01rem dashed #ccc;
+        position: relative;
+        img {
+          width: 0.4rem;
+          height: 0.4rem;
+        }
+        .addImg {
+          width: 0.15rem;
+          height: 0.15rem;
+          position: absolute;
+          top: -0.07rem;
+          right: -0.07rem;
+        }
+        .forms_reduce {
+          border-radius: 50%;
+          background: rgba(255, 97, 137, 1);
+          line-height: 0.12rem;
+          display: inline-block;
+          text-align: center;
+          color: #fff;
+        }
+        .forms_add {
+          width: 0.15rem;
+          height: 0.15rem;
+          border-radius: 50%;
+          background: rgba(23, 221, 131, 1);
+          line-height: 0.15rem;
+          text-align: center;
+          display: inline-block;
+          color: #fff;
+          position: absolute;
+          top: -0.07rem;
+          right: -0.07rem;
+        }
+      }
+      .my_forms_text {
+        font-size: 0.12rem;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: rgba(51, 51, 51, 1);
+        line-height: 0.17rem;
+        margin-top: 0.07rem;
       }
     }
   }

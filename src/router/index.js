@@ -1,25 +1,28 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import MyHome from "../views/Home.vue";
-import Home from "../pages/Home.vue";
 import Visitor from "../pages/Visitor.vue";
 import Work from "../pages/Work.vue";
 import Mine from "../pages/Mine.vue";
 import News from "../pages/News.vue";
 import Selection from "../pages/Selection";
-import Brief  from "../pages/Brief.vue";
-import PKdetalis  from "../pages/PKdetalis.vue";
+import Brief from "../pages/Brief.vue";
+import PKdetalis from "../pages/PKdetalis.vue";
 import Custom from "../pages/Custom";
 import Collection from "../pages/Collection";
 import CommonForms from "../pages/CommonForms";
 import CustomHome from "../pages/CustomHome";
 import Setting from "../pages/Setting";
+import ShortcutForms from "../pages/ShortcutKeyForm";
+import store from "../store";
 Vue.use(VueRouter);
 
 const routes = [{
         path: "/",
-        name: "Home",
-        component: Home
+        redirect: "/home",
+        meta: {
+            title: "首页"
+        }
     },
     {
         path: "/work",
@@ -51,15 +54,23 @@ const routes = [{
         name: "Selection",
         component: Selection
     },
+
+    {
+        path: "/customHome",
+        name: "CustomHome",
+        component: CustomHome
+    },
+    // 表单设置
     {
         path: "/commonForms",
         name: "CommonForms",
         component: CommonForms
     },
+    // 快捷键表单设置
     {
-        path: "/customHome",
-        name: "CustomHome",
-        component: CustomHome
+        path: "/shortcutForms",
+        name: "ShortcutForms",
+        component: ShortcutForms
     },
     // 简报详情
     {
@@ -92,21 +103,27 @@ const routes = [{
         component: Setting
     },
     {
-        path: "/about",
-        name: "About",
+        path: "/home",
+        name: "Home",
         // route level code-splitting
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         // 按需加载模式
         component: () =>
-            import ( /* webpackChunkName: "about" */ "../views/About.vue")
+            import ( /* webpackChunkName: "about" */ "../pages/Home.vue")
     }
 ];
 
 const router = new VueRouter({
     routes
 });
+
 router.beforeEach((to, from, next) => {
+    if (to.path == "/home") {
+        store.commit("set_flag", true);
+    } else if (to.path == "/setting") {
+        store.commit("set_flag", false);
+    }
     if (to.path === "/") {
         next();
     } else {
