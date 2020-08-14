@@ -21,7 +21,7 @@ export default {
     } else {
       localStorage.setItem(
         "token",
-        "eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6IjJhZjFhNmVhLWFmZTYtNDY5MC05Y2VmLWZkZDhmYmQ1Y2UwMSJ9.86QUX0KKWC_en5jwTV6Uxh7OhOonqhG1YYLf5nO0dgvT3WYitBax8hs48nW5YSe74q7Dziz9gprlcR1t0nzccQ"
+        "eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6ImUyOTE3YWM2LTFlNjgtNDhkZC05MzA3LWFmMTgyNTljMDgzZCJ9.woD-WvM-_tQVs0VacNNAIQJa5qxuX3vknuzmWDvDcFWlnfMZWxMwyPe7XAnSPDZjnzERgCEidrk17BqcmFLKjA"
       );
       this.getDDCode();
     }

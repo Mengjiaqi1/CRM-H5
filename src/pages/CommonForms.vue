@@ -1,5 +1,5 @@
 <template>
-  <div class="wrap" v-if="isReoladAlive">
+  <div class="wrap">
     <myHeader>
       <div class="h_center">常用表单</div>
       <div class="h_right"></div>
@@ -12,7 +12,7 @@
             class="my_forms_listEven"
             v-for="(el, index) in queryMenuData"
             :key="index"
-            @click="changeQueryData(el.name, el.icon, el.id)"
+            @click="changeQueryData(index, el.name, el.icon, el.id)"
           >
             <div class="my_forms_top">
               <img src="../common/images/forms_customer.png" alt="" />
@@ -108,11 +108,14 @@ export default {
   mounted() {},
   methods: {
     //我的表单 删除表单
-    changeQueryData(name, icon, id) {
+    changeQueryData(ind, name, icon, id) {
+      this.queryMenuData.map(each => {
+        if (each.menuId == id) {
+          this.queryMenuData.splice(ind, 1);
+        }
+      });
       getCreate(0, name, icon, (this.type = "1"), id).then(res => {
         if (res.code == "200") {
-          this.queryMenuData = res.data;
-          this.delMenuData = res.data;
           this.getcustomIndex();
           this.treeselect();
         }
@@ -195,22 +198,11 @@ export default {
           }
         });
       }
-    },
-
-    // 刷新数据页面闪动问题
-    reload() {
-      this.isReoladAlive = false;
-      this.$nextTick(() => {
-        this.isReoladAlive = true;
-      });
     }
   }
 };
 </script>
 <style lang="scss" scoped>
-[v-cloak] {
-  display: none !important;
-}
 .wrap {
   width: 100%;
   display: flex;
@@ -229,7 +221,6 @@ export default {
     .my_forms {
       width: 100%;
       box-sizing: border-box;
-
       .my_forms_tit {
         width: 100%;
         height: 0.32rem;
@@ -247,7 +238,6 @@ export default {
     }
     .my_forms_list {
       width: 100%;
-
       padding-bottom: 0.2rem;
       display: flex;
       flex-wrap: wrap;

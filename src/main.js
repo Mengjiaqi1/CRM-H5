@@ -9,6 +9,7 @@ import Axios from "axios";
 import echarts from "echarts";
 import Vconsole from "vconsole";
 import VueCookies from "vue-cookies";
+import { Overlay } from "vant";
 
 let vConsole = new Vconsole();
 
@@ -41,6 +42,7 @@ Vue.use(Popup);
 Vue.use(DatetimePicker);
 Vue.use(Field);
 Vue.use(ShareSheet);
+Vue.use(Overlay);
 
 Vue.config.productionTip = false;
 Vue.config.isToken = true;

@@ -85,13 +85,7 @@
                       />
                       <span class="text">{{ element.name }} </span>
                     </p>
-                    <span class="badge mover">
-                      <img
-                        src="../common/images/c_order.png"
-                        class="sort"
-                        alt=""
-                      />
-                    </span>
+                    <span class="badge "> </span>
                   </li>
                 </transition-group>
               </draggable>
@@ -110,11 +104,8 @@ export default {
   name: "wrap",
   data() {
     return {
-      type: "a",
       chartFlag: false,
-      flag: true,
-      editable: true,
-      typeCode: 0,
+      typeCode: 0, // 0 添加卡片  1 删除卡片
       typeFlag: true,
       forms_add: require("../common/images/home_add.png"),
       forms_reduce: require("../common/images/home_reducer.png"),
@@ -126,15 +117,9 @@ export default {
     };
   },
   mounted() {
-    if (this.count <= 1) {
-      this.typeFlag = true;
-    }
-    if (this.count >= 1) {
-      this.removeAdd();
-      this.getqueryData();
-      this.removeAt();
-      this.getCustomData();
-    }
+    this.getqueryData();
+    this.removeAt();
+    this.getCustomData();
   },
 
   created() {
@@ -154,15 +139,12 @@ export default {
         if (res.code == 200) {
           this.addCard = res.data;
           for (var i = 0; i < this.addCard.length; i++) {
-            console.log(this.addCard.length, "lens");
             this.count = this.addCard.length;
-            console.log(this.count, "count");
             if (this.addCard.length <= 1 && this.count <= 1) {
               this.$toast({
                 message: "必须保留一条卡片",
                 position: "center"
               });
-              this.typeFlag = false;
             }
           }
         }
@@ -170,21 +152,21 @@ export default {
     },
     // 删除 已添加卡片
     removeAdd(id, name) {
-      getCreatemneu(0, id, name, (this.typeCode = "1")).then(res => {
-        if (res.code == 200) {
-          this.count -= 1;
-          if (this.count >= 2) {
-            this.count = 2;
-            this.typeFlag = false;
-            this.$toast({
-              message: "必须保留一条卡片",
-              position: "center"
-            });
+      if (this.count > 1) {
+        getCreatemneu(0, id, name, (this.typeCode = "1")).then(res => {
+          if (res.code == 200) {
+            this.count -= 1;
+            if (this.count <= 1) {
+              this.$toast({
+                message: "必须保留一条卡片",
+                position: "center"
+              });
+            }
+            this.getCustomData();
+            this.getqueryData();
           }
-          this.getCustomData();
-          this.getqueryData();
-        }
-      });
+        });
+      }
     },
     // 删除 添加 更多卡片
     removeAt(id, name) {
@@ -193,17 +175,10 @@ export default {
           if (each.menuId == id && each.checked == false) {
             this.typeCode = 0;
             this.count++;
-            if (this.count > 1) {
-              this.typeFlag = true;
-            }
           }
           if (each.menuId == id && each.checked == true) {
             this.typeCode = 1;
             this.count -= 1;
-            if (this.count >= 2) {
-              this.count = 2;
-              this.typeFlag = false;
-            }
           }
         });
 
@@ -235,14 +210,9 @@ export default {
       });
     }
   },
-  computed: {
-    // draggingInfo() {
-    //   return this.dragging ? "under drag" : "";
-    // }
-  },
+  computed: {},
   components: {
     draggable
-    // rawDisplayer
   },
   watch: {}
 };
@@ -371,11 +341,6 @@ li.list-group-item {
 }
 .col-md-3 {
   box-sizing: border-box;
-}
-.mover {
-  //   background-color: #fdfdfd;
-  //   cursor: move;
-  //   padding: 0.03rem 0.6rem;
 }
 .handle {
   background-color: #fdfdfd;

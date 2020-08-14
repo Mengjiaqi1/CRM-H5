@@ -19,10 +19,10 @@ Vue.use(VueRouter);
 
 const routes = [{
         path: "/",
-        redirect: "/home"
-            // meta: {
-            //     title: "首页"
-            // }
+        redirect: "/home",
+        meta: {
+            title: "首页"
+        }
     },
     {
         path: "/work",

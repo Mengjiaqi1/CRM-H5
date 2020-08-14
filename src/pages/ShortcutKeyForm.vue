@@ -2,7 +2,7 @@
   <div class="wrap" v-if="isReoladAlive">
     <myHeader>
       <div class="h_center">快捷键表单设置</div>
-      <div class="h_right"></div>
+      <div class="h_right" @click="show = true">新建</div>
     </myHeader>
     <main>
       <div class="my_forms">
@@ -12,7 +12,7 @@
             class="my_forms_listEven"
             v-for="(el, index) in queryMenuData"
             :key="index"
-            @click="changeQueryData(el.name, el.icon, el.id)"
+            @click="changeQueryData(index, el.name, el.icon, el.id)"
           >
             <div class="my_forms_top">
               <img src="../common/images/forms_customer.png" alt="" />
@@ -60,6 +60,23 @@
         </div>
       </div>
     </main>
+    <van-overlay :show="show" @click="show = false">
+      <div class="wrapper">
+        <div class="my_forms_list">
+          <div
+            class="my_forms_listEven"
+            v-for="(el, index) in queryMenuData"
+            :key="index"
+            @click="changeQueryData(el.name, el.icon, el.id)"
+          >
+            <div class="my_forms_top">
+              <img src="../common/images/forms_customer.png" alt="" />
+            </div>
+            <span class="my_forms_text">{{ el.name }}</span>
+          </div>
+        </div>
+      </div>
+    </van-overlay>
   </div>
 </template>
 <script>
@@ -77,6 +94,7 @@ export default {
   },
   data() {
     return {
+      show: false,
       isReoladAlive: true,
       active: 0,
       typeFlag: false,
@@ -112,11 +130,15 @@ export default {
   mounted() {},
   methods: {
     //我的表单 删除表单
-    changeQueryData(name, icon, id) {
+    changeQueryData(ind, name, icon, id) {
+      this.queryMenuData.map(each => {
+        if (each.menuId == id) {
+          this.queryMenuData.splice(ind, 1);
+        }
+      });
+
       getaddQuick(0, name, icon, (this.type = "1"), id).then(res => {
         if (res.code == "200") {
-          this.queryMenuData = res.data;
-          this.delMenuData = res.data;
           this.getQuickInfoData();
           this.treeselect();
         }
@@ -214,6 +236,7 @@ export default {
 [v-cloak] {
   display: none !important;
 }
+
 .wrap {
   width: 100%;
   display: flex;
@@ -258,7 +281,6 @@ export default {
       box-sizing: border-box;
       .my_forms_listEven {
         width: 25%;
-
         margin-top: 0.23rem;
         display: flex;
         flex-direction: column;
@@ -343,6 +365,73 @@ export default {
       }
       /deep/.van-tabs__line {
         background-color: #006aff;
+      }
+    }
+  }
+  .wrapper {
+    height: 100%;
+    .my_forms_list {
+      display: flex;
+      flex-wrap: wrap;
+      box-sizing: border-box;
+      height: 100%;
+      margin-top: 0.45rem;
+    }
+
+    .my_forms_listEven {
+      width: 33%;
+      height: 0.7rem;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .my_forms_top {
+        width: 0.4rem;
+        height: 0.4rem;
+        margin-top: 0.1rem;
+        // border: 0.01rem dashed #ccc;
+        position: relative;
+        img {
+          width: 0.4rem;
+          height: 0.4rem;
+        }
+        .addImg {
+          width: 0.15rem;
+          height: 0.15rem;
+          position: absolute;
+          top: -0.07rem;
+          right: -0.07rem;
+        }
+        .forms_reduce {
+          border-radius: 50%;
+          background: rgba(255, 97, 137, 1);
+          line-height: 0.12rem;
+          display: inline-block;
+          text-align: center;
+          color: #fff;
+        }
+        .forms_add {
+          width: 0.15rem;
+          height: 0.15rem;
+          border-radius: 50%;
+          background: rgba(23, 221, 131, 1);
+          line-height: 0.15rem;
+          text-align: center;
+          display: inline-block;
+          color: #fff;
+          position: absolute;
+          top: -0.07rem;
+          right: -0.07rem;
+        }
+      }
+      .my_forms_text {
+        font-size: 0.12rem;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: rgba(51, 51, 51, 1);
+        line-height: 0.17rem;
+        margin-top: 0.07rem;
       }
     }
   }
