@@ -25,6 +25,15 @@ import {
     DatetimePicker,
     Field,
     ShareSheet,
+    List,
+    Cell,
+    PullRefresh,
+    DropdownMenu,
+    DropdownItem,
+    Form,
+    Button,
+    Area,
+
 } from "vant";
 
 Vue.use(NavBar);
@@ -41,6 +50,14 @@ Vue.use(Popup);
 Vue.use(DatetimePicker);
 Vue.use(Field);
 Vue.use(ShareSheet);
+Vue.use(List);
+Vue.use(Cell);
+Vue.use(PullRefresh);
+Vue.use(DropdownMenu);
+Vue.use(DropdownItem);
+Vue.use(Form);
+Vue.use(Button);
+Vue.use(Area);
 
 Vue.config.productionTip = false;
 Vue.config.isToken = true;

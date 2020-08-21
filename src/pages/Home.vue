@@ -86,10 +86,10 @@
               <img src="../common/images/Payment.png" alt="" />
               <span>回款计划</span>
             </li>
-            <li>
+            <router-link tag="li" to="/allCustom">
               <img src="../common/images/customer.png" alt="" />
               <span>全部客户</span>
-            </li>
+            </router-link>
             <router-link tag="li" to="/commonForms">
               <img src="../common/images/set.png" alt="" />
               <span>设置</span>

@@ -103,7 +103,7 @@ export default {
       // PK类别
       isCategory:false,
       timeCategory:0,
-        titleName: '合同金额',
+      titleName: '合同金额',
       categoryData: [
         {
           name: "合同金额",

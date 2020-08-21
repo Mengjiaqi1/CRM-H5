@@ -9,10 +9,13 @@ import News from "../pages/News.vue";
 import Selection from "../pages/Selection";
 import Brief  from "../pages/Brief.vue";
 import PKdetalis  from "../pages/PKdetalis.vue";
-import Custom from "../pages/Custom";
+import Custom from "../pages/Custom/Custom";
 import Collection from "../pages/Collection";
 import CommonForms from "../pages/CommonForms";
 import CustomHome from "../pages/CustomHome";
+import AllCustom from "../pages/Custom/AllCustom";
+import Build from "../pages/Custom/Build";
+import CustomScreen from "../pages/Custom/CustomScreen";
 import Setting from "../pages/Setting";
 Vue.use(VueRouter);
 
@@ -90,6 +93,24 @@ const routes = [{
         path: "/setting",
         name: "Setting",
         component: Setting
+    },
+    // 全部客户
+    {
+        path: "/allCustom",
+        name: "AllCustom",
+        component: AllCustom
+    },
+    // 新建
+    {
+        path: "/build",
+        name: "Build",
+        component: Build
+    },
+    // 设置筛选项
+    {
+        path: "/customScreen",
+        name: "CustomScreen",
+        component: CustomScreen
     },
     {
         path: "/about",

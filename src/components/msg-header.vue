@@ -34,7 +34,7 @@
         border-radius: 0.02rem;
         background: #006aff;
         color: #fff;
-        font-size: 0.02rem;
+        font-size: 0.12rem;
         padding: 0.02rem 0.09rem;
         line-height: 0.17rem;
       }
