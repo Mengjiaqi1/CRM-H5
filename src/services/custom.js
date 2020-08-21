@@ -21,8 +21,3 @@ export function getCreatemneu(userId, id, name, type, frontIndex, afterIndex) {
 export function getquery() {
     return get("/app/customHome/getData", {});
 }
-
-// 通过日期查询客户列表
-export function getCustomData(Data) {
-    return post("/app/customerManagementInfo/findCustomerInfoListByDate", Data);
-}

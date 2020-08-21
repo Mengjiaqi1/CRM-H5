@@ -1,17 +1,21 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import MyHome from "../views/Home.vue";
+import Home from "../pages/Home.vue";
 import Visitor from "../pages/Visitor.vue";
 import Work from "../pages/Work.vue";
 import Mine from "../pages/Mine.vue";
 import News from "../pages/News.vue";
 import Selection from "../pages/Selection";
-import Brief from "../pages/Brief.vue";
-import PKdetalis from "../pages/PKdetalis.vue";
-import Custom from "../pages/Custom";
+import Brief  from "../pages/Brief.vue";
+import PKdetalis  from "../pages/PKdetalis.vue";
+import Custom from "../pages/Custom/Custom";
 import Collection from "../pages/Collection";
 import CommonForms from "../pages/CommonForms";
 import CustomHome from "../pages/CustomHome";
+import AllCustom from "../pages/Custom/AllCustom";
+import Build from "../pages/Custom/Build";
+import CustomScreen from "../pages/Custom/CustomScreen";
 import Setting from "../pages/Setting";
 import ShortcutForms from "../pages/ShortcutKeyForm";
 import store from "../store";
@@ -101,6 +105,24 @@ const routes = [{
         path: "/setting",
         name: "Setting",
         component: Setting
+    },
+    // 全部客户
+    {
+        path: "/allCustom",
+        name: "AllCustom",
+        component: AllCustom
+    },
+    // 新建
+    {
+        path: "/build",
+        name: "Build",
+        component: Build
+    },
+    // 设置筛选项
+    {
+        path: "/customScreen",
+        name: "CustomScreen",
+        component: CustomScreen
     },
     {
         path: "/home",
