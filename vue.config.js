@@ -10,6 +10,7 @@ module.exports = {
         config.resolve.symlinks(true); //热更新
     },
     configureWebpack: config => {
+        console.log(config, "config");
         console.log(process.env.NODE_ENV);
         if (process.env.NODE_ENV === "production") {
             // 为生产环境修改配置...
@@ -48,7 +49,8 @@ module.exports = {
                 alias: {
                     "@": path.resolve(__dirname, "./src"),
                     "@c": path.resolve(__dirname, "./src/components"),
-                    "@p": path.resolve(__dirname, "./src/pages")
+                    "@p": path.resolve(__dirname, "./src/pages"),
+                    vue$: "vue/dist/vue.esm.js"
                 } // 别名配置
             }
         });

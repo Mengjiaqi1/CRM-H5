@@ -72,10 +72,10 @@
               <img src="../common/images/order.png" alt="" />
               <span>合同订单</span>
             </li>
-            <li>
+            <router-link tag="li" to="/organization">
               <img src="../common/images/contacts.png" alt="" />
               <span>联系人</span>
-            </li>
+            </router-link>
           </div>
           <div class="list list2">
             <li>
@@ -563,6 +563,13 @@ export default {
   },
   created() {
     console.log(this.$router);
+     const localStorageSet = (name, data, expire = 24) => {
+            const time = new Date().getTime() + expire * 60 * 60 * 1000;
+            const obj = { data, time };
+            localStorage.setItem(name, JSON.stringify(obj));
+           
+            };
+             console.log(localStorage.getItem(name),'name')
   },
   methods: {
     changeAdd: function() {

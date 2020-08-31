@@ -9,16 +9,12 @@
 import axios from "axios";
 import qS from "qs";
 import router from "../router";
-
-// import { Toast } from "vant"; // Toast 提示框组件
-
+import { setCookie, getCookie, delCookie } from "../untils/auth";
 axios.defaults.timeout = 1000; // 设置请求网络超时
 axios.defaults.baseURL = "/api";
 axios.defaults.headers.post["Content-Type"] = "application/json; charset=UTF-8";
-
 axios.interceptors.request.use(config => {
-    const tokenStr = localStorage.getItem("token");
-
+    const tokenKey = getCookie("tokenKey");
     if (!config.headers["Content-Type"]) {
         config.data = JSON.stringify(config.data);
         config.headers = {
@@ -28,7 +24,7 @@ axios.interceptors.request.use(config => {
     if (config.url.split("/").pop() == "login") {
         return config;
     } else {
-        config.headers.Authorization = tokenStr;
+        config.headers.Authorization = tokenKey;
     }
     return config;
 });
@@ -36,7 +32,6 @@ axios.interceptors.request.use(config => {
 // http request 拦截器
 axios.interceptors.response.use(
     response => {
-        // console.log(response);
         // 如果code是-1，说明用户已注销或者token已过期
         // 此时需要重新登录，并且还要清除本地缓存信息和store数据
         if (response.status == 200) {
@@ -45,7 +40,7 @@ axios.interceptors.response.use(
                 logoutFun();
             }
         } else if (response.data.token) {
-            localStorage.setItem("token", response.data.token);
+            setCookie("tokenKey", response.data.token);
         }
         return response;
     },
@@ -60,9 +55,8 @@ axios.interceptors.response.use(
 
 function logoutFun() {
     // 清空本地缓存的token和store里的token
-    // this.$store.commit("set_token", "");
 
-    localStorage.removeItem("token");
+    delCookie("tokenKey");
     // 跳转至登录页，并携带用户退出时或token失效时的页面路由，方便登录后直接跳转到此页面。
     router.push("/");
 }

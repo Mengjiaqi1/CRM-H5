@@ -8,9 +8,6 @@ import "./assets/iconfont/iconfont.css";
 import Axios from "axios";
 import echarts from "echarts";
 import Vconsole from "vconsole";
-import VueCookies from "vue-cookies";
-import { Overlay } from "vant";
-
 let vConsole = new Vconsole();
 
 import {
@@ -25,7 +22,10 @@ import {
     Popup,
     DatetimePicker,
     Field,
-    ShareSheet
+    ShareSheet,
+    Search,
+    Overlay,
+    List
 } from "vant";
 
 Vue.use(NavBar);
@@ -37,12 +37,13 @@ Vue.use(Tab);
 Vue.use(Tabs);
 Vue.use(Checkbox);
 Vue.use(vConsole);
-Vue.use(VueCookies);
 Vue.use(Popup);
 Vue.use(DatetimePicker);
 Vue.use(Field);
 Vue.use(ShareSheet);
 Vue.use(Overlay);
+Vue.use(Search);
+Vue.use(List);
 
 Vue.config.productionTip = false;
 Vue.config.isToken = true;
@@ -50,7 +51,6 @@ Vue.config.isToken = true;
 Axios.defaults.headers["Content-Type"] = "application/x-www-form-urlencoded";
 Vue.prototype.$http = Axios;
 Vue.prototype.$echarts = echarts;
-Vue.prototype.$cookies = VueCookies;
 
 Vue.component("myHeader", () => {
     return import ("@/components/my-header");
