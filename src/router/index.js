@@ -8,15 +8,18 @@ import News from "../pages/News.vue";
 import Selection from "../pages/Selection";
 import Brief from "../pages/Brief.vue";
 import PKdetalis from "../pages/PKdetalis.vue";
-import Custom from "../pages/Custom";
+import Custom from "../pages/Custom/Custom";
 import Collection from "../pages/Collection";
 import CommonForms from "../pages/CommonForms";
 import CustomHome from "../pages/CustomHome";
+import AllCustom from "../pages/Custom/AllCustom";
+import Build from "../pages/Custom/Build";
+import CustomScreen from "../pages/Custom/CustomScreen";
 import Setting from "../pages/Setting";
 import ShortcutForms from "../pages/ShortcutKeyForm";
 import Organization from "../pages/Organization";
 import store from "../store";
-import {getCookie} from '../untils/auth'
+import { getCookie } from "../untils/auth";
 Vue.use(VueRouter);
 
 const routes = [
@@ -136,6 +139,25 @@ const routes = [
         component: Setting
     },
     // 首页
+
+    // 全部客户
+    {
+        path: "/allCustom",
+        name: "AllCustom",
+        component: AllCustom
+    },
+    // 新建
+    {
+        path: "/build",
+        name: "Build",
+        component: Build
+    },
+    // 设置筛选项
+    {
+        path: "/customScreen",
+        name: "CustomScreen",
+        component: CustomScreen
+    },
     {
         path: "/home",
         name: "Home",
@@ -161,8 +183,7 @@ router.beforeEach((to, from, next) => {
     if (to.path === "/") {
         next();
     } else {
-       
-         const tokenKey = getCookie('tokenKey')
+        const tokenKey = getCookie("tokenKey");
 
         if (tokenKey === null || tokenKey === "") {
             next("/");

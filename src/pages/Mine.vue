@@ -14,7 +14,8 @@
         </div>
         <div class="mine-msg">
           <div class="mine_msg_icon">
-            <img src="../common/images/cover.png" alt="">
+            <img v-if="userInfo.avatar" :src="userInfo.avatar" alt="">
+            <img v-else src="../common/images/cover.png" alt="">
           </div>
           <p class="mine_name">{{userInfo?userInfo.nickName:''}}<span>CEO</span></p>
           <p class="mine_position">市场营销一部</p>
