@@ -238,10 +238,10 @@ export default {
         }
       }
     }
-    footer{
-      .router-link-active[data-v-cbeb59d2]{
-        color: #666 !important;
-      }
-    }
+    // footer{
+    //   .router-link-active[data-v-cbeb59d2]{
+    //     color: #666 !important;
+    //   }
+    // }
   }
 </style>

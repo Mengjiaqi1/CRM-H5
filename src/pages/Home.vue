@@ -60,10 +60,10 @@
       <div class="list_box">
         <div class="list_center">
           <div class="list">
-            <li>
+            <router-link to='/customerDetails' tag='li'>
               <img src="../common/images/chance.png" alt="" />
               <span>全部机会</span>
-            </li>
+            </router-link>
             <li>
               <img src="../common/images/follow.png" alt="" />
               <span>跟进记录</span>
@@ -111,7 +111,7 @@
       </div>
     </header>
     <main>
-      <div class="none" ref="bH"></div>
+      <div class="none" ref="bH"></div> 
       <div class="briefing">
         <div class="b_tit">
           <div class="b_tit_l">
@@ -197,7 +197,7 @@
         <div>
           <van-divider>查看详情</van-divider>
         </div>
-      </div>
+      </div> 
       <div class="none"></div>
       <!-- PK榜 -->
       <div class="pk briefing">
@@ -346,7 +346,7 @@
       <div class="none"></div>
       <!-- 资金管理 -->
       <div class="capital briefing">
-        <div class="b_tit">
+        <!-- <div class="b_tit">
           <div class="b_tit_l">
             <img src="../common/images/Title-icon.png" alt="" />
             <span>资金管理</span>
@@ -354,8 +354,8 @@
           <div class="b_tit_r">
             <img src="../common/images/more.png" alt="" />
           </div>
-        </div>
-        <div class="d_account">
+        </div> -->
+        <!-- <div class="d_account">
           <div class="d_header">
             <div class="balance">
               <p>
@@ -375,9 +375,9 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         <!-- 净流水 -->
-        <div class="clean_water">
+        <!-- <div class="clean_water">
           <div class="cw_header">
             <p class="cw_text">净流水</p>
             <p class="cw_money"><span>￥</span><span>688,876.00</span></p>
@@ -495,7 +495,7 @@
               <p class="cw_list_text">进项开票</p>
             </li>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="none"></div>
       <div class="progress briefing">

@@ -39,7 +39,6 @@ footer {
   position: fixed;
   left: 0;
   bottom: 0;
-  z-index: 1000;
   display: flex;
   background: #fff;
   box-sizing: border-box;
@@ -50,7 +49,6 @@ footer {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    position: relative;
     text-decoration: none;
     color: #7e8185;
     i {

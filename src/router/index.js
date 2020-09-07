@@ -18,6 +18,7 @@ import CustomScreen from "../pages/Custom/CustomScreen";
 import Setting from "../pages/Setting";
 import ShortcutForms from "../pages/ShortcutKeyForm";
 import Organization from "../pages/Organization";
+import CustomerDetails from '../pages/Custom/CustomerDetails'
 import store from "../store";
 import { getCookie } from "../untils/auth";
 Vue.use(VueRouter);
@@ -145,6 +146,12 @@ const routes = [
         path: "/allCustom",
         name: "AllCustom",
         component: AllCustom
+    },
+    // 客户详情
+    {
+        path: "/customerDetails",
+        name: "CustomerDetails",
+        component: CustomerDetails
     },
     // 新建
     {

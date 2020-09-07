@@ -32,7 +32,11 @@ import {
     DropdownItem,
     Form,
     Button,
-    Area
+    Area,
+    ActionSheet,
+    SwipeCell,
+    Card,
+    ImagePreview
 } from "vant";
 
 Vue.use(NavBar);
@@ -51,8 +55,6 @@ Vue.use(ShareSheet);
 Vue.use(Overlay);
 Vue.use(Search);
 Vue.use(List);
-
-Vue.use(List);
 Vue.use(Cell);
 Vue.use(PullRefresh);
 Vue.use(DropdownMenu);
@@ -60,6 +62,10 @@ Vue.use(DropdownItem);
 Vue.use(Form);
 Vue.use(Button);
 Vue.use(Area);
+Vue.use(ActionSheet);
+Vue.use(SwipeCell);
+Vue.use(Card);
+Vue.use(ImagePreview);
 
 Vue.config.productionTip = false;
 Vue.config.isToken = true;
