@@ -34,6 +34,7 @@ import {
     Form,
     Button,
     Area,
+    Uploader,
 
 } from "vant";
 
@@ -60,6 +61,8 @@ Vue.use(DropdownItem);
 Vue.use(Form);
 Vue.use(Button);
 Vue.use(Area);
+Vue.use(Uploader);
+
 
 Vue.config.productionTip = false;
 Vue.config.isToken = true;

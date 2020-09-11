@@ -6,10 +6,9 @@
       <msgHeader :msg="{title,deptTypeName,beginTime,endTime}"></msgHeader>
       <div class="space"></div>
       <!--内容-->
-      <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
+      <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
         <van-list
           v-model="loading"
-          :immediate-check="false"
           :finished="finished"
           finished-text="没有更多数据"
           @load="onLoad"
@@ -48,6 +47,7 @@
 <script>
   import msgHeader from '../../components/msg-header'
   import {getCustomData} from "../../services/AllCustom";
+  import {Toast} from "vant";
   export default {
     components: {
         msgHeader
@@ -60,11 +60,11 @@
         endTime:'',
         inCustomList: [],
         // 加载刷新
-        refreshing: false,
+        isLoading: false,
         loading: false,
         finished: false,
         // 当前页数
-        pageNum:1,
+        pageNum:0,
         // 当前条数
         pageSize:10,
       };
@@ -84,66 +84,48 @@
             // endTime:this.endTime,
             // yearState:this.half, //新
             // quarter:this.quarter,   //新
-            pageNum:this.pageNum,
-            // pageSize:10,
+            pageNum:this.pageNum++,
+            pageSize:10,
         }
         getCustomData(Data).then(res => {
           if (res.code == 200) {
-            console.log(Data,'8888')
             this.deptTypeName = res.deptTypeName;
             this.beginTime = res.beginTime;
             this.endTime = res.endTime;
             this.total = res.total;
-            // this.inCustomList = res.rows;
-            console.log(res.rows,'9900')
-            // console.log(this.total,this.inCustomList,'001122')
-            // // 加载状态结束
-            // this.loading = false
-            // this.refreshing = false
-            // // 数据全部加载完成
-            // // if (this.inCustomList.length >= 40) {
-            //     this.finished = true
-            // // }
 
-            const rows = res.rows;
-            console.log(rows.length,'996')
-            if(rows == null || rows.length===0){
-              // 加载结束
-              this.finished = true;
-              return
+            if(this.refreshing){
+             this. inCustomList = [];
+             this.refreshing = false;
             }
-            if(rows.length < this.pageSize){
-              // 最后一页不足10条的情况
+            if(res.rows.length>0){
+              this.inCustomList = this.inCustomList.concat(res.rows);
+              console.log(res.rows.length,this.inCustomList,res.rows.length,this.inCustomList.concat(res.rows),'000111')
+              this.loading = false;
+              if(res.rows.length !== 10){
+                  this.loading = false;
+                  this.finished = true;
+              }
+            }else{
+                this.loading = false;
                 this.finished = true;
             }
-            // 处理数据
-            if(this.pageNum === 1) {
-                this.inCustomList = rows
-            } else{
-                this.inCustomList =  this.inCustomList.concat(rows)
-                alert(111)
-            }
-
           }
 
-        }).catch(function (error) {
-          console.log(error)
-        }).finally(()=>{
-          this.refreshing = false;
-          this.loading = false;
         })
       },
         /**
          *  下拉刷新方法
          */
         onRefresh () {
-            this.pageNum = 1;
-            // 清空列表数据
-            this.finished = false;
-            // this.refreshing = false;
-            // 调用请求数据方法
-            this.getCustomInfo()
-            console.log(this.finished,this.refreshing,'564')
+            setTimeout(() => {
+                Toast('刷新成功');
+                this.isLoading = false;
+                this.pageNum = 0;
+
+                this.inCustomList = [];
+                this.getCustomInfo();
+            }, 1000);
 
         },
         /**
@@ -151,28 +133,10 @@
          *  页面打开时初始化会调用onLoad方法 如果想去掉初始化调用使用,给List添加属性immediate-check=false
          */
         onLoad () {
-            this.pageNum++;
-            this.loading = true;
+            // this.pageNum++;
+            // this.loading = true;
             // 调用请求数据方法
             this.getCustomInfo()
-            console.log(this.pageNum,this.finished,this.refreshing,'0678')
-            // setTimeout(() => {
-            //     if (this.refreshing) {
-            //         this.inCustomList = [];
-            //         this.refreshing = false;
-            //     }
-            //
-            //     for (let i = 0; i < 10; i++) {
-            //         this.inCustomList.push(this.inCustomList.length + 1);
-            //     }
-            //     this.loading = false;
-            //
-            //     // if (this.inCustomList.length >= 40) {
-            //         this.finished = true;
-            //     // }
-            // }, 1000);
-
-
         },
     }
   };
