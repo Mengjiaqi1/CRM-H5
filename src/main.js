@@ -34,6 +34,8 @@ import {
     Form,
     Button,
     Area,
+    Uploader,
+
     ActionSheet,
     SwipeCell,
     Card,
@@ -69,6 +71,7 @@ Vue.use(SwipeCell);
 Vue.use(Card);
 Vue.use(ImagePreview);
 Vue.use(Uploader);
+
 
 Vue.config.productionTip = false;
 Vue.config.isToken = true;

@@ -15,8 +15,10 @@ import CustomHome from "../pages/CustomHome";
 import AllCustom from "../pages/Custom/AllCustom";
 import Build from "../pages/Custom/Build";
 import CustomScreen from "../pages/Custom/CustomScreen";
+import DefaultSort from "../pages/Custom/DefaultSort";
 import Setting from "../pages/Setting";
 import ShortcutForms from "../pages/ShortcutKeyForm";
+import Approval from "../pages/Approval";
 import Organization from "../pages/Organization";
 import Entrance from "../pages/Entrance";
 import CustomerDetails from "../pages/Custom/CustomerDetails";
@@ -181,6 +183,18 @@ const routes = [
         path: "/customScreen",
         name: "CustomScreen",
         component: CustomScreen
+    },
+    // 默认排序设置
+    {
+        path: "/defaultSort",
+        name: "DefaultSort",
+        component: DefaultSort
+    },
+    // 审批列表
+    {
+        path: "/approval",
+        name: "Approval",
+        component: Approval
     },
     {
         path: "/home",

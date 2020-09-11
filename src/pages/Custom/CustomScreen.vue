@@ -2,11 +2,38 @@
   <div class="wrap">
     <myHeader>
       <div class="h_center">设置筛选项</div>
-      <div class="h_right h_more">保存</div>
+      <div class="h_right h_more" @click="handleConfirm">保存</div>
     </myHeader>
     <main>
       <div class="chart_type">
         <div class="custom_tit">已启用</div>
+        <div class="more_card">
+          <div class="fluid container">
+            <div class="col-md-3">
+              <draggable class="list-group" tag="ul">
+                <li
+                        class="list-group-item"
+                        v-for="element in addCard" v-if="element.checked"
+                        :key="element.sizerId"
+                        handle=".handle"
+                >
+                  <p>
+                    <img
+                            :src="element.isDefault == '1' ? forms_reduce : forbid"
+                            alt=""
+                            class="reducer"
+                            @click="removeAt(element.sizerId, element.sizerDesc,element.isDefault)"
+                    />
+                    <span class="text">{{ element.sizerDesc }} </span>
+                  </p>
+                </li>
+              </draggable>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="chart_type">
+        <div class="custom_tit">未启用</div>
         <div class="add_card">
           <div class="fluid container">
             <div class="col-md-3">
@@ -18,62 +45,21 @@
               >
                 <li
                         class="list-group-item"
-                        v-for="element in addCard"
-                        :key="element.menuId"
+                        v-for="element in addCard" v-if="!element.checked"
+                        :key="element.sizerId"
                 >
                   <p>
                     <img
-                            :src="forms_reduce"
+                            :src="forms_add"
                             alt=""
                             class="reducer"
-                            @click="removeAdd(element.menuId, element.name)"
+                            @click="removeAt(element.sizerId, element.sizerDesc,element.isDefault)"
                     />
-                    <span class="text">{{ element.name }} </span>
+                    <span class="text">{{ element.sizerDesc }} </span>
                   </p>
-                  <span class="badge">
-                    <img
-                            src="../../common/images/c_order.png"
-                            class="sort"
-                            alt=""
-                    />
-                  </span>
                 </li>
               </draggable>
               <!-- <rawDisplayer class="col-3" :value="addCard" title="flip-list" /> -->
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="chart_type">
-        <div class="custom_tit">未启用</div>
-        <div class="more_card">
-          <div class="fluid container">
-            <div class="col-md-3">
-              <draggable class="list-group" tag="ul">
-                <li
-                        class="list-group-item"
-                        v-for="element in custommenu"
-                        :key="element.menuId"
-                        handle=".handle"
-                >
-                  <p>
-                    <img
-                            :src="element.checked ? forms_reduce : forms_add"
-                            alt=""
-                            class="reducer"
-                            @click="removeAt(element.menuId, element.name)"
-                    />
-                    <span class="text">{{ element.name }} </span>
-                  </p>
-                  <span class="badge">
-                    <img
-                            src="../../common/images/c_order.png"
-                            class="sort"
-                            alt=""
-                    />
-                  </span>
-                </li>
-              </draggable>
             </div>
           </div>
         </div>
@@ -83,7 +69,7 @@
 </template>
 <script>
     import DragGable from "../../components/DragGable.vue";
-    import { getCustommenu, getCreatemneu, getquery } from "../../services/custom";
+    import { getScreenList, filedSizerList} from "../../services/AllCustom";
     import draggable from "vuedraggable";
     // import rawDisplayer from "rawDisplayer";
     const message = [
@@ -114,159 +100,92 @@
                 isDragging1: false,
                 delayedDragging: false,
                 typeCode: 0,
-                typeFlag: true,
                 forms_add: require("../../assets/forms_add.png"),
                 forms_reduce: require("../../assets/forms_reduce.png"),
-                custommenu: "", // 更多卡片数据
-                addCard: "", // 已添加卡片
-                count: 1
+                forbid:require("../../assets/forbid.png"),
+                screenData:[],//全部数据
+                addCard:[],// 未启用卡片
+                sizerIds:'',
+                count: 1,
+                sizerIdState:'',
+                sizerContent:[],
             };
         },
         mounted() {
-            // this.list = this.custommenu.map((name, index) => {
-            //   return { name, order: index + 1, fixed: false };
-            // });
-            if (this.count <= 1) {
-                this.typeFlag = true;
-            }
-            console.log(this.count);
-            console.log(this.typeFlag, "false");
-            if (this.count >= 1) {
-                this.removeAdd();
-                this.getqueryData();
-                this.removeAt();
-                this.getCustomData();
-            }
+          this.removeAt();
         },
-
-        created() {},
+        created() {
+          this.screenList();
+        },
 
         methods: {
-            changeChart() {
-                this.chartFlag = !this.chartFlag;
-            },
-            // 查询已添加的卡片
-            getqueryData() {
-                getquery().then(res => {
-                    // console.log(res, "22");
+            // 筛选项数据
+            screenList(){
+                let  Data = {
+                    formId:1,
+                    templateId:1,
+                    userId:1,
+                }
+                getScreenList(Data).then(res => {
                     if (res.code == 200) {
-                        this.addCard = res.data;
-                        for (var i = 0; i < this.addCard.length; i++) {
-                            console.log(this.addCard.length);
-                            this.count = this.addCard.length;
-                            if (this.count <= 1) {
-                                this.typeFlag = false;
-                            }
-                        }
+                      this.screenData = res.rows;
+                      // 循环数据
+                      for (var index = 0; index < this.screenData.length; index++) {
+                          const element = this.screenData[index];
+                          let addCartContent = {
+                              sizerId: element.sizerId,
+                              sizerDesc: element.sizerDesc,
+                              checked: element.checked,
+                              isDefault: element.isDefault,
+                              flag:true,
+                          }
+                          this.addCard.push(addCartContent);
+                          console.log(addCartContent,addCartContent.sizerId,'00112233')
+
+                      }
                     }
                 });
             },
-            // 删除 已添加卡片
-            removeAdd(id, name) {
-                getCreatemneu(0, id, name, (this.typeCode = "1")).then(res => {
-                    if (res.code == 200) {
-                        this.count -= 1;
-                        if (this.count >= 2) {
-                            this.count = 2;
-                            this.typeFlag = false;
-                            this.$toast({
-                                message: "必须保留一条卡片",
-                                position: "center"
-                            });
-                        }
-                        console.log((this.count = 2), "count");
-                        this.getCustomData();
-                        this.getqueryData();
+            // 删除 添加 卡片
+            removeAt(sizerId, sizerDesc,isDefault) {
+              if(isDefault=='1'){
+                this.addCard &&
+                this.addCard.map(each => {
+                    if (each.sizerId == sizerId){
+                        each.checked = !each.checked;
+                          this.flag = !this.flag;
+                          console.log(this.flag,each.sizerId,each.checked,'555666');
                     }
                 });
+              }
             },
-            // 删除 添加 更多卡片
-            removeAt(id, name) {
-                this.custommenu &&
-                this.custommenu.map(each => {
-                    if (each.menuId == id && each.checked == false) {
-                        this.typeCode = 0;
-                        this.count++;
-                        console.log(this.count, "+");
-                        if (this.count > 1) {
-                            this.typeFlag = true;
-                        }
-                    }
-                    if (each.menuId == id && each.checked == true) {
-                        this.typeCode = 1;
-                        this.count -= 1;
-                        console.log(this.count, "-");
-                        if (this.count >= 2) {
-                            this.count = 2;
-                            this.typeFlag = false;
+            handleConfirm(){
+                this.addCard &&
+                this.addCard.map(each => {
+                    if (each.checked){
+                        if(each.isDefault=='1'){
+                            this.sizerContent.push(each.sizerId);
+                            this.sizerIds = this.sizerContent.toString()
+                            console. log(this.sizerIds,'234');
                         }
                     }
                 });
 
-                if (this.count >= 1) {
-                    getCreatemneu(0, id, name, this.typeCode).then(res => {
-                        if (res.code == 200) {
-                            this.getCustomData();
-                            this.getqueryData();
-                        }
-                    });
+
+                let Data = {
+                    templateId:1,
+                    userId:1,
+                    sizerIds:this.sizerIds,
                 }
-            },
-            // 获取自定义更多卡片
-            getCustomData() {
-                getCustommenu().then(res => {
+                filedSizerList(Data).then(res => {
                     if (res.code == 200) {
-                        console.log(res);
-                        this.custommenu = res.data;
+                      this.$router.push({ path: "/AllCustom"});
                     }
                 });
             },
-            orderList1() {
-                this.list = this.list.sort((one, two) => {
-                    return one.order - two.order;
-                });
-            },
-            orderList() {
-                this.list = this.list.sort((one, two) => {
-                    return one.order - two.order;
-                });
-            },
-            onMove1({ relatedContext, draggedContext }) {
-                const relatedElement = relatedContext.element;
-                const draggedElement = draggedContext.element;
-                return (
-                    (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed
-                );
-            },
-            onMove({ relatedContext, draggedContext }) {
-                const relatedElement = relatedContext.element;
-                const draggedElement = draggedContext.element;
-                return (
-                    (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed
-                );
-            }
         },
         computed: {
-            draggingInfo() {
-                return this.dragging ? "under drag" : "";
-            },
 
-            dragOptions1() {
-                return {
-                    animation: 0,
-                    group: "description",
-                    disabled: !this.editable,
-                    ghostClass: "ghost"
-                };
-            },
-            dragOptions() {
-                return {
-                    animation: 0,
-                    group: "description",
-                    disabled: !this.editable,
-                    ghostClass: "ghost"
-                };
-            }
         },
         components: {
             DragGable,
@@ -324,46 +243,6 @@
         box-sizing: border-box;
         padding: 0 0.12rem;
         background: rgba(248, 249, 250, 1);
-        .chart_box {
-          width: 100%;
-          height: 1.28rem;
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-
-          .chart_left {
-            width: 48%;
-            height: 1.04rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: rgba(255, 255, 255, 1);
-            img {
-              width: 0.6rem;
-              height: 0.6rem;
-            }
-          }
-          .chart_active {
-            width: 48%;
-            height: 1.04rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 0.04rem;
-            font-family: PingFangSC-Regular, PingFang SC;
-            font-weight: 400;
-            color: rgba(0, 106, 255, 1);
-            background: rgba(242, 247, 255, 1);
-            border: 0.01rem solid rgba(0, 106, 255, 1);
-            background: url("../../common/images/Select.png") no-repeat bottom right;
-            background-size: 0.18rem 0.18rem;
-            box-sizing: border-box;
-            img {
-              width: 0.6rem;
-              height: 0.6rem;
-            }
-          }
-        }
       }
     }
   }

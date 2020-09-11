@@ -43,7 +43,7 @@
         color: #666;
         font-size: 0.16rem;
         line-height:0.22rem;
-        vertical-align: middle;
+        /*vertical-align: middle;*/
       }
     }
   }
