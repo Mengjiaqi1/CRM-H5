@@ -513,7 +513,7 @@
         <div class="order">
           <span class="order_text">合同订单</span>
           <router-link tag="li" to="/approval">
-          <span class="approval">待审批</span>
+            <span class="approval">待审批</span>
           </router-link>
         </div>
         <div class="pro_banner">
@@ -825,7 +825,7 @@ export default {
   }
   main {
     flex: 1;
-    overflow: scroll;
+    // overflow: scroll;
     margin-bottom: 0.6rem;
     .b_tit {
       width: 100%;

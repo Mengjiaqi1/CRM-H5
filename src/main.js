@@ -35,12 +35,10 @@ import {
     Button,
     Area,
     Uploader,
-
     ActionSheet,
     SwipeCell,
     Card,
-    ImagePreview,
-    Uploader
+    ImagePreview
 } from "vant";
 
 Vue.use(NavBar);
@@ -71,7 +69,6 @@ Vue.use(SwipeCell);
 Vue.use(Card);
 Vue.use(ImagePreview);
 Vue.use(Uploader);
-
 
 Vue.config.productionTip = false;
 Vue.config.isToken = true;
