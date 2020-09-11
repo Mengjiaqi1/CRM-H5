@@ -23,7 +23,7 @@ export default {
     } else {
       setCookie(
         "tokenKey",
-        "eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6ImYxN2E2MDYwLTc0YzgtNGI2My04ZTU2LTAzMjJlYWM1ZTM5NSJ9.rN2ydIb2Fif-MuzNr1zX_S79owSk-HgDKomTLIFGFNhUaOMG09M5lF8mbxMHFCGoSWL0BG3_lHPFMOroL66eZw"
+        "eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6IjM0NjVlZmQ2LTZmZjktNGRmZS1iNzY1LThmMGQwNWIwNjdlMCJ9.P9uGa8zaiu7LVO0W5ohO4ivRe8w8YmyVGgKhTRBbj-ME52j-VdDEoBUFPjpoaWKqTCjxtAovIH5QRtlJI3PM7w"
       );
       this.getDDCode();
     }
@@ -65,12 +65,18 @@ export default {
 </script>
 
 <style lang="scss">
+html,
+body {
+  height: 100%;
+}
+
 * {
   margin: 0;
   padding: 0;
   list-style: none;
   font-size: 0.14rem;
 }
+
 #app {
   width: 100%;
   height: 100%;

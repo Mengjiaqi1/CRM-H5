@@ -18,9 +18,11 @@ import CustomScreen from "../pages/Custom/CustomScreen";
 import Setting from "../pages/Setting";
 import ShortcutForms from "../pages/ShortcutKeyForm";
 import Organization from "../pages/Organization";
-import CustomerDetails from '../pages/Custom/CustomerDetails'
+import Entrance from "../pages/Entrance";
+import CustomerDetails from "../pages/Custom/CustomerDetails";
 import store from "../store";
 import { getCookie } from "../untils/auth";
+import Team from "../pages/Team";
 Vue.use(VueRouter);
 
 const routes = [
@@ -62,6 +64,22 @@ const routes = [
         component: Mine,
         meta: {
             title: "我的"
+        }
+    },
+    {
+        path: "/team",
+        name: "Team",
+        component: Team,
+        meta: {
+            title: "团队负责人"
+        }
+    },
+    {
+        path: "/entrance",
+        name: "Entrance",
+        component: Entrance,
+        meta: {
+            title: "组织架构入口"
         }
     },
     {
@@ -139,7 +157,6 @@ const routes = [
         name: "Setting",
         component: Setting
     },
-    // 首页
 
     // 全部客户
     {

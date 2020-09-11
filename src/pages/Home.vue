@@ -60,10 +60,10 @@
       <div class="list_box">
         <div class="list_center">
           <div class="list">
-            <router-link to='/customerDetails' tag='li'>
+            <li>
               <img src="../common/images/chance.png" alt="" />
               <span>全部机会</span>
-            </router-link>
+            </li>
             <li>
               <img src="../common/images/follow.png" alt="" />
               <span>跟进记录</span>
@@ -72,7 +72,7 @@
               <img src="../common/images/order.png" alt="" />
               <span>合同订单</span>
             </li>
-            <router-link tag="li" to="/organization">
+            <router-link tag="li" to="/entrance">
               <img src="../common/images/contacts.png" alt="" />
               <span>联系人</span>
             </router-link>
@@ -111,7 +111,7 @@
       </div>
     </header>
     <main>
-      <div class="none" ref="bH"></div> 
+      <div class="none" ref="bH"></div>
       <div class="briefing">
         <div class="b_tit">
           <div class="b_tit_l">
@@ -197,7 +197,7 @@
         <div>
           <van-divider>查看详情</van-divider>
         </div>
-      </div> 
+      </div>
       <div class="none"></div>
       <!-- PK榜 -->
       <div class="pk briefing">
@@ -563,13 +563,12 @@ export default {
   },
   created() {
     console.log(this.$router);
-     const localStorageSet = (name, data, expire = 24) => {
-            const time = new Date().getTime() + expire * 60 * 60 * 1000;
-            const obj = { data, time };
-            localStorage.setItem(name, JSON.stringify(obj));
-           
-            };
-             console.log(localStorage.getItem(name),'name')
+    const localStorageSet = (name, data, expire = 24) => {
+      const time = new Date().getTime() + expire * 60 * 60 * 1000;
+      const obj = { data, time };
+      localStorage.setItem(name, JSON.stringify(obj));
+    };
+    console.log(localStorage.getItem(name), "name");
   },
   methods: {
     changeAdd: function() {

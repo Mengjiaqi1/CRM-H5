@@ -9,6 +9,7 @@ import Axios from "axios";
 import echarts from "echarts";
 import Vconsole from "vconsole";
 let vConsole = new Vconsole();
+import moment from "moment";
 
 import {
     NavBar,
@@ -36,7 +37,8 @@ import {
     ActionSheet,
     SwipeCell,
     Card,
-    ImagePreview
+    ImagePreview,
+    Uploader
 } from "vant";
 
 Vue.use(NavBar);
@@ -66,6 +68,7 @@ Vue.use(ActionSheet);
 Vue.use(SwipeCell);
 Vue.use(Card);
 Vue.use(ImagePreview);
+Vue.use(Uploader);
 
 Vue.config.productionTip = false;
 Vue.config.isToken = true;
@@ -73,6 +76,7 @@ Vue.config.isToken = true;
 Axios.defaults.headers["Content-Type"] = "application/x-www-form-urlencoded";
 Vue.prototype.$http = Axios;
 Vue.prototype.$echarts = echarts;
+Vue.prototype.$moment = moment;
 
 Vue.component("myHeader", () => {
     return import ("@/components/my-header");

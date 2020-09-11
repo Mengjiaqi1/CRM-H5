@@ -6,7 +6,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         token: "qwe",
-        Flag: true
+        Flag: true,
+        customerId: ""
     },
     mutations: {
         set_token(state, token) {
@@ -15,12 +16,20 @@ export default new Vuex.Store({
         },
         set_flag(state, flag) {
             state.Flag = flag;
+        },
+        set_customerId(state, customerId) {
+            state.customerId = customerId;
+            localStorage.setItem("customerId", customerId);
         }
     },
     actions: {
         set_token({ commit }, i) {
             commit("set_token", i);
         }
+        // set_customerId({ commit }, i) {
+        //     commit("set_customerId", i);
+        // }
     },
+    getters: {},
     modules: {}
 });

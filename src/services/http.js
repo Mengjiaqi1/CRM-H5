@@ -7,7 +7,7 @@
  * @LastEditTime : 2019-12-31 10:59:28
  */
 import axios from "axios";
-import qS from "qs";
+import qs from "qs";
 import router from "../router";
 import { setCookie, getCookie, delCookie } from "../untils/auth";
 axios.defaults.timeout = 1000; // 设置请求网络超时
@@ -90,10 +90,10 @@ export function post(url, data = {}, isJSON = true) {
     }
     if (!isJSON) {
         // 转换成表单提交数据
-        data = qs.stringify(data);
+        data = Qs.stringify(data);
     }
     // console.log(data)
-    // console.log(isJSON)
+    // console.log(isJSON);
     // console.log(axios.defaults.headers['Content-Type'])
     // console.log(axios.defaults.headers.post['Content-Type'])
     return new Promise((resolve, reject) => {
