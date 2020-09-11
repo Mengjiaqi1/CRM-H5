@@ -104,7 +104,7 @@
                     label="相关图片"
             />
             <van-uploader :after-read="afterRead" multiple v-model="imageFileIds">
-              <img src="../../common/images/upload.png" alt="" style="width: 0.64rem;height: 0.64rem;">
+              <img src="../../common/images/uploads.png" alt="" style="width: 0.64rem;height: 0.64rem;">
             </van-uploader>
             <div class="space"></div>
             <van-field
