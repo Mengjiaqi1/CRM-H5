@@ -139,7 +139,6 @@
             this.getCustomInfo()
         },
     }
-  }
 };
 </script>
 <style lang="scss" scoped>
