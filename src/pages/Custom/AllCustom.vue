@@ -52,7 +52,6 @@
                         >
                           <span>{{ each.name }}</span>
                         </div>
-
                       </div>
                     </div>
                     <!--归档状态-->
@@ -261,8 +260,20 @@
               <!--          <van-cell v-for="(item,index) in inCustomList" :key="index">-->
               <div class="space" style="height: 0.18rem"></div>
               <div class="custom_contents" v-for="(item,index) in inCustomList" :key="index">
+              <router-link
+                tag="div"
+                class="custom_contents"
+                v-for="(item, index) in inCustomList"
+                :key="index"
+                :to="{
+                  path: '/customerDetails',
+                  query: { id: item.customerId }
+                }"
+              >
                 <div class="custom_content_top clearfix">
-                  <p class="custom_content_address fl">{{item.customerFullName}}</p>
+                  <p class="custom_content_address fl">
+                    {{ item.customerFullName }}
+                  </p>
                 </div>
                 <div class="line"></div>
                 <ul class="custom_content_text">
@@ -273,17 +284,18 @@
                   </li>
                   <li>
                     <p>最近跟进时间：</p>
-                    <p v-if="item.lastFollowUpTime">{{item.lastFollowUpTime}}</p>
+                    <p v-if="item.lastFollowUpTime">
+                      {{ item.lastFollowUpTime }}
+                    </p>
                     <p v-else>--</p>
                   </li>
                 </ul>
                 <div class="space"></div>
-              </div>
+              </router-link>
               <!--          </van-cell>-->
             </van-list>
           </van-pull-refresh>
         </div>
-
       </div>
     </main>
     <!--时间自定义-->

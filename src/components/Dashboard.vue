@@ -24,7 +24,6 @@ export default {
   methods: {
     EchartBar() {
       this.myChart = this.$echarts.init(document.getElementById("Dashboard"));
-      console.log(this.myChart);
       this.myChart.setOption({
         tooltip: {
           formatter: "{a} <br/>{b} : {c}%"

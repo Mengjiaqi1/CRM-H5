@@ -1,13 +1,15 @@
 <template>
   <div id="app">
     <router-view />
-    <input type="text" v-model="inp" ref="text" id="inp" />
+    <!-- <input type="text" v-model="inp" ref="text" id="inp" /> -->
   </div>
 </template>
 <script>
 import { getLogin } from "./services/login";
 import * as dd from "dingtalk-jsapi";
 import router from "./router";
+import { setCookie, getCookie } from "./untils/auth";
+
 export default {
   data() {
     return {
@@ -19,9 +21,9 @@ export default {
     if (dd.env.platform != "notInDingTalk") {
       await this.getDDCode();
     } else {
-      localStorage.setItem(
-        "token",
-        "eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6ImUyOTE3YWM2LTFlNjgtNDhkZC05MzA3LWFmMTgyNTljMDgzZCJ9.woD-WvM-_tQVs0VacNNAIQJa5qxuX3vknuzmWDvDcFWlnfMZWxMwyPe7XAnSPDZjnzERgCEidrk17BqcmFLKjA"
+      setCookie(
+        "tokenKey",
+        "eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6ImYxN2E2MDYwLTc0YzgtNGI2My04ZTU2LTAzMjJlYWM1ZTM5NSJ9.rN2ydIb2Fif-MuzNr1zX_S79owSk-HgDKomTLIFGFNhUaOMG09M5lF8mbxMHFCGoSWL0BG3_lHPFMOroL66eZw"
       );
       this.getDDCode();
     }
@@ -35,21 +37,20 @@ export default {
             onSuccess: function(info) {
               const tempCode = info.code;
               if (
-                localStorage.getItem("token") == null ||
-                localStorage.getItem("token") == undefined
+                getCookie("tokenKey") == null ||
+                getCookie("tokenKey") == undefined
               ) {
                 getLogin(tempCode).then(res => {
                   if (res.code == 200 && res.token) {
-                    localStorage.setItem("token", res.token);
+                    setCookie("tokenKey", res.token);
                     router.push("/home");
                   }
                 });
               }
-
               resolve();
             },
             onFail: function(err) {
-              console.log(err);
+              //   console.log(err);
               this.toast({
                 message: "获取code失败，请退出重试"
               });

@@ -60,10 +60,10 @@
       <div class="list_box">
         <div class="list_center">
           <div class="list">
-            <li>
+            <router-link to='/customerDetails' tag='li'>
               <img src="../common/images/chance.png" alt="" />
               <span>全部机会</span>
-            </li>
+            </router-link>
             <li>
               <img src="../common/images/follow.png" alt="" />
               <span>跟进记录</span>
@@ -72,10 +72,10 @@
               <img src="../common/images/order.png" alt="" />
               <span>合同订单</span>
             </li>
-            <li>
+            <router-link tag="li" to="/organization">
               <img src="../common/images/contacts.png" alt="" />
               <span>联系人</span>
-            </li>
+            </router-link>
           </div>
           <div class="list list2">
             <li>
@@ -111,7 +111,7 @@
       </div>
     </header>
     <main>
-      <div class="none" ref="bH"></div>
+      <div class="none" ref="bH"></div> 
       <div class="briefing">
         <div class="b_tit">
           <div class="b_tit_l">
@@ -197,7 +197,7 @@
         <div>
           <van-divider>查看详情</van-divider>
         </div>
-      </div>
+      </div> 
       <div class="none"></div>
       <!-- PK榜 -->
       <div class="pk briefing">
@@ -346,7 +346,7 @@
       <div class="none"></div>
       <!-- 资金管理 -->
       <div class="capital briefing">
-        <div class="b_tit">
+        <!-- <div class="b_tit">
           <div class="b_tit_l">
             <img src="../common/images/Title-icon.png" alt="" />
             <span>资金管理</span>
@@ -354,8 +354,8 @@
           <div class="b_tit_r">
             <img src="../common/images/more.png" alt="" />
           </div>
-        </div>
-        <div class="d_account">
+        </div> -->
+        <!-- <div class="d_account">
           <div class="d_header">
             <div class="balance">
               <p>
@@ -375,9 +375,9 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
         <!-- 净流水 -->
-        <div class="clean_water">
+        <!-- <div class="clean_water">
           <div class="cw_header">
             <p class="cw_text">净流水</p>
             <p class="cw_money"><span>￥</span><span>688,876.00</span></p>
@@ -495,7 +495,7 @@
               <p class="cw_list_text">进项开票</p>
             </li>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="none"></div>
       <div class="progress briefing">
@@ -565,6 +565,13 @@ export default {
   },
   created() {
     console.log(this.$router);
+     const localStorageSet = (name, data, expire = 24) => {
+            const time = new Date().getTime() + expire * 60 * 60 * 1000;
+            const obj = { data, time };
+            localStorage.setItem(name, JSON.stringify(obj));
+           
+            };
+             console.log(localStorage.getItem(name),'name')
   },
   methods: {
     changeAdd: function() {

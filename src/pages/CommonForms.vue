@@ -65,14 +65,8 @@
 <script>
 import { getTreeselect, getcustomIndex, getCreate } from "../services/forms";
 export default {
-  provide() {
-    return {
-      reload: this.reload
-    };
-  },
   data() {
     return {
-      isReoladAlive: true,
       active: 0,
       typeFlag: false,
       type: "", // 0 增 1减
@@ -83,17 +77,7 @@ export default {
       delMenuData: [], // 删除表单
       forms_add: require("../assets/forms_add.png"),
       forms_reduce: require("../assets/forms_reduce.png"),
-      count: 1,
-      data: [
-        {
-          name: "1",
-          id: 1
-        },
-        {
-          name: 2,
-          id: 2
-        }
-      ]
+      count: 1
     };
   },
   created() {
@@ -103,7 +87,6 @@ export default {
     }
 
     this.changeQueryData();
-    this.reload();
   },
   mounted() {},
   methods: {
@@ -150,7 +133,6 @@ export default {
     },
 
     // 修改自定义表单 增加删除表单
-
     changeForms(name, icon, id) {
       this.MenuData &&
         this.MenuData.map(each => {

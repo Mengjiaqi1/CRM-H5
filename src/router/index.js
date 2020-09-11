@@ -1,14 +1,13 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import MyHome from "../views/Home.vue";
-import Home from "../pages/Home.vue";
 import Visitor from "../pages/Visitor.vue";
 import Work from "../pages/Work.vue";
 import Mine from "../pages/Mine.vue";
 import News from "../pages/News.vue";
 import Selection from "../pages/Selection";
-import Brief  from "../pages/Brief.vue";
-import PKdetalis  from "../pages/PKdetalis.vue";
+import Brief from "../pages/Brief.vue";
+import PKdetalis from "../pages/PKdetalis.vue";
 import Custom from "../pages/Custom/Custom";
 import Collection from "../pages/Collection";
 import CommonForms from "../pages/CommonForms";
@@ -20,10 +19,15 @@ import DefaultSort from "../pages/Custom/DefaultSort";
 import Setting from "../pages/Setting";
 import ShortcutForms from "../pages/ShortcutKeyForm";
 import Approval from "../pages/Approval";
+import Organization from "../pages/Organization";
+import CustomerDetails from '../pages/Custom/CustomerDetails'
 import store from "../store";
+import { getCookie } from "../untils/auth";
 Vue.use(VueRouter);
 
-const routes = [{
+const routes = [
+    //首页从定向
+    {
         path: "/",
         redirect: "/home",
         meta: {
@@ -33,22 +37,42 @@ const routes = [{
     {
         path: "/work",
         name: "Work",
-        component: Work
+        component: Work,
+        meta: {
+            title: "工作"
+        }
     },
     {
         path: "/news",
         name: "News",
-        component: News
+        component: News,
+        meta: {
+            title: "消息"
+        }
     },
     {
         path: "/visitor",
         name: "Visitor",
-        component: Visitor
+        component: Visitor,
+        meta: {
+            title: "访客"
+        }
     },
     {
         path: "/mine",
         name: "Mine",
-        component: Mine
+        component: Mine,
+        meta: {
+            title: "我的"
+        }
+    },
+    {
+        path: "/organization",
+        name: "Organization",
+        component: Organization,
+        meta: {
+            title: "组织架构"
+        }
     },
     {
         path: "/myHome",
@@ -64,19 +88,28 @@ const routes = [{
     {
         path: "/customHome",
         name: "CustomHome",
-        component: CustomHome
+        component: CustomHome,
+        meta: {
+            title: "自定义首页"
+        }
     },
     // 表单设置
     {
         path: "/commonForms",
         name: "CommonForms",
-        component: CommonForms
+        component: CommonForms,
+        meta: {
+            title: "表单设置"
+        }
     },
     // 快捷键表单设置
     {
         path: "/shortcutForms",
         name: "ShortcutForms",
-        component: ShortcutForms
+        component: ShortcutForms,
+        meta: {
+            title: "快捷键表单设置"
+        }
     },
     // 简报详情
     {
@@ -108,11 +141,19 @@ const routes = [{
         name: "Setting",
         component: Setting
     },
+    // 首页
+
     // 全部客户
     {
         path: "/allCustom",
         name: "AllCustom",
         component: AllCustom
+    },
+    // 客户详情
+    {
+        path: "/customerDetails",
+        name: "CustomerDetails",
+        component: CustomerDetails
     },
     // 新建
     {
@@ -163,9 +204,9 @@ router.beforeEach((to, from, next) => {
     if (to.path === "/") {
         next();
     } else {
-        let token = localStorage.getItem("token");
+        const tokenKey = getCookie("tokenKey");
 
-        if (token === null || token === "") {
+        if (tokenKey === null || tokenKey === "") {
             next("/");
         } else {
             next();
