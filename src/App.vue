@@ -5,11 +5,12 @@
   </div>
 </template>
 <script>
-import { getLogin } from "./services/login";
+import { getLogin, jsapi } from "./services/login";
 import * as dd from "dingtalk-jsapi";
 import router from "./router";
 import { setCookie, getCookie } from "./untils/auth";
 
+console.log(jsapi, "jsapi");
 export default {
   data() {
     return {
@@ -17,18 +18,53 @@ export default {
       inp: ""
     };
   },
+  mounted() {
+    this.getjsapi();
+  },
   async created() {
     if (dd.env.platform != "notInDingTalk") {
+      //   await this.getjsapi();
       await this.getDDCode();
     } else {
       setCookie(
         "tokenKey",
-        "eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6IjM0NjVlZmQ2LTZmZjktNGRmZS1iNzY1LThmMGQwNWIwNjdlMCJ9.P9uGa8zaiu7LVO0W5ohO4ivRe8w8YmyVGgKhTRBbj-ME52j-VdDEoBUFPjpoaWKqTCjxtAovIH5QRtlJI3PM7w"
+        "eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6IjA5MzEyYzJiLWVlNWMtNDA4Mi04ZTc3LWYxZTljOThhNGM1YyJ9.3UFe22GdQQQsy9vEoXqNYKw8NBhJYqErGF8gDYhlyzVUl8OXyTEzIsBg_i5wIHPUKAiWc25tX2V0m2b-iybAXA"
       );
       this.getDDCode();
     }
   },
   methods: {
+    getjsapi() {
+      jsapi().then(res => {
+        dd.config({
+          //实现验证
+          agentId: res.agentId,
+          corpId: res.corpId,
+          timeStamp: res.timeStamp,
+          nonceStr: res.nonceStr,
+          signature: res.signature,
+          type: 0,
+          jsApiList: [
+            "runtime.info",
+            "biz.contact.choose",
+            "device.notification.confirm",
+            "device.notification.alert",
+            "device.notification.prompt",
+            "biz.ding.post",
+            "biz.util.openLink",
+            "biz.telephone.call",
+            "biz.telephone.showCallMenu",
+            "biz.telephone.checkBizCall",
+            "biz.telephone.quickCallList",
+            "biz.conference.videoConfCall",
+            "biz.ding.create" //2.0
+          ]
+        });
+        dd.error(err => {
+          console.log(err, "err");
+        });
+      });
+    },
     getDDCode() {
       return new Promise((resolve, reject) => {
         dd.ready(function() {
@@ -68,6 +104,17 @@ export default {
 html,
 body {
   height: 100%;
+  /deep/element.style {
+    z-index: 0;
+  }
+  /deep/.van-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+  }
+  /deep/.van-image-preview__overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+  }
 }
 
 * {
@@ -75,6 +122,7 @@ body {
   padding: 0;
   list-style: none;
   font-size: 0.14rem;
+  font-family: PingFangSC-Regular, PingFang SC;
 }
 
 #app {

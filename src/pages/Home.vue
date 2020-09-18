@@ -72,7 +72,7 @@
               <img src="../common/images/order.png" alt="" />
               <span>合同订单</span>
             </li>
-            <router-link tag="li" to="/entrance">
+            <router-link tag="li" to="/contactDetails">
               <img src="../common/images/contacts.png" alt="" />
               <span>联系人</span>
             </router-link>

@@ -27,7 +27,6 @@ import {
     Search,
     Overlay,
     List,
-    Cell,
     PullRefresh,
     DropdownMenu,
     DropdownItem,
@@ -38,7 +37,14 @@ import {
     ActionSheet,
     SwipeCell,
     Card,
-    ImagePreview
+    ImagePreview,
+    Picker,
+    Icon,
+    RadioGroup,
+    Cell,
+    CellGroup,
+    Radio,
+    CheckboxGroup
 } from "vant";
 
 Vue.use(NavBar);
@@ -58,6 +64,7 @@ Vue.use(Overlay);
 Vue.use(Search);
 Vue.use(List);
 Vue.use(Cell);
+Vue.use(CellGroup);
 Vue.use(PullRefresh);
 Vue.use(DropdownMenu);
 Vue.use(DropdownItem);
@@ -69,6 +76,12 @@ Vue.use(SwipeCell);
 Vue.use(Card);
 Vue.use(ImagePreview);
 Vue.use(Uploader);
+Vue.use(Picker);
+Vue.use(Icon);
+Vue.use(Radio);
+Vue.use(RadioGroup);
+Vue.use(Checkbox);
+Vue.use(CheckboxGroup);
 
 Vue.config.productionTip = false;
 Vue.config.isToken = true;

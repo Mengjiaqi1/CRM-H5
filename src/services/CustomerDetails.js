@@ -46,7 +46,7 @@ export function File(file) {
 }
 //客户详情-文件柜-添加文件
 export function add(businessNo, cabinetType, customerNo, fileIds, fileType) {
-    return post("app/fileCabinet/add", {
+    return post("/app/fileCabinet/add", {
         businessNo,
         cabinetType,
         customerNo,

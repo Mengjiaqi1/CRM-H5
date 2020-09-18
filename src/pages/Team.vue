@@ -14,19 +14,45 @@
               >
                 <li
                   class="list-group-item"
-                  v-for="element in addCard"
-                  :key="element.menuId"
+                  v-for="element in principalList"
+                  :key="element.userId"
                 >
-                  <p class="headwrap">
-                    <img src="../common/images/2.jpg" alt="" class="head" />
-                    <span class="text">{{ element.name }} </span>
-                  </p>
+                  <div class="headwrap">
+                    <div class="head">
+                      <img
+                        :class="element.userProfile == '' ? 'ImgHide' : ''"
+                        :src="element.userProfile + '_100x100.jpg'"
+                        alt=""
+                      />
+                      <p
+                        :class="
+                          element.userProfile == '' ? 'ImgShow' : 'ImgHide'
+                        "
+                      >
+                        {{
+                          element.userName.length >= 3
+                            ? element.userName.substring(
+                                element.userName.length - 2,
+                                element.userName.length
+                              )
+                            : element.userName
+                        }}
+                      </p>
+                    </div>
+                    <span class="text">{{ element.userName }} </span>
+                  </div>
                   <span class="badge">
                     <img
                       :src="forms_reduce"
                       alt=""
                       class="reducer"
-                      @click="removeAdd(element.menuId, element.name)"
+                      @click="
+                        removeprincipal(
+                          element.customerNo,
+                          element.type,
+                          element.userId
+                        )
+                      "
                     />
                   </span>
                 </li>
@@ -48,19 +74,45 @@
               >
                 <li
                   class="list-group-item"
-                  v-for="element in addCard"
-                  :key="element.menuId"
+                  v-for="element in partnerList"
+                  :key="element.userId"
                 >
-                  <p class="headwrap">
-                    <img src="../common/images/2.jpg" alt="" class="head" />
-                    <span class="text">{{ element.name }} </span>
-                  </p>
+                  <div class="headwrap">
+                    <div class="head">
+                      <img
+                        :class="element.userProfile == '' ? 'ImgHide' : ''"
+                        :src="element.userProfile + '_100x100.jpg'"
+                        alt=""
+                      />
+                      <p
+                        :class="
+                          element.userProfile == '' ? 'ImgShow' : 'ImgHide'
+                        "
+                      >
+                        {{
+                          element.userName.length >= 3
+                            ? element.userName.substring(
+                                element.userName.length - 2,
+                                element.userName.length
+                              )
+                            : element.userName
+                        }}
+                      </p>
+                    </div>
+                    <span class="text">{{ element.userName }} </span>
+                  </div>
                   <span class="badge">
                     <img
                       :src="forms_reduce"
                       alt=""
                       class="reducer"
-                      @click="removeAdd(element.menuId, element.name)"
+                      @click="
+                        removepartner(
+                          element.customerNo,
+                          element.type,
+                          element.userId
+                        )
+                      "
                     />
                   </span>
                 </li>
@@ -71,18 +123,20 @@
       </div>
     </main>
     <div class="addcontacts">
-      <router-link tag="div" class="add" to="/organization">
+      <div class="add" @click="goOranization">
         <img src="../common/images/add.png" alt="" />
-      </router-link>
+      </div>
     </div>
     <div class="footer">
-      <van-button type="info">电话会议</van-button>
+      <van-button type="info" @click="changeCall">电话会议</van-button>
       <van-button type="primary">Ding</van-button>
     </div>
   </div>
 </template>
 <script>
 import draggable from "vuedraggable";
+import { findChargeList, add } from "../services/organization";
+import * as dd from "dingtalk-jsapi";
 export default {
   data() {
     return {
@@ -92,13 +146,70 @@ export default {
         { menuId: 2, name: "3" }
       ],
       forms_add: require("../common/images/home_add.png"),
-      forms_reduce: require("../common/images/home_reducer.png")
+      forms_reduce: require("../common/images/home_reducer.png"),
+      customerNo: "",
+      partnerList: [], //协同人
+      principalList: [], // 负责人
+      users: [], //工号测试
+      usersList: [] //工号
     };
   },
-  created() {},
+  created() {
+    this.customerNo = this.$route.query.id;
+    this.getfindChargeList();
+    console.log(JSON.parse(JSON.stringify(this.users)), "list");
+    // let arr = [{ 0: "梦" }, { 1: "佳琦" }];
+    for (var each of this.users) {
+      for (var key in each) {
+        console.log(each[key]);
+      }
+    }
+    console.log(this.usersList, "lsit2");
+  },
   methods: {
-    removeAdd(id, names) {
-      console.log(id, names);
+    //电话会议
+    changeCall() {
+      dd.ready(function() {
+        dd.biz.telephone.call({
+          users: ["2031031816751911", "201913384023551116"], //用户列表，工号
+          corpId: "ding4549e680a3f82a1c35c2f4657eb6378f", //企业id
+          onSuccess: function() {},
+          onFail: function() {}
+        });
+      });
+      dd.error(err => {
+        console.log(err, "err");
+      });
+    },
+    goOranization() {
+      this.$router.push({
+        path: "/organization",
+        query: { id: this.customerNo }
+      });
+    },
+    // 查询协同人，负责人
+    getfindChargeList() {
+      findChargeList(this.customerNo).then(res => {
+        if (res.code == 200) {
+          this.partnerList = res.data.partnerList;
+          this.principalList = res.data.principalList;
+          this.principalList.map(each => {
+            this.users.push(each.staffId);
+          });
+        }
+      });
+    },
+    // 删除负责人
+    removeprincipal(customerNo, type, userId) {
+      add(customerNo, type, userId).then(res => {
+        console.log(res);
+      });
+    },
+    // 删除协同人
+    removepartner(customerNo, type, userId) {
+      add(customerNo, type, userId).then(res => {
+        console.log(res);
+      });
     }
   },
   components: {
@@ -197,6 +308,23 @@ export default {
               width: 0.28rem;
               height: 0.28rem;
               border-radius: 50%;
+            }
+            .ImgHide {
+              display: none;
+            }
+            .ImgShow {
+              width: 0.28rem;
+              height: 0.28rem;
+              border-radius: 50%;
+              margin-right: 0.11rem;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              background: #006aff;
+              color: #fff;
+              font-size: 0.12rem;
+              font-family: PingFangSC-Regular, PingFang SC;
+              font-weight: 400;
             }
           }
 

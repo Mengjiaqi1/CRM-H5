@@ -390,7 +390,6 @@ import area from "../../common/js/area";
 import { Toast } from "vant";
 export default {
   components: {
-    area,
     TimePopup
   },
   data() {

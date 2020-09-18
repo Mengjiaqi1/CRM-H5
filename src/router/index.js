@@ -22,9 +22,14 @@ import Approval from "../pages/Approval";
 import Organization from "../pages/Organization";
 import Entrance from "../pages/Entrance";
 import CustomerDetails from "../pages/Custom/CustomerDetails";
+import ContactDetails from "../pages/Contacts/ContactDetails.vue";
 import store from "../store";
 import { getCookie } from "../untils/auth";
 import Team from "../pages/Team";
+import NewContacts from "../pages/Contacts/NewContacts.vue";
+import Associated from "../pages/Custom/Associated.vue";
+import Xls from "../pages/Xls.vue";
+console.log(Associated, "Associated");
 Vue.use(VueRouter);
 
 const routes = [
@@ -172,6 +177,42 @@ const routes = [
         name: "CustomerDetails",
         component: CustomerDetails
     },
+    // 表格
+    {
+        path: "/xls",
+        name: "Xls",
+        component: Xls,
+        meta: {
+            title: "表格"
+        }
+    },
+    // 联系人详情
+    {
+        path: "/contactDetails",
+        name: "ContactDetails",
+        component: ContactDetails,
+        meta: {
+            title: "联系人详情"
+        }
+    },
+    //关联客户
+    {
+        path: "/associated",
+        name: "Associated",
+        component: Associated,
+        meta: {
+            title: "关联客户"
+        }
+    },
+    // 新建联系人
+    {
+        path: "/newContacts",
+        name: "NewContacts",
+        component: NewContacts,
+        meta: {
+            title: "新建联系人"
+        }
+    },
     // 新建
     {
         path: "/build",
@@ -196,6 +237,7 @@ const routes = [
         name: "Approval",
         component: Approval
     },
+
     {
         path: "/home",
         name: "Home",

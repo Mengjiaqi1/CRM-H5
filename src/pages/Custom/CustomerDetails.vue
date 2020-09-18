@@ -43,12 +43,12 @@
           </div>
         </div>
         <div class="header_team">
-          <router-link to="/team" class="header_t_left">
+          <div class="header_t_left" @click="goTeam">
             <div class="header_t_center">
               <img src="../../common/images/2.jpg" alt="" />
               <span class="text">海绵宝宝</span>
             </div>
-          </router-link>
+          </div>
           <div class="header_t_right">
             <div class="header_t_center">
               <img src="../../common/images/2.jpg" alt="" />
@@ -92,7 +92,7 @@
       </div>
       <div class="content">
         <div class="nav">
-          <van-tabs>
+          <van-tabs style="height:100%,backgroung:red">
             <van-tab title="基本信息">
               <div class="Basic_infor">
                 <div class="none"></div>
@@ -128,6 +128,8 @@
                     type="textarea"
                     label="客户地址"
                     readonly
+                    rows="1"
+                    autosize
                   />
                   <van-field
                     v-model="GW"
@@ -164,11 +166,18 @@
                 </div>
                 <div class="form">
                   <div class="enclosure_wrap">
-                    <div class="enclosure" @click="handleLoopUp">
+                    <div
+                      class="enclosure"
+                      v-for="(val, index) in accessoryList"
+                      :key="index"
+                    >
                       <span class="enclosure_tit">附件</span
-                      ><span class="enclosure_content" ref="preview">{{
-                        enclosure
-                      }}</span>
+                      ><span
+                        class="enclosure_content"
+                        @click="handleLoopUp(val.url)"
+                        ref="preview"
+                        >{{ val.fileOldName }}</span
+                      >
                     </div>
                   </div>
 
@@ -339,11 +348,94 @@
                 </div>
               </div>
             </van-tab>
-            <van-tab title="上下级"> 内容 3 </van-tab>
+            <van-tab title="上下级">
+              <div class="superior">
+                <div class="tit">
+                  <span class="customer">上级客户</span>
+                  <router-link tag="span" to="/associated"
+                    ><van-icon name="add"
+                  /></router-link>
+                </div>
+                <div class="s_content">
+                  <div class="content_li">
+                    <div class="c_tit">
+                      <span class="company">中国东方航空集团有限公司</span>
+                      <span><van-icon name="delete"/></span>
+                    </div>
+                    <div class="center">
+                      <p class="c_li">
+                        <span class="left">联系电话:</span
+                        ><span class="right">12345678</span>
+                      </p>
+                      <p class="c_li">
+                        <span class="left">负责人:</span
+                        ><span class="right">12345678</span>
+                      </p>
+                      <p class="c_li">
+                        <span class="left">最后跟进时间:</span
+                        ><span class="right">12345678</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="superior">
+                <div class="tit">
+                  <span class="customer">下级客户</span>
+                  <router-link tag="span" to="/associated">
+                    <van-icon name="add"
+                  /></router-link>
+                </div>
+                <div class="s_content">
+                  <div class="content_li">
+                    <div class="c_tit">
+                      <span class="company">中国东方航空集团有限公司</span>
+                      <span><van-icon name="delete"/></span>
+                    </div>
+                    <div class="center">
+                      <p class="c_li">
+                        <span class="left">联系电话:</span
+                        ><span class="right">12345678</span>
+                      </p>
+                      <p class="c_li">
+                        <span class="left">负责人:</span
+                        ><span class="right">12345678</span>
+                      </p>
+                      <p class="c_li">
+                        <span class="left">最后跟进时间:</span
+                        ><span class="right">12345678</span>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="content_li">
+                    <div class="empty"></div>
+                    <div class="c_tit">
+                      <span class="company">中国东方航空集团有限公司</span>
+                      <span><van-icon name="delete"/></span>
+                    </div>
+                    <div class="center">
+                      <p class="c_li">
+                        <span class="left">联系电话:</span
+                        ><span class="right">12345678</span>
+                      </p>
+                      <p class="c_li">
+                        <span class="left">负责人:</span
+                        ><span class="right">12345678</span>
+                      </p>
+                      <p class="c_li">
+                        <span class="left">最后跟进时间:</span
+                        ><span class="right">12345678</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </van-tab>
             <van-tab title="文件柜">
               <div class="File_cabinet">
                 <div class="tit">
-                  <span class="total">共计文件</span><span class="num">2</span>
+                  <span class="total">共计文件</span
+                  ><span class="num">{{ total }}</span>
                 </div>
                 <div class="file_wrap">
                   <div class="file_nav">
@@ -354,17 +446,18 @@
                         v-model="activeName"
                       >
                         <van-tab title="客户" name="1">
-                          <div class="file_content" ref="fileContent">
+                          <div class="file_content">
                             <van-swipe-cell
                               v-for="(each, index) in fileList"
                               :key="each.cabinetId"
                             >
                               <div class="file_content_li">
-                                <div class="left">
+                                <div class="left" @click="changeImg(each.url)">
                                   <img
                                     src="../../common/images/excel.png"
                                     alt=""
                                   />
+                                  <van-uploader v-model="uploader" />
                                 </div>
                                 <div class="center">
                                   <p class="Scheduling">
@@ -379,17 +472,70 @@
                                     </li>
                                   </div>
                                   <div class="size">
-                                    {{
-                                      (each.fileSize / 1024 / 1024).toFixed(1)
-                                    }}M
+                                    {{ (each.fileSize / 1024).toFixed(1) }}KB
                                   </div>
                                 </div>
                                 <div
                                   class="right"
-                                  @click="handlecheck(each.url)"
+                                  @click="handlecheck(each.url, each.cabinetId)"
                                 >
                                   <img
-                                    ref="check"
+                                    :src="uploadType(each.url) ? check : xiazai"
+                                    alt=""
+                                  />
+                                </div>
+                              </div>
+                              <template #right>
+                                <van-button
+                                  type="danger"
+                                  class="delete-button-none"
+                                />
+                                <van-button
+                                  square
+                                  text="删除"
+                                  type="danger"
+                                  class="delete-button"
+                                  @click="handlerDel(each.cabinetId, index)"
+                                />
+                              </template>
+                            </van-swipe-cell>
+                          </div>
+                        </van-tab>
+                        <van-tab title="合同" name="2">
+                          <div class="file_content">
+                            <van-swipe-cell
+                              v-for="(each, index) in fileList"
+                              :key="each.cabinetId"
+                            >
+                              <div class="file_content_li">
+                                <div class="left" @click="changeImg(each.url)">
+                                  <img
+                                    src="../../common/images/excel.png"
+                                    alt=""
+                                  />
+                                  <van-uploader v-model="uploader" />
+                                </div>
+                                <div class="center">
+                                  <p class="Scheduling">
+                                    {{ each.fileOldName }}
+                                  </p>
+                                  <div class="nameAndtime">
+                                    <span class="surname">{{
+                                      each.createUserName
+                                    }}</span>
+                                    <li class="time">
+                                      <span>{{ each.createTime }}</span>
+                                    </li>
+                                  </div>
+                                  <div class="size">
+                                    {{ (each.fileSize / 1024).toFixed(1) }}KB
+                                  </div>
+                                </div>
+                                <div
+                                  class="right"
+                                  @click="handlecheck(each.url, each.cabinetId)"
+                                >
+                                  <img
                                     src="../../common/images/check.png"
                                     alt=""
                                   />
@@ -409,34 +555,47 @@
                                 />
                               </template>
                             </van-swipe-cell>
-                            <!-- <van-swipe-cell>
+                          </div>
+                        </van-tab>
+                        <van-tab title="机会" name="3">
+                          <div class="file_content">
+                            <van-swipe-cell
+                              v-for="(each, index) in fileList"
+                              :key="each.cabinetId"
+                            >
                               <div class="file_content_li">
-                                <div class="left">
-                                  <img :src="fileList" alt="" />
+                                <div class="left" @click="changeImg(each.url)">
+                                  <img
+                                    src="../../common/images/excel.png"
+                                    alt=""
+                                  />
+                                  <van-uploader v-model="uploader" />
                                 </div>
                                 <div class="center">
-                                  <div class="Scheduling">项目排期.rar</div>
+                                  <p class="Scheduling">
+                                    {{ each.fileOldName }}
+                                  </p>
                                   <div class="nameAndtime">
-                                    <span class="surname">何强</span>
+                                    <span class="surname">{{
+                                      each.createUserName
+                                    }}</span>
                                     <li class="time">
-                                      <span class="ymd">2020-12-01</span>
-                                      <span class="hsm">12:32:21</span>
+                                      <span>{{ each.createTime }}</span>
                                     </li>
                                   </div>
-                                  <div class="size">1.1M</div>
+                                  <div class="size">
+                                    {{ (each.fileSize / 1024).toFixed(1) }}KB
+                                  </div>
                                 </div>
-                                <div class="right">
+                                <div
+                                  class="right"
+                                  @click="handlecheck(each.url, each.cabinetId)"
+                                >
                                   <img
-                                    @click="changePreview"
                                     src="../../common/images/check.png"
                                     alt=""
                                   />
                                 </div>
-                                <van-image-preview
-                                  v-model="Fileshow"
-                                  :images="images"
-                                >
-                                </van-image-preview>
                               </div>
                               <template #right>
                                 <van-button
@@ -448,42 +607,22 @@
                                   text="删除"
                                   type="danger"
                                   class="delete-button"
+                                  @click="handlerDel(each.cabinetId, index)"
                                 />
                               </template>
-                            </van-swipe-cell> -->
+                            </van-swipe-cell>
                           </div>
                         </van-tab>
-                        <van-tab title="合同" name="2">内容 2</van-tab>
-                        <van-tab title="机会" name="3">内容 3</van-tab>
                       </van-tabs>
                       <div class="file_upload">
-                        <van-uploader class="uploadImg" :after-read="afterRead">
+                        <van-uploader
+                          class="uploadImg"
+                          :after-read="onRead"
+                          ref="upload"
+                        >
                           <img src="../../common/images/upload.png" alt="" />
                         </van-uploader>
-                        <!-- <input
-                          ref="fileToUpload"
-                          id="fileToUpload"
-                          type="file"
-                          name="fileToUpload"
-                          multiple
-                          class="uploadImg"
-                          @change="handleFile"
-                        /> -->
                       </div>
-                      <!-- <van-overlay :show="fileshow" @click="fileshow = false">
-                        <div class="wrapper" @click.stop>
-                          <div class="block">
-                            <iframe
-                              frameborder="0"
-                              :src="fileUrl"
-                              width="100%"
-                              height="500"
-                              id="iframe"
-                              name="iframe1"
-                            ></iframe>
-                          </div>
-                        </div>
-                      </van-overlay> -->
                     </div>
                   </div>
                 </div>
@@ -493,13 +632,14 @@
         </div>
       </div>
     </main>
-    <!-- <van-overlay :show="Imgshow" @click="Imgshow = false">
-      <div class="wrapper" @click="Imgshow = false" @click.stop>
+
+    <van-overlay :show="showImg" @click="showImg = false">
+      <div class="wrapper" @click="showImg = false" @click.stop>
         <div class="block">
-          <img src="" alt="" id="img" />
+          <img :src="imgUrl" alt="" id="img" />
         </div>
       </div>
-    </van-overlay> -->
+    </van-overlay>
     <CustomerNav />
   </div>
 </template>
@@ -510,23 +650,20 @@ import {
   findByCustomerNo,
   findRecordsCount,
   remove,
-  add,
-  fileupload
+  add
 } from "../../services/CustomerDetails";
-import { ImagePreview } from "vant";
-import pdf from "vue-pdf";
-import { post } from "../../services/http";
 import CustomerNav from "@/components/CustomerNav";
-import qS from "qs";
+import upLoaderImg from "../../common/js/upLoaderImg";
 
 export default {
   data() {
     return {
+      reg: /\.(png|jpg|gif|jpeg|webp)$/,
       check: require("../../common/images/check.png"),
       xiazai: require("../../common/images/xiazai.png"),
       show: false,
-      fileshow: false,
-      Imgshow: false,
+      showImg: false,
+      total: 0, // 文件总数
       actions: [{ name: "选项一" }, { name: "选项二" }, { name: "选项三" }],
       customerNo: "", // 编号
       businessNo: "", //业务编号
@@ -552,15 +689,14 @@ export default {
       customerId: "",
       Fileshow: false,
       index: 0,
-      images: [],
       FollowrecordData: "", // 跟进记录数据
       url: "",
       fileList: [],
       activeName: "1", // 文件柜类型1客户2合同3机会
       count: "",
-      fileUrl: "http://baidu.com",
-      fileObj: "",
-      fileId: "" // 上传图片id
+      uploader: [], // 点击图片放大
+      imgUrl: "",
+      upload: ""
     };
   },
   watch: {},
@@ -573,94 +709,61 @@ export default {
     this.getfindRecordsCount();
   },
   methods: {
-    afterRead(file) {
-      console.log(file, "co");
-      //   fileupload(file.content.split(",")[1], file.file.name).then(res => {
-      //     if (res.retDesc == "ok") {
-      //       this.fileId = res.result.fileId;
-      //       console.log(this.fileId, "id");
-      //       //   add(
-      //       //     this.customerNo,
-      //       //     this.activeName,
-      //       //     this.customerNo,
-      //       //     this.fileId
-      //       //   ).then(res => {
-      //       //     if (res.code == 200) {
-      //       //       console.log(res);
-      //       //     }
-      //       //   });
-      //     }
-      //   });
-
-      this.$http
-        .post("/upload/fileUpload/file", file, {
-          headers: {
-            "Content-Type": "multipart/form-data"
-          }
-        })
-        .then(res => {
-          console.log(res, "res");
-        });
-      //   File(file).then(res => {
-      //     console.log(res);
-      //   });
+    goTeam() {
+      this.$router.push({ path: "/team", query: { id: this.customerNo } });
     },
+    //正则判断上传文件类型
+    uploadType(url) {
+      return /(png|jpg|gif|jpeg|webp)$/.test(
+        url.substring(url.lastIndexOf(".") + 1, url.length)
+      );
+    },
+    // 文件柜
+    changeImg(url) {
+      this.uploader.push({ url: url });
+    },
+    // 文件柜查看文件
+    handlecheck(url) {
+      if (this.uploadType(url)) {
+        this.showImg = true;
+        this.imgUrl = url;
+      } else {
+        this.showImg = false;
+        this.$router.push({ path: "/xls", query: { url } });
+      }
+    },
+    async onRead(file) {
+      await upLoaderImg(file.file).then(res => {
+        this.fileId = res.result.fileId;
+      });
+      await this.getAdd();
+    },
+    getAdd() {
+      add(this.customerNo, this.activeName, this.customerNo, this.fileId).then(
+        res => {
+          if (res.code == 200) {
+            console.log(res);
+          }
+        }
+      );
+    },
+
     handlerDel(id, ind) {
       this.fileList.splice(ind, 1);
       remove(id).then(res => {
         if (res.code == 200) {
           console.log(res);
-          this.$Toast("删除成功");
+          this.$toast({
+            message: "删除成功",
+            position: "center"
+          });
         }
       });
     },
-    handleFile() {
-      let file = this.$refs.fileToUpload.files[0];
-      console.log(file, "files");
-      this.fileObj = this.$refs.fileToUpload.files[0];
-      console.log(file, "fle");
-
-      fileupload(file).then(res => {
-        console.log(res);
-      });
-      this.fileList.push({
-        fileSize: file.size,
-        fileOldName: file.name,
-        url: file.url,
-        createTime: this.$moment(file.lastModifiedDate).format(
-          "YYYY-MM-DD HH:mm:ss"
-        )
-      });
-    },
-    handlecheck(url) {
-      //   console.log(this.fileObj.raw, "obj");
-      //   console.log(document.getElementById("img"));
-      //   var fReader = new FileReader();
-
-      //   fReader.readAsDataURL(this.fileObj._proto_);
-      //   console.log(fReader.readAsDataURL(this.fileObj), "fReader");
-      //   fReader.οnlοad = function(e) {
-      //     console.log(e, "e");
-      //     document.getElementById("img").src = this.result;
-      //   };
-      this.Imgshow = true;
-      this.fileUrl = url;
-      //   console.log(this.fileUrl, "urla");
-      this.fileshow = !this.fileshow;
-    },
     onClickName(name) {
-      console.log(name, "type");
       this.activeName = name;
+      this.getfindByCustomerNo();
     },
-
-    // handlerUpload() {
-    //   let fileContent = this.$refs.fileContent;
-    //   var fileBox = "";
-    //   this.fileList.map(each => {
-    //     fileContent.innerHTML += fileBox;
-    //     this.fileList = [];
-    //   });
-    // },
 
     handleOk(convertedData) {
       console.log(convertedData);
@@ -675,21 +778,11 @@ export default {
       });
     },
     // 基本信息查看附件
-    handleLoopUp() {
-      this.accessoryList.map(each => {
-        this.url = each.url;
-        this.images.push(each.url);
-        console.log(this.images);
-      });
+    handleLoopUp(url) {
+      this.$router.push({ path: "xls", query: { url: url } });
     },
     onChange(index) {
       this.index = index;
-    },
-    changePreview() {
-      ImagePreview([
-        "https://img.yzcdn.cn/vant/apple-1.jpg",
-        "https://img.yzcdn.cn/vant/apple-2.jpg"
-      ]);
     },
     onSelect(item) {
       // 默认情况下点击选项时不会自动收起
@@ -747,26 +840,22 @@ export default {
       findByCustomerNo(this.customerNo, this.activeName, 0, 10).then(res => {
         if (res.code == 200) {
           this.fileList = res.rows;
+          this.total = res.rows.length;
         }
       });
     }
   },
 
-  components: { pdf, CustomerNav }
+  components: { CustomerNav }
 };
 </script>
 <style scoped lang="scss">
 * {
   margin: 0;
   padding: 0;
-  list-style: none;
 }
-.van-overlay {
-  //   width: 100%;
-  //   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 999;
-}
+
+// 弹框样式
 .wrapper {
   display: flex;
   align-items: center;
@@ -789,10 +878,12 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
+  //   background: #f8f9fa;
   main {
     // flex: 1;
     // overflow: scroll;
     margin-bottom: 0.6rem;
+    // background: #f8f9fa;
   }
 
   .chenkExecl {
@@ -876,7 +967,6 @@ export default {
           width: 1.6rem;
           display: flex;
           font-size: 0.16rem;
-          font-family: PingFangSC-Semibold, PingFang SC;
           font-weight: 600;
           color: #ffffff;
           line-height: 0.22rem;
@@ -891,7 +981,6 @@ export default {
           margin-top: 0.07rem;
           .personnel {
             font-size: 0.14rem;
-            font-family: PingFangSC-Regular, PingFang SC;
             font-weight: 400;
             color: #ffffff;
             line-height: 0.2rem;
@@ -899,7 +988,6 @@ export default {
           }
           .names {
             font-size: 0.14rem;
-            font-family: PingFangSC-Regular, PingFang SC;
             font-weight: 400;
             color: #ffffff;
             line-height: 0.2rem;
@@ -1000,14 +1088,12 @@ export default {
         }
         .num {
           font-size: 0.18rem;
-          font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
           color: #333333;
           line-height: 0.25rem;
         }
         .scroll_text {
           font-size: 0.12rem;
-          font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
           color: #999999;
           line-height: 0.17rem;
@@ -1022,22 +1108,23 @@ export default {
     .nav {
       width: 100%;
       height: 100%;
+      background: #f8f9fa !important;
       .none {
         width: 100%;
         height: 0.1rem;
         background: #f8f9fa;
+        /deep/.van-tabs__content {
+          height: 100%;
+        }
       }
 
       /deep/.van-tabs__wrap--scrollable {
+        background: #fff;
         padding-left: 0.12rem;
         padding-right: 0.12rem;
       }
       /deep/.van-tabs__line {
         width: 0.32rem !important;
-      }
-      /deep/.van-tabs__wrap--scrollable .van-tabs__nav--complete {
-        padding-left: 0;
-        padding-right: 0;
       }
       /deep/.van-tab {
         margin-right: 0.45rem;
@@ -1053,9 +1140,11 @@ export default {
       }
     }
     .form {
+      background: #fff;
       /deep/.van-cell {
         min-height: 0.44rem;
         display: flex;
+
         span {
           display: inline-block;
           margin-top: 0.12rem;
@@ -1078,6 +1167,7 @@ export default {
       width: 100%;
       height: 100%;
       .files {
+        background: #fff;
         .files_tit {
           width: 100%;
           height: 0.44rem;
@@ -1160,6 +1250,8 @@ export default {
       height: 100%;
       .con_follow_li {
         width: 100%;
+        background: #fff;
+        padding-bottom: 0.12rem;
         .con_follow_li_tit {
           display: flex;
           justify-content: space-between;
@@ -1277,7 +1369,6 @@ export default {
           padding: 0 0.12rem;
           box-sizing: border-box;
           margin-top: 0.18rem;
-          margin-bottom: 0.2rem;
           .con_follow_li_time_min {
             width: 100%;
             height: 0.34rem;
@@ -1385,6 +1476,7 @@ export default {
             /deep/.van-tabs__wrap {
               height: 0.34rem;
               display: flex;
+              padding-left: 0;
             }
             /deep/.van-tab--active {
               color: #017cff;
@@ -1416,7 +1508,7 @@ export default {
             }
             .file_content {
               width: 100%;
-              //   height: 5rem;
+              height: 100%;
               border-radius: 0.08rem;
               background: #fff;
               margin-top: 0.1rem;
@@ -1448,19 +1540,39 @@ export default {
               }
               .file_content_li {
                 width: 100%;
-                height: 0.96rem;
                 display: flex;
                 justify-content: space-between;
                 border-bottom: 0.01rem solid #eceff2;
                 background: #fff;
                 box-sizing: border-box;
+                padding-bottom: 0.16rem;
                 .left {
                   margin-top: 0.24rem;
                   width: 0.4rem;
                   height: 0.4rem;
+                  position: relative;
                   img {
                     width: 0.4rem;
                     height: 0.4rem;
+                  }
+                  /deep/.van-uploader {
+                    width: 0.4rem;
+                    height: 0.4rem;
+                  }
+                  /deep/.van-uploader__upload {
+                    display: none;
+                  }
+                  /deep/.van-uploader__preview-image {
+                    width: 0.4rem;
+                    height: 0.4rem;
+                  }
+                  /deep/.van-uploader__preview-delete {
+                    display: none;
+                  }
+                  /deep/.van-uploader__preview {
+                    position: absolute;
+                    top: -0.4rem;
+                    opacity: 0;
                   }
                 }
                 .center {
@@ -1470,24 +1582,21 @@ export default {
 
                   .Scheduling {
                     width: 2rem;
-                    overflow: hidden;
-                    white-space: nowrap;
-                    text-overflow: ellipsis;
+                    text-align: justify;
+                    text-justify: newspaper;
+                    word-break: break-all;
+                    text-align: left;
                     font-size: 0.16rem;
-                    font-family: PingFangSC-Regular, PingFang SC;
                     font-weight: 400;
                     color: #333333;
                     line-height: 0.22rem;
-                    // &:hover {
-                    //   text-overflow: inherit;
-                    //   overflow: visible;
-                    //   white-space: inherit;
-                    // }
                   }
                   .nameAndtime {
                     display: flex;
+                    line-height: 0.17rem;
                     margin-top: 0.05rem;
                     .surname {
+                      display: flex;
                       min-width: 0.39rem;
                       font-size: 0.12rem;
                       font-family: PingFangSC-Regular, PingFang SC;
@@ -1501,6 +1610,7 @@ export default {
 
                   .size {
                     display: flex;
+                    line-height: 0.17rem;
                     margin-top: 0.05rem;
                     font-size: 0.12rem;
                     font-family: PingFangSC-Regular, PingFang SC;
@@ -1516,6 +1626,32 @@ export default {
                   img {
                     widows: 0.14rem;
                     height: 0.14rem;
+                    position: relative;
+                  }
+                  /deep/.van-uploader {
+                    width: 0.2rem;
+                    height: 0.2rem;
+                    position: absolute;
+                    top: 50%;
+                    right: 0;
+                    margin-top: -0.1rem;
+                  }
+                  /deep/.van-uploader__upload {
+                    display: none;
+                  }
+                  /deep/.van-uploader__wrapper {
+                    width: 0.2rem;
+                    height: 0.2rem;
+                  }
+                  /deep/.van-uploader__preview-image {
+                    width: 0.14rem;
+                    height: 0.14rem;
+                  }
+                  /deep/.van-uploader__preview-delete {
+                    display: none;
+                  }
+                  /deep/.van-uploader__preview {
+                    // display: none;
                   }
                 }
               }
@@ -1534,120 +1670,95 @@ export default {
             .uploadImg {
               width: 0.34rem;
               height: 0.34rem;
-              //   position: absolute;
-              //   top: 0;
-              //   left: 0;
-              //   opacity: 0;
             }
           }
         }
       }
     }
-    .file_content {
+    .superior {
       width: 100%;
-      height: 5rem;
-      border-radius: 0.08rem;
-      background: #fff;
-      margin-top: 0.1rem;
-      padding: 0 0.11rem;
-      box-sizing: border-box;
-      /deep/element.style {
-        transform: translate3d(-79px, 0px, 0px);
-      }
-      /deep/.van-swipe-cell__right {
+      .tit {
+        width: 100%;
+        height: 0.4rem;
+        background: #f8f9fa;
         display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-left: 0.12rem;
+        padding-right: 0.12rem;
+        box-sizing: border-box;
+        .customer {
+          font-size: 0.12rem;
+          font-family: PingFangSC-Regular, PingFang SC;
+          font-weight: 400;
+          color: #999999;
+        }
+        .van-icon-add {
+          width: 0.16rem;
+          height: 0.16rem;
+          color: #006aff;
+        }
       }
-      /deep/.van-button--danger {
-        background: #ff6189;
-        border: none;
+      .s_content {
+        .content_li {
+          background: #fff;
+          .empty {
+            width: 100%;
+            height: 0.12rem;
+            background: #f8f9fa;
+          }
+          .c_tit {
+            width: 100%;
+            height: 0.44rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 0.01rem solid #eceff2;
+            padding-left: 0.12rem;
+            padding-right: 0.12rem;
+            box-sizing: border-box;
+            .company {
+              font-size: 0.16rem;
+              font-family: PingFangSC-Regular, PingFang SC;
+              font-weight: 400;
+              color: #333333;
+            }
+            .van-icon-delete {
+              width: 0.16rem;
+              height: 0.19rem;
+              color: #d8d8d8;
+            }
+          }
+          .center {
+            width: 100%;
+            margin-top: 0.11rem;
+            padding-bottom: 0.17rem;
+            padding-left: 0.12rem;
+            padding-right: 0.12rem;
+            box-sizing: border-box;
+            .c_li {
+              display: flex;
+              margin-top: 0.08rem;
+              .left {
+                flex: 3;
+                display: flex;
+                font-size: 0.12rem;
+                font-family: PingFangSC-Regular, PingFang SC;
+                font-weight: 400;
+                color: #666666;
+              }
+              .right {
+                flex: 7;
+                display: flex;
+                font-size: 0.12rem;
+                font-family: PingFangSC-Regular, PingFang SC;
+                font-weight: 400;
+                color: #999999;
+              }
+            }
+          }
+        }
       }
-      /deep/ .goods-card {
-        margin: 0;
-        background-color: #fff;
-      }
-      /deep/.delete-button-none {
-        width: 0.15rem;
-        background: #fff;
-        height: 100%;
-        border-bottom: 0.01rem solid #eceff2;
-      }
-      /deep/.delete-button {
-        width: 0.64rem;
-        height: 100%;
-      }
-      //   .file_content_li {
-      //     width: 100%;
-      //     height: 0.96rem;
-      //     display: flex;
-      //     justify-content: space-between;
-      //     border-bottom: 0.01rem solid #eceff2;
-      //     background: #fff;
-      //     box-sizing: border-box;
-      //     .left {
-      //       margin-top: 0.24rem;
-      //       width: 0.4rem;
-      //       height: 0.4rem;
-      //       img {
-      //         width: 0.4rem;
-      //         height: 0.4rem;
-      //       }
-      //     }
-      //     .center {
-      //       flex: 1;
-      //       margin-left: 0.2rem;
-      //       margin-top: 0.16rem;
-      //       box-sizing: border-box;
-      //       .Scheduling {
-      //         display: flex;
-      //         font-size: 0.16rem;
-      //         font-family: PingFangSC-Regular, PingFang SC;
-      //         font-weight: 400;
-      //         color: #333333;
-      //         line-height: 0.22rem;
-      //       }
-      //       .nameAndtime {
-      //         display: flex;
-      //         margin-top: 0.05rem;
-      //         .surname {
-      //           font-size: 0.12rem;
-      //           font-family: PingFangSC-Regular, PingFang SC;
-      //           font-weight: 400;
-      //           color: #666666;
-      //           margin-right: 0.18rem;
-      //         }
-      //         .time {
-      //           .ymd {
-      //             margin-right: 0.05rem;
-      //           }
-      //           .ymd .hms {
-      //             font-size: 0.12rem;
-      //             font-family: PingFangSC-Regular, PingFang SC;
-      //             font-weight: 400;
-      //             color: #666666;
-      //           }
-      //         }
-      //       }
-
-      //       .size {
-      //         display: flex;
-      //         margin-top: 0.05rem;
-      //         font-size: 0.12rem;
-      //         font-family: PingFangSC-Regular, PingFang SC;
-      //         font-weight: 400;
-      //         color: #666666;
-      //       }
-      //     }
-      //     .right {
-      //       display: flex;
-      //       align-items: center;
-      //       justify-content: center;
-      //       margin-right: 0.08rem;
-      //       img {
-      //         widows: 0.14rem;
-      //         height: 0.14rem;
-      //       }
-      //     }
-      //   }
     }
   }
 }

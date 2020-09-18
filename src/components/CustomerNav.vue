@@ -24,7 +24,7 @@
           <div class="block_wrap">
             <div class="tit">联系人号码</div>
             <div class="content">
-              <li v-for="each in phoneList" :key="each.contactsId">
+              <li v-for="(each, ind) in phoneList" :key="ind">
                 <p class="deptName">
                   <span class="name">{{ each.contactsName }}</span
                   ><span class="phone">{{ each.phoneNum }}</span
@@ -34,21 +34,7 @@
                   <img
                     src="../common/images/phone.png"
                     alt=""
-                    @click="handleCall"
-                  />
-                </p>
-              </li>
-              <li>
-                <p class="deptName">
-                  <span class="name">王大陆</span
-                  ><span class="phone">18811396788</span
-                  ><span class="line"></span>
-                </p>
-                <p class="phoneImg">
-                  <img
-                    src="../common/images/phone.png"
-                    alt=""
-                    @click="handleCall"
+                    @click="handleCall(each.phoneNum)"
                   />
                 </p>
               </li>
@@ -58,108 +44,51 @@
         </div>
       </div>
     </van-overlay>
-    <div class="sheet">
-      <van-action-sheet
-        v-model="showProup"
-        :actions="actions"
-        cancel-text="取消"
-        close-on-click-action
-        @select="onSelect"
-      />
-    </div>
-    <div class="tel">
-      <van-overlay :show="telshow" @click="telshow = false">
-        <div class="wrapper" @click.stop>
-          <div class="block" />
-        </div>
-      </van-overlay>
-    </div>
   </div>
 </template>
 <script>
 import { findContactsByCustomerId } from "../services/CustomerDetails";
 import * as dd from "dingtalk-jsapi";
-
 export default {
   data() {
     return {
       show: false,
-      telshow: false,
+      Telephone: "",
       options: [],
       phoneList: "",
-      showProup: false,
-      actions: [{ name: "钉钉电话" }, { name: "普通电话" }, { name: "复制" }],
-
+      //   telactions: [],
       OrdinaryTelephone: "" //普通电话
     };
   },
-  create() {},
+  created() {},
   methods: {
     handerStop(e) {
       console.log(e);
-    },
-    onSelect(item) {
-      if (item.name == "钉钉电话") {
-        alert("dd");
-        dd.ready(function() {
-          dd.biz.telephone.call({
-            users: ["101"], //用户列表，工号
-            corpId: "", //企业id
-            onSuccess: function() {},
-            onFail: function() {}
-          });
-        });
-      } else if (item.name == "普通电话") {
-        alert("普通");
-        this.showProup = false;
-        // this.telshow = true;
-        this.OrdinaryTelephone = "13643479254";
-        dd.ready(function() {
-          dd.biz.telephone.showCallMenu({
-            phoneNumber: "13643479254", // 期望拨打的电话号码
-            code: "+86", // 国家代号，中国是+86
-            showDingCall: true, // 是否显示钉钉电话
-            onSuccess: function() {
-              console.log("success");
-            },
-            onFail: function() {
-              console.log("fail");
-            }
-          });
-        });
-      } else if (item.name == "复制") {
-        alert("fuzhi");
-        dd.ready(function() {
-          dd.biz.telephone.checkBizCall({
-            corpId: "ding4549e680a3f82a1c35c2f4657eb6378f", //企业id
-            onSuccess: function(result) {
-              console.log(result, "result");
-              /*{
-            isSupport: 1 // 是否开通
-        }*/
-            },
-            onFail: function(err) {
-              console.log(err, "err");
-            }
-          });
-        });
-      }
     },
     showPopup() {
       this.show = true;
       this.getfindContactsByCustomerId();
     },
-    handleCall() {
-      this.showProup = true;
-      dd.biz.telephone.call({
-        users: [this.$store.state.customerI], //用户列表，工号
-        corpId: "ding4549e680a3f82a1c35c2f4657eb6378f", //企业id
-        onSuccess: function() {},
-        onFail: function() {}
+    handleCall(tel) {
+      dd.ready(function() {
+        dd.biz.telephone.showCallMenu({
+          phoneNumber: tel, // 期望拨打的电话号码
+          code: "+86", // 国家代号，中国是+86
+          showDingCall: true, // 是否显示钉钉电话
+          onSuccess: function() {
+            console.log("success");
+          },
+          onFail: function(err) {
+            console.log(err);
+          }
+        });
       });
+      dd.error(err => {
+        console.log(err, "err");
+      });
+      this.Telephone = tel;
     },
     getfindContactsByCustomerId() {
-      console.log(this.$store.state.customerId);
       findContactsByCustomerId(this.$store.state.customerId).then(res => {
         if (res.code == 200) {
           this.phoneList = res.rows;
@@ -371,6 +300,16 @@ export default {
     // display: none;
   }
   .tel {
+    width: 100%;
+    height: 100%;
+    /deep/.van-popup {
+      width: 100%;
+      min-height: 1rem;
+    }
+    .content {
+      width: 100%;
+      min-height: 0.4rem;
+    }
   }
 }
 </style>

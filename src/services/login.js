@@ -7,3 +7,7 @@ export function getLogin(code) {
 export function getToken() {
     return get("/app/getToken", {});
 }
+//钉钉鉴权
+export function jsapi() {
+    return get("/app/getSignature", {});
+}

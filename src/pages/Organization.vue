@@ -79,25 +79,37 @@
             <span>{{ val.nickName }}</span>
           </li>
         </van-list> -->
-        <li class="three_li" v-for="val in userData" :key="val.userId">
-          <div class="headewrap">
-            <img class="head" src="../common/images/2.jpg" alt="" />
-            <span class="Name">{{ val.nickName }}</span>
-          </div>
-          <div>
-            <input
-              ref="checked"
-              type="checkbox"
-              name="userlist"
-              :id="val.userId"
-              :checked="val.checkStatus"
-              :value="val.nickName"
-              class="color-input-green"
-              @click.stop="handlechecked(val.userId, val.nickName)"
-            />
-            <label for="color-input-green"></label>
-          </div>
-        </li>
+        <van-checkbox-group v-model="result" @change="singleChecked">
+          <van-checkbox
+            class="three_li"
+            v-for="val in userData"
+            :key="val.userId"
+            :name="val.userId"
+            shape="square"
+            checked-color="#07c160"
+          >
+            <div class="headewrap">
+              <div class="head">
+                <img
+                  :class="val.avatar == '' ? 'ImgHide' : ''"
+                  :src="val.avatar + '_100x100.jpg'"
+                  alt=""
+                />
+                <p :class="val.avatar == '' ? 'ImgShow' : 'ImgHide'">
+                  {{
+                    val.nickName.length >= 3
+                      ? val.nickName.substring(
+                          val.nickName.length - 2,
+                          val.nickName.length
+                        )
+                      : val.nickName
+                  }}
+                </p>
+              </div>
+              <span class="Name">{{ val.nickName }}</span>
+            </div>
+          </van-checkbox>
+        </van-checkbox-group>
       </div>
     </main>
     <footer>
@@ -105,12 +117,14 @@
         已选 :<span class="num">{{ userLen }}</span
         >人
       </div>
-      <div class="footer_right"><span class="determine">确定</span></div>
+      <div class="footer_right" @click="Submit">
+        <span class="determine">确定</span>
+      </div>
     </footer>
   </div>
 </template>
 <script>
-import { getUserList } from "../services/organization";
+import { getUserList, findChargeList, add } from "../services/organization";
 import { get } from "../services/http";
 export default {
   data() {
@@ -122,21 +136,40 @@ export default {
       deptId: 1,
       userData: [],
       userId: "",
-      userIdList: [],
+      userIdList: {},
       userLen: 0,
       nickName: "",
       loading: false,
       finished: false,
-      flag: true
+      flag: true,
+      result: [],
+      customerNo: ""
     };
   },
   created() {
+    this.customerNo = this.$route.query.id;
+
     this.getSonDeptData();
     // this.getdepartment();
     this.getUserListData();
     this.onSearch();
+    // this.singleChecked();
   },
   methods: {
+    //点击确定按钮
+    Submit() {
+      add(this.customerNo, "", this.userIdList).then(res => {
+        console.log(res, "res");
+      });
+      this.$router.push({ path: "/team", query: { userId: this.result } });
+    },
+    // 多选框选择
+    singleChecked(id) {
+      this.result = id;
+      this.userLen = this.result.length;
+      this.userIdList = Object.values(this.result);
+    },
+
     clickNode(target) {
       console.log("you clicked " + target.id);
     },
@@ -210,30 +243,29 @@ export default {
       });
     },
     // 多选框选中为选中状态
-    handlechecked(userId, name) {
-      console.log(name, "user");
-      var str = this.$refs.checked;
-      str.map(each => {
-        if (each.id == userId) {
-          if (each.checked == true) {
-            this.userIdList.push(userId);
-          } else if (each.checked == false) {
-            this.userIdList = this.userIdList.filter(each => {
-              return each != userId;
-            });
-          }
-          this.userId = this.userIdList.length
-            ? Array.from(this.userIdList).join(",")
-            : null;
-          this.userLen = this.userIdList.length;
-          getUserList(this.deptId, null, this.userId).then(res => {
-            if (res.code == 200) {
-              this.userData = res.data;
-            }
-          });
-        }
-      });
-    },
+    // handlechecked(userId, name) {
+    //   var str = this.$refs.checked;
+    //   str.map(each => {
+    //     if (each.id == userId) {
+    //       if (each.checked == true) {
+    //         this.userIdList.push(userId);
+    //       } else if (each.checked == false) {
+    //         this.userIdList = this.userIdList.filter(each => {
+    //           return each != userId;
+    //         });
+    //       }
+    //       this.userId = this.userIdList.length
+    //         ? Array.from(this.userIdList).join(",")
+    //         : null;
+    //       this.userLen = this.userIdList.length;
+    //       getUserList(this.deptId, null, this.userId).then(res => {
+    //         if (res.code == 200) {
+    //           this.userData = res.data;
+    //         }
+    //       });
+    //     }
+    //   });
+    // },
     onLoad() {
       // 异步更新数据
       // setTimeout 仅做示例，真实场景中一般为 ajax 请求
@@ -294,6 +326,7 @@ export default {
       justify-content: center;
       display: flex;
       align-items: center;
+      position: relative;
       .search {
         margin-right: 0.12rem;
         width: 0.68rem;
@@ -438,24 +471,54 @@ export default {
         font-weight: 400;
         color: rgba(51, 51, 51, 1);
         border-bottom: 0.01rem solid #dbe4ef;
-        // .inp {
-        //   width: 0.14rem;
-        //   height: 0.14rem;
-        //   border-radius: 0.02rem;
-        //   border: 0.01rem solid #d6d6d6;
-        // }
-        // input[type="checkbox"]:checked::after {
-        //   background-color: chartreuse;
-        // }
+        position: relative;
+        /deep/.van-checkbox__icon {
+          position: absolute;
+          right: 0.02rem;
+          top: 50%;
+          margin-top: -0.07rem;
+        }
+        /deep/.van-checkbox__icon {
+          width: 0.14rem;
+          height: 0.14rem;
+          border-radius: 0.02rem;
+        }
+        /deep/.van-icon {
+          width: 0.14rem;
+          height: 0.14rem;
+          border-radius: 0.02rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
         .headewrap {
           display: flex;
           align-items: center;
+
+          .ImgHide {
+            display: none;
+          }
+          .ImgShow {
+            width: 0.28rem;
+            height: 0.28rem;
+            border-radius: 50%;
+            margin-right: 0.11rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #006aff;
+            color: #fff;
+            font-size: 0.12rem;
+            font-family: PingFangSC-Regular, PingFang SC;
+            font-weight: 400;
+          }
         }
-        .head {
+        .head img {
           width: 0.28rem;
           height: 0.28rem;
           border-radius: 50%;
-          margin-right: 0.11rem;
+          margin-right: 0.12rem;
         }
         .Name {
           font-size: 0.14rem;

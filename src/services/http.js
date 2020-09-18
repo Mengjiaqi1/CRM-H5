@@ -32,13 +32,14 @@ axios.interceptors.request.use(config => {
 // http request 拦截器
 axios.interceptors.response.use(
     response => {
+        console.log(response, "response");
         // 如果code是-1，说明用户已注销或者token已过期
         // 此时需要重新登录，并且还要清除本地缓存信息和store数据
         if (response.status == 200) {
             const data = response.data;
-            if (data.code != 200) {
-                logoutFun();
-            }
+            // if (data.code == 500 || data.code == 401) {
+            //     logoutFun();
+            // }
         } else if (response.data.token) {
             setCookie("tokenKey", response.data.token);
         }
@@ -57,6 +58,7 @@ function logoutFun() {
     // 清空本地缓存的token和store里的token
 
     delCookie("tokenKey");
+    alert("认证失败请重新登录");
     // 跳转至登录页，并携带用户退出时或token失效时的页面路由，方便登录后直接跳转到此页面。
     router.push("/");
 }
