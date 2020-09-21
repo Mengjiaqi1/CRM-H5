@@ -47,11 +47,7 @@
                       alt=""
                       class="reducer"
                       @click="
-                        removeprincipal(
-                          element.customerNo,
-                          element.type,
-                          element.userId
-                        )
+                        removeprincipal(element.customerNo, element.userId)
                       "
                     />
                   </span>
@@ -106,13 +102,7 @@
                       :src="forms_reduce"
                       alt=""
                       class="reducer"
-                      @click="
-                        removepartner(
-                          element.customerNo,
-                          element.type,
-                          element.userId
-                        )
-                      "
+                      @click="removepartner(element.customerNo, element.userId)"
                     />
                   </span>
                 </li>
@@ -129,14 +119,15 @@
     </div>
     <div class="footer">
       <van-button type="info" @click="changeCall">电话会议</van-button>
-      <van-button type="primary">Ding</van-button>
+      <van-button type="primary" @click="changeDing">Ding</van-button>
     </div>
   </div>
 </template>
 <script>
 import draggable from "vuedraggable";
-import { findChargeList, add } from "../services/organization";
+import { findChargeList, add, remove } from "../services/organization";
 import * as dd from "dingtalk-jsapi";
+var users = [];
 export default {
   data() {
     return {
@@ -151,27 +142,66 @@ export default {
       partnerList: [], //协同人
       principalList: [], // 负责人
       users: [], //工号测试
-      usersList: [] //工号
+      usersList: [], //工号
+      userId: [], // 从组织架构传过来的用户id
+      removeUser: [] //删除工号
     };
   },
   created() {
-    this.customerNo = this.$route.query.id;
+    this.customerNo = this.$store.state.customerNo;
     this.getfindChargeList();
-    console.log(JSON.parse(JSON.stringify(this.users)), "list");
-    // let arr = [{ 0: "梦" }, { 1: "佳琦" }];
-    for (var each of this.users) {
-      for (var key in each) {
-        console.log(each[key]);
-      }
-    }
-    console.log(this.usersList, "lsit2");
   },
   methods: {
+    //ding一下
+    changeDing() {
+      this.users = Array.from(new Set(this.users)).map(each => {
+        return each;
+      });
+      users = this.users;
+      dd.biz.ding.create({
+        users: users, // 用户列表，工号
+        corpId: "", // 企业id
+        type: 1, // 附件类型 1：image  2：link
+        alertType: 2, // 钉发送方式 0:电话, 1:短信, 2:应用内
+        alertDate: { format: "yyyy-MM-dd HH:mm", value: "2015-05-09 08:00" },
+        attachment: {
+          images: [""]
+        }, // 附件信息
+        text: "", // 正文
+        bizType: 0, // 业务类型 0：通知DING；1：任务；2：会议；
+        confInfo: {
+          bizSubType: 0, // 子业务类型如会议：0：预约会议；1：预约电话会议；2：预约视频会议；（注：目前只有会议才有子业务类型）
+          location: "某某会议室", //会议地点；（非必填）
+          startTime: { format: "yyyy-MM-dd HH:mm", value: "2015-05-09 08:00" }, // 会议开始时间
+          endTime: { format: "yyyy-MM-dd HH:mm", value: "2015-05-09 08:00" }, // 会议结束时间
+          remindMinutes: 30, // 会前提醒。单位分钟-1：不提醒；0：事件发生时提醒；5：提前5分钟；15：提前15分钟；30：提前30分钟；60：提前1个小时；1440：提前一天；
+          remindType: 2 // 会议提前提醒方式。0:电话, 1:短信, 2:应用内
+        },
+
+        taskInfo: {
+          ccUsers: users, // 抄送用户列表，工号
+          deadlineTime: {
+            format: "yyyy-MM-dd HH:mm",
+            value: "2015-05-09 08:00"
+          }, // 任务截止时间
+          taskRemind: 30 // 任务提醒时间，单位分钟0：不提醒；15：提前15分钟；60：提前1个小时；180：提前3个小时；1440：提前一天；
+        },
+
+        onSuccess: function() {
+          //onSuccess将在点击发送之后调用
+        },
+        onFail: function() {}
+      });
+    },
     //电话会议
     changeCall() {
+      this.users = Array.from(new Set(this.users)).map(each => {
+        return each;
+      });
+      users = this.users;
       dd.ready(function() {
         dd.biz.telephone.call({
-          users: ["2031031816751911", "201913384023551116"], //用户列表，工号
+          users: users, //用户列表，工号
           corpId: "ding4549e680a3f82a1c35c2f4657eb6378f", //企业id
           onSuccess: function() {},
           onFail: function() {}
@@ -184,26 +214,28 @@ export default {
     goOranization() {
       this.$router.push({
         path: "/organization",
-        query: { id: this.customerNo }
+        query: { id: this.customerNo, userId: this.userId }
       });
     },
     // 查询协同人，负责人
     getfindChargeList() {
-      findChargeList(this.customerNo).then(res => {
+      findChargeList(this.customerNo, "1").then(res => {
         if (res.code == 200) {
           this.partnerList = res.data.partnerList;
           this.principalList = res.data.principalList;
           this.principalList.map(each => {
             this.users.push(each.staffId);
+            this.userId.push(parseInt(each.userId));
           });
         }
       });
     },
     // 删除负责人
-    removeprincipal(customerNo, type, userId) {
-      add(customerNo, type, userId).then(res => {
+    removeprincipal(customerNo, userId) {
+      remove(customerNo, userId, 1).then(res => {
         console.log(res);
       });
+      this.getfindChargeList();
     },
     // 删除协同人
     removepartner(customerNo, type, userId) {
@@ -304,7 +336,7 @@ export default {
           .headwrap {
             display: flex;
             align-items: center;
-            .head {
+            .head img {
               width: 0.28rem;
               height: 0.28rem;
               border-radius: 50%;
@@ -316,7 +348,7 @@ export default {
               width: 0.28rem;
               height: 0.28rem;
               border-radius: 50%;
-              margin-right: 0.11rem;
+              //   margin-right: 0.11rem;
               display: flex;
               align-items: center;
               justify-content: center;
@@ -330,6 +362,7 @@ export default {
 
           .text {
             margin-left: 0.1rem;
+            white-space: normal;
           }
           .reducer {
             width: 0.15rem;

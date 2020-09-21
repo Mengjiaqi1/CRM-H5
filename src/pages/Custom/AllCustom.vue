@@ -297,46 +297,40 @@
               style="margin-top: 0.92rem"
             >
               <div class="space" style="height: 0.18rem"></div>
-              <div
+              <router-link
+                tag="div"
                 class="custom_contents"
                 v-for="(item, index) in inCustomList"
                 :key="index"
+                :to="{
+                  path: '/customerDetails',
+                  query: { id: item.customerId }
+                }"
               >
-                <router-link
-                  tag="div"
-                  class="custom_contents"
-                  v-for="(item, index) in inCustomList"
-                  :key="index"
-                  :to="{
-                    path: '/customerDetails',
-                    query: { id: item.customerId }
-                  }"
-                >
-                  <div class="custom_content_top clearfix">
-                    <p class="custom_content_address fl">
-                      {{ item.customerFullName }}
+                <div class="custom_content_top clearfix">
+                  <p class="custom_content_address fl">
+                    {{ item.customerFullName }}
+                  </p>
+                </div>
+                <div class="line"></div>
+                <ul class="custom_content_text">
+                  <li class="margin_bottom">
+                    <p>负责人：</p>
+                    <p v-if="item.personInCharge">
+                      {{ item.personInCharge }}
                     </p>
-                  </div>
-                  <div class="line"></div>
-                  <ul class="custom_content_text">
-                    <li class="margin_bottom">
-                      <p>负责人：</p>
-                      <p v-if="item.personInCharge">
-                        {{ item.personInCharge }}
-                      </p>
-                      <p v-else>--</p>
-                    </li>
-                    <li>
-                      <p>最近跟进时间：</p>
-                      <p v-if="item.lastFollowUpTime">
-                        {{ item.lastFollowUpTime }}
-                      </p>
-                      <p v-else>--</p>
-                    </li>
-                  </ul>
-                  <div class="space"></div>
-                </router-link>
-              </div>
+                    <p v-else>--</p>
+                  </li>
+                  <li>
+                    <p>最近跟进时间：</p>
+                    <p v-if="item.lastFollowUpTime">
+                      {{ item.lastFollowUpTime }}
+                    </p>
+                    <p v-else>--</p>
+                  </li>
+                </ul>
+                <div class="space"></div>
+              </router-link>
             </van-list>
           </van-pull-refresh>
         </div>

@@ -124,7 +124,7 @@
   </div>
 </template>
 <script>
-import { getUserList, findChargeList, add } from "../services/organization";
+import { getUserList, add } from "../services/organization";
 import { get } from "../services/http";
 export default {
   data() {
@@ -137,6 +137,7 @@ export default {
       userData: [],
       userId: "",
       userIdList: {},
+      users: [],
       userLen: 0,
       nickName: "",
       loading: false,
@@ -147,21 +148,27 @@ export default {
     };
   },
   created() {
-    this.customerNo = this.$route.query.id;
-
+    if (this.$route.query.userId) {
+      this.result = Array.from(new Set(this.$route.query.userId)).map(each => {
+        return parseInt(each);
+      });
+    }
+    this.userLen = this.result.length;
+    this.customerNo = this.$store.state.customerNo;
     this.getSonDeptData();
-    // this.getdepartment();
     this.getUserListData();
     this.onSearch();
-    // this.singleChecked();
   },
   methods: {
     //点击确定按钮
     Submit() {
-      add(this.customerNo, "", this.userIdList).then(res => {
-        console.log(res, "res");
+      add(this.customerNo, "1", this.userIdList).then(res => {
+        if (res.code == 200) {
+          this.$router.push({
+            path: "/team"
+          });
+        }
       });
-      this.$router.push({ path: "/team", query: { userId: this.result } });
     },
     // 多选框选择
     singleChecked(id) {

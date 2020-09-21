@@ -82,10 +82,10 @@
               <img src="../common/images/productm.png" alt="" />
               <span>产品管理</span>
             </li>
-            <li>
+            <router-link tag="li" to="/billingInformationDetail">
               <img src="../common/images/Payment.png" alt="" />
-              <span>回款计划</span>
-            </li>
+              <span>开票信息</span>
+            </router-link>
             <router-link tag="li" to="/allCustom">
               <img src="../common/images/customer.png" alt="" />
               <span>全部客户</span>
