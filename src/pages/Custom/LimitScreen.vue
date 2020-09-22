@@ -121,10 +121,16 @@
         methods: {
             // 筛选项数据
             screenList(){
+                // 客户参数（客户templateId根据具体情况）
+                // let  Data = {
+                //     formId:1,
+                //     templateId:1,
+                //     userId:1,
+                // }
+                // 联系人参数（联系人无templateId 所以值为0）
                 let  Data = {
-                    formId:1,
-                    templateId:1,
-                    userId:1,
+                    formId:2,
+                    templateId:0,
                 }
                 getScreenList(Data).then(res => {
                     if (res.code == 200) {
@@ -170,16 +176,21 @@
                         }
                     }
                 });
-
-
+                // let Data = {
+                //     templateId:1,
+                //     userId:1,
+                //     sizerIds:this.sizerIds,
+                // }
                 let Data = {
-                    templateId:1,
-                    userId:1,
+                    templateId:0,
                     sizerIds:this.sizerIds,
                 }
+
                 filedSizerList(Data).then(res => {
                     if (res.code == 200) {
-                      this.$router.push({ path: "/AllCustom"});
+                      // 根据后端定义的模板id 判断跳转位置
+                      // this.$router.push({ path: "/AllCustom"});
+                      this.$router.push({ path: "/Contact"});
                     }
                 });
             },

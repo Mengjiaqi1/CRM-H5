@@ -14,15 +14,16 @@ import CommonForms from "../pages/CommonForms";
 import CustomHome from "../pages/CustomHome";
 import AllCustom from "../pages/Custom/AllCustom";
 import Build from "../pages/Custom/Build";
-import CustomScreen from "../pages/Custom/CustomScreen";
+import LimitScreen from "../pages/Custom/LimitScreen";
 import DefaultSort from "../pages/Custom/DefaultSort";
 import Setting from "../pages/Setting";
 import ShortcutForms from "../pages/ShortcutKeyForm";
-import Approval from "../pages/Approval";
+import Approval from "../pages/Custom/Approval";
 import Organization from "../pages/Organization";
 import Entrance from "../pages/Entrance";
 import CustomerDetails from "../pages/Custom/CustomerDetails";
 import ContactDetails from "../pages/Contacts/ContactDetails.vue";
+import Contact from "../pages/Contacts/Contact";
 import store from "../store";
 import { getCookie } from "../untils/auth";
 import Team from "../pages/Team";
@@ -186,6 +187,15 @@ const routes = [
             title: "表格"
         }
     },
+    // 联系人
+    {
+        path: "/contact",
+        name: "Contact",
+        component: Contact,
+        meta: {
+            title: "联系人"
+        }
+    },
     // 联系人详情
     {
         path: "/contactDetails",
@@ -221,9 +231,9 @@ const routes = [
     },
     // 设置筛选项
     {
-        path: "/customScreen",
-        name: "CustomScreen",
-        component: CustomScreen
+        path: "/limitScreen",
+        name: "LimitScreen",
+        component: LimitScreen
     },
     // 默认排序设置
     {
@@ -231,7 +241,7 @@ const routes = [
         name: "DefaultSort",
         component: DefaultSort
     },
-    // 审批列表
+    // 客户提醒列表
     {
         path: "/approval",
         name: "Approval",

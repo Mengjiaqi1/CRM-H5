@@ -2,8 +2,10 @@
   <div class="navwrap">
     <div class="nav">
       <li>
-        <img src="../common/images/remind2.png" alt="" />
-        <span>提醒</span>
+        <router-link tag="li" to="/approval">
+          <img src="../common/images/remind2.png" alt="" />
+          <span style="width: 0.24rem">提醒</span>
+        </router-link>
       </li>
       <li>
         <img src="../common/images/follow-up.png" alt="" />

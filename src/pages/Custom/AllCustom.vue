@@ -297,11 +297,6 @@
               style="margin-top: 0.92rem"
             >
               <div class="space" style="height: 0.18rem"></div>
-              <div
-                class="custom_contents"
-                v-for="(item, index) in inCustomList"
-                :key="index"
-              >
                 <router-link
                   tag="div"
                   class="custom_contents"
@@ -336,7 +331,6 @@
                   </ul>
                   <div class="space"></div>
                 </router-link>
-              </div>
             </van-list>
           </van-pull-refresh>
         </div>
@@ -731,6 +725,7 @@ export default {
           // if(this.templateId){
           if (res.rows.length > 0) {
             this.inCustomList = res.rows;
+            console.log(this.inCustomList,'我是全部客户数据')
             // this.inCustomList = this.inCustomList.concat(res.rows);
             // this.pageNum++
             this.loading = false;
@@ -749,7 +744,7 @@ export default {
       let Data = {
         formId: 1,
         templateId: 1,
-        userId: 1
+        // userId: 1
       };
       getScreenList(Data).then(res => {
         if (res.code == 200) {
@@ -1002,7 +997,7 @@ export default {
     },
     // 设置筛选项
     changeScreen() {
-      this.$router.push({ path: "/customScreen" });
+      this.$router.push({ path: "/limitScreen" });
     },
     // 筛选重置
     changeSet() {
@@ -1174,6 +1169,9 @@ export default {
       }
       /deep/.van-dropdown-item__content {
         max-height: 100% !important;
+      }
+      /deep/.van-dropdown-menu__bar{
+        box-shadow: none !important;
       }
       /*头部内容固定*/
       .all_custom_fixed {

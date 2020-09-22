@@ -65,8 +65,10 @@
               <span>全部机会</span>
             </li>
             <li>
-              <img src="../common/images/follow.png" alt="" />
-              <span>跟进记录</span>
+              <router-link tag="li" to="/contact">
+                <img src="../common/images/follow.png" alt="" />
+                <span>跟进记录</span>
+              </router-link>
             </li>
             <li>
               <img src="../common/images/order.png" alt="" />

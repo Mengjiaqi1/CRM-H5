@@ -1,7 +1,7 @@
 <template>
   <div class="wrap">
     <myHeader>
-      <div class="h_center">审批列表</div>
+      <div class="h_center">客户提醒</div>
       <div class="h_right h_more">一键已读</div>
     </myHeader>
     <main>
@@ -13,7 +13,7 @@
         <div class="space"></div>
         <ul class="approval_list_content clearfix">
           <li class="fl approval_list_left">
-<!--            <img src="../common/images/" alt="">-->
+            <img src="../../common/images/warn.png" alt="">
             <span class="active"></span>
           </li>
           <li class="fl approval_list_right">
@@ -26,7 +26,7 @@
         <div class="space"></div>
         <ul class="approval_list_content clearfix">
           <li class="fl approval_list_left">
-<!--            <img src="../common/images/warn.png" alt="">-->
+            <img src="../../common/images/warn.png" alt="">
             <span class="active"></span>
           </li>
           <li class="fl approval_list_right">

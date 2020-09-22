@@ -14,7 +14,7 @@
         </div>
         <div class="mine-msg">
           <div class="mine_msg_icon">
-            <img v-if="userInfo.avatar" :src="'userInfo.avatar'+'_100x100.jpg'" alt="">
+            <img v-if="userInfo.avatar" :src="userInfo.avatar+'_80x80.jpg'" alt="">
             <img v-else src="../common/images/cover.png" alt="">
           </div>
           <p class="mine_name">{{userInfo?userInfo.nickName:''}}
@@ -151,10 +151,10 @@ export default {
           margin-left: 1.48rem;
           margin-bottom: 0.09rem;
           img{
-            width: 0.7rem;
-            height: 0.7rem;
+            width: 0.8rem;
+            height: 0.8rem;
             border-radius: 50%;
-            margin-top: 0.05rem;
+            /*margin-top: 0.05rem;*/
           }
         }
         .mine_name{
