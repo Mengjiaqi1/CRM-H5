@@ -1,8 +1,8 @@
 import {get, post } from "./http.js";
 
 // 根据部门id查询用户
-export function getUserList(deptId, nickName, checkUserId) {
-    return get("/system/user/getUserList", { deptId, nickName, checkUserId });
+export function getUserList(deptId, checkUserId = []) {
+    return get("/system/user/getUserList", { deptId, checkUserId });
 }
 //新增/修改负责人
 export function add(customerNo, type, userIds) {
@@ -16,4 +16,13 @@ export function add(customerNo, type, userIds) {
 //查询负责人、协同人列表
 export function findChargeList(customerNo) {
     return post("/app/customerManagementCharge/findChargeList", { customerNo });
+}
+
+// 删除
+export function remove(customerNo, userId, type) {
+    return post("/app/customerManagementCharge/remove", {
+        customerNo,
+        userId,
+        type
+    });
 }

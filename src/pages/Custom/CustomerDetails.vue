@@ -34,6 +34,8 @@
             <div class="company">北京器材有限公司</div>
             <div class="personnel_wrap">
               <span class="personnel">负责人 ：</span>
+              <span class="names">刘山山、</span>
+              <span class="names">刘山山、</span>
               <span class="names">刘山山</span>
               <span class="time">一个月内</span>
             </div>
@@ -46,7 +48,7 @@
           <div class="header_t_left" @click="goTeam">
             <div class="header_t_center">
               <img src="../../common/images/2.jpg" alt="" />
-              <span class="text">海绵宝宝</span>
+              <span class="text">海绵宝宝等3人</span>
             </div>
           </div>
           <div class="header_t_right">
@@ -800,6 +802,7 @@ export default {
         if (res.code == 200) {
           let success = res.data;
           this.customerNo = success.customerNo;
+          this.$store.commit("set_customerNo", success.customerNo);
           this.businessNo = success.businessNo;
           this.text = success.personInCharge;
           this.type =

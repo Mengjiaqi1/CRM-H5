@@ -28,7 +28,7 @@ export default {
     } else {
       setCookie(
         "tokenKey",
-        "eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6IjA5MzEyYzJiLWVlNWMtNDA4Mi04ZTc3LWYxZTljOThhNGM1YyJ9.3UFe22GdQQQsy9vEoXqNYKw8NBhJYqErGF8gDYhlyzVUl8OXyTEzIsBg_i5wIHPUKAiWc25tX2V0m2b-iybAXA"
+        "eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6ImJjNDk3NjgxLTIwZTUtNGUxNy05YTI3LWEwNGQ4M2JmYWE3OSJ9.DGk8BlyoZfu-j8K8a92-qgufPbgUYc9qvpJzYulnT5CehDcAlupMqy4iNeQqgLrbM4v62-ty06oedhnk1lCkCg"
       );
       this.getDDCode();
     }

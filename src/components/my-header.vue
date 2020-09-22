@@ -83,6 +83,10 @@ header {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    img.add {
+      width: 0.16rem;
+      height: 0.16rem;
+    }
   }
   & > span {
     color: #fff;

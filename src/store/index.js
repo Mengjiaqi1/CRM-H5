@@ -7,7 +7,9 @@ export default new Vuex.Store({
     state: {
         token: "qwe",
         Flag: true,
-        customerId: ""
+        customerId: "",
+        customerNo: "", // 客户编号
+        userIdList: [] // 组织构架多选框用户的userId
     },
     mutations: {
         set_token(state, token) {
@@ -20,6 +22,10 @@ export default new Vuex.Store({
         set_customerId(state, customerId) {
             state.customerId = customerId;
             localStorage.setItem("customerId", customerId);
+        },
+        set_customerNo(state, customerNo) {
+            state.customerNo = customerNo;
+            localStorage.setItem("customerNo", customerNo);
         }
     },
     actions: {

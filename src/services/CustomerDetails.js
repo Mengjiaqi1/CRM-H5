@@ -7,7 +7,6 @@ export function findBase(customerId) {
 export function findRecordBaseList(customerId, pageNum, pageSize) {
     return post("/app/customerFollowRecords/findRecordBaseList", {
         customerId,
-
         pageNum,
         pageSize
     });

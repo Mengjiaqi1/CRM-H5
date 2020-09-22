@@ -30,9 +30,9 @@ import Team from "../pages/Team";
 import NewContacts from "../pages/Contacts/NewContacts.vue";
 import Associated from "../pages/Custom/Associated.vue";
 import Xls from "../pages/Xls.vue";
-console.log(Associated, "Associated");
+import BillingInformationDetail from "../pages/BillingInformationDetails.vue";
 Vue.use(VueRouter);
-
+console.log(BillingInformationDetail, "xainqin");
 const routes = [
     //首页从定向
     {
@@ -164,6 +164,15 @@ const routes = [
         path: "/setting",
         name: "Setting",
         component: Setting
+    },
+    // 开票信息详情
+    {
+        path: "/billingInformationDetail",
+        name: "BillingInformationDetail",
+        component: BillingInformationDetail,
+        meta: {
+            title: "开票信息详情"
+        }
     },
 
     // 全部客户

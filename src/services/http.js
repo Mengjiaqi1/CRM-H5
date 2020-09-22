@@ -32,7 +32,7 @@ axios.interceptors.request.use(config => {
 // http request 拦截器
 axios.interceptors.response.use(
     response => {
-        console.log(response, "response");
+        // console.log(response, "response");
         // 如果code是-1，说明用户已注销或者token已过期
         // 此时需要重新登录，并且还要清除本地缓存信息和store数据
         if (response.status == 200) {
@@ -69,7 +69,7 @@ export function get(url, params = {}) {
     return new Promise((resolve, reject) => {
         axios
             .get(url, {
-                params: params
+                params
             })
             .then(response => {
                 resolve(response.data);
