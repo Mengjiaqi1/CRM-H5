@@ -150,47 +150,6 @@
             </div>
             <div class="file_wrap">
               <div class="file_content" ref="fileContent">
-                <!-- <van-swipe-cell
-                  v-for="(each, index) in fileList"
-                  :key="each.cabinetId"
-                >
-                  <div class="file_content_li">
-                    <div class="left">
-                      <img src="../../common/images/excel.png" alt="" />
-                    </div>
-                    <div class="center">
-                      <p class="Scheduling">
-                        {{ each.fileOldName }}
-                      </p>
-                      <div class="nameAndtime">
-                        <span class="surname">{{ each.createUserName }}</span>
-                        <li class="time">
-                          <span>{{ each.createTime }}</span>
-                        </li>
-                      </div>
-                      <div class="size">
-                        {{ (each.fileSize / 1024 / 1024).toFixed(1) }}M
-                      </div>
-                    </div>
-                    <div class="right" @click="handlecheck(each.url)">
-                      <img
-                        ref="check"
-                        src="../../common/images/check.png"
-                        alt=""
-                      />
-                    </div>
-                  </div>
-                  <template #right>
-                    <van-button type="danger" class="delete-button-none" />
-                    <van-button
-                      square
-                      text="删除"
-                      type="danger"
-                      class="delete-button"
-                      @click="handlerDel(each.cabinetId, index)"
-                    />
-                  </template>
-                </van-swipe-cell> -->
                 <van-swipe-cell>
                   <div class="file_content_li">
                     <div class="left">
@@ -277,59 +236,58 @@
   </div>
 </template>
 <script>
-import * as dd from "dingtalk-jsapi";
+import * as dd from 'dingtalk-jsapi'
 
 export default {
   data() {
     return {
-      check: require("../../common/images/check.png"),
-      xiazai: require("../../common/images/xiazai.png"),
-      customerNo: "", // 编号
-      customer: "", //关联客户
-      Fullname: "", // 姓名
-      Telephone: "", // 联系电话
-      department: "", // 部门
+      check: require('../../common/images/check.png'),
+      xiazai: require('../../common/images/xiazai.png'),
+      customerNo: '', // 编号
+      customer: '', //关联客户
+      Fullname: '', // 姓名
+      Telephone: '', // 联系电话
+      department: '', // 部门
       Fileshow: false,
       fileList: [],
       images: [],
       show: false,
-      actions: [{ name: "钉钉电话" }, { name: "普通电话" }, { name: "复制" }],
       showImg: false,
-      imgUrl: ""
-    };
+      imgUrl: '',
+    }
   },
   create() {},
   methods: {
     // 点击操作去新建
     gobuild() {
-      this.$router.push("/newContacts");
+      this.$router.push('/newContacts')
     },
     // 点击联系人poup
     showPopup() {
-      this.show = true;
+      this.show = true
       //   this.getfindContactsByCustomerId();
     },
     handleCall(tel) {
       dd.ready(function() {
         dd.biz.telephone.showCallMenu({
-          phoneNumber: "13522070865", // 期望拨打的电话号码
-          code: "+86", // 国家代号，中国是+86
+          phoneNumber: '13522070865', // 期望拨打的电话号码
+          code: '+86', // 国家代号，中国是+86
           showDingCall: true, // 是否显示钉钉电话
           onSuccess: function() {},
-          onFail: function() {}
-        });
-      });
-      this.showProup = true;
-      this.Telephone = tel;
+          onFail: function() {},
+        })
+      })
+      this.showProup = true
+      this.Telephone = tel
     },
     afterRead(file) {
-      console.log(file);
+      console.log(file)
     },
     changeClose() {
-      location.replace("/");
-    }
-  }
-};
+      location.replace('/')
+    },
+  },
+}
 </script>
 <style lang="scss" scoped>
 .wrap {
@@ -340,7 +298,7 @@ export default {
     width: 100%;
     height: 2rem;
     box-sizing: border-box;
-    background: url("../../common/images/BG.png") no-repeat center center;
+    background: url('../../common/images/BG.png') no-repeat center center;
     background-size: 100%;
     position: relative;
     .header_tit {
@@ -492,7 +450,7 @@ export default {
       left: 0.13rem;
       color: #ee0a24;
       font-size: 0.14rem;
-      content: "*";
+      content: '*';
     }
     /deep/.van-tabs__wrap--scrollable {
       padding-left: 0.12rem;
@@ -834,11 +792,6 @@ export default {
             color: #333333;
             line-height: 0.22rem;
             display: flex;
-            // &:hover {
-            //   text-overflow: inherit;
-            //   overflow: visible;
-            //   white-space: inherit;
-            // }
           }
           .nameAndtime {
             display: flex;

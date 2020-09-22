@@ -1237,14 +1237,12 @@ export default {
             color: #666666;
           }
         }
-        /deep/ .van-cell__value {
+        /deep/.van-cell__value {
           margin-top: 0.12rem;
         }
-        /deep/ .van-field__label {
+        /deep/.van-field__label {
           width: 0.84rem;
           margin-left: 0.12rem;
-        }
-        /deep/ .van-cell__title {
         }
       }
     }
