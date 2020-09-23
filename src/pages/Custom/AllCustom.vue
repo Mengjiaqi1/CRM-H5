@@ -125,22 +125,6 @@
                         </div>
                       </div>
                     </div>
-                    <!--弃用-->
-                    <!--                    <div class="selection">-->
-                    <!--                      <div class="selec_tit">-->
-                    <!--                        <span class="selec_tit_type">弃用</span>-->
-                    <!--                      </div>-->
-                    <!--                      <div class="selec_content">-->
-                    <!--                        <div-->
-                    <!--                                v-for="(each, index) in chargeData"-->
-                    <!--                                :key="each.id"-->
-                    <!--                                :class="chargeStatus == index ? 'active' : 'each'"-->
-                    <!--                                @click="chargeSection(index)"-->
-                    <!--                        >-->
-                    <!--                          <span>{{ each.name }}</span>-->
-                    <!--                        </div>-->
-                    <!--                      </div>-->
-                    <!--                    </div>-->
                     <!--客户地址-->
                     <div class="selection">
                       <div class="selec_tit">
@@ -268,7 +252,6 @@
                       </div>
                     </div>
                   </van-dropdown-item>
-                  <!--                  <van-dropdown-item v-model="value2" :options="option2" @open="handleOrtherItem" :close-on-click-overlay="true">-->
                   <van-dropdown-item
                     v-model="value2"
                     :options="option"
@@ -285,6 +268,7 @@
               </div>
             </van-tab>
           </van-tabs>
+          <div class="space"></div>
         </div>
         <div class="all_custom_list">
           <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
@@ -294,9 +278,8 @@
               :finished="finished"
               finished-text="没有更多数据"
               @load="onLoad"
-              style="margin-top: 0.92rem"
+              style="margin-top: 1.15rem"
             >
-              <div class="space" style="height: 0.18rem"></div>
                 <router-link
                   tag="div"
                   class="custom_contents"
@@ -480,24 +463,6 @@ export default {
       MenuData: [],
       templateId: 1,
       templateName: "绿洲",
-      // MenuData:[
-      //   {
-      //     name:"绿洲",
-      //     id:'0',
-      //   },
-      //   {
-      //     name:"邮中",
-      //     id:'1',
-      //   },
-      //   {
-      //     name:"餐饮",
-      //     id:'2',
-      //   },
-      //   {
-      //     name:"北邮",
-      //     id:'3',
-      //   },
-      // ],
       // 全部option
       option1: [
         { text: "全部", value: 0 },
@@ -602,20 +567,6 @@ export default {
           id: "3"
         }
       ],
-      // giveData:[
-      //   {
-      //     name: "我的",
-      //     id: "1"
-      //   },
-      //   {
-      //     name: "下属的",
-      //     id: "2"
-      //   },
-      //   {
-      //     name: "选择员工",
-      //     id: "3"
-      //   },
-      // ],
       addressData: [
         {
           name: "选择省市区",
@@ -831,10 +782,10 @@ export default {
     },
     // 自定义弹框--按钮
     handleCancel(data) {
-      console.log(data);
+      console.log(data,'123');
       this.isCustom = false;
-      // this.isCreate =false;
       this.PublishValue = true;
+      this.$refs.timeMenu.toggle(true);
     },
     handleConfirm(data) {
       console.log(data.start_Time, this.inputData.end_Time, "====");
@@ -1060,9 +1011,9 @@ export default {
     // 筛选确认
     changeConfirm() {
       this.PublishValue = false;
-      // this.$nextTick(function () {
-      //   this.$refs.timeMenu.toggle();
-      // })
+      this.$nextTick(function () {
+        this.$refs.timeMenu.toggle(false);
+      })
       // this.$refs.timeMenu.close();
       // console.log(this.$refs.timeMenu.toggle(),'0099');
       this.getCustomInfo();
@@ -1346,6 +1297,10 @@ export default {
               margin-bottom: 0.06rem;
             }
           }
+        }
+        .custom_contents>.space:last-child{
+          height: 0rem;
+          background-color: #FFFFFF;
         }
       }
     }

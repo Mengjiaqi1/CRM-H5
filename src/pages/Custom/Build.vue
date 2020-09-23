@@ -19,10 +19,9 @@
         </div>
 
         <div class="build_form">
-          <van-form @submit="onSubmit" @failed="onFail">
+          <van-form @submit="onSubmit" @failed="onFail" validate-first>
             <van-field
               v-model="username"
-              name="创建人"
               label="创建人"
               placeholder="王大陆"
               input-align="right"
@@ -30,7 +29,6 @@
               :rules="[{ required: true, message: '请选择创建人' }]"
             />
             <van-field
-              name="负责人"
               label="负责人"
               placeholder="王大陆"
               input-align="right"
@@ -38,7 +36,6 @@
             <div class="space"></div>
             <van-field
               v-model="customerFullName"
-              name="客户全称"
               label="客户全称"
               required
               placeholder="请输入"
@@ -47,7 +44,6 @@
             />
             <van-field
               v-model="type"
-              name="客户类型"
               label="客户类型"
               required
               class="form_icon"
@@ -60,7 +56,6 @@
             <!--          <img src="../../common/images/arrow.png" alt="" style="width: 0.2rem;height: 0.2rem">-->
             <van-field
               v-model="customerShortName"
-              name="客户简称"
               label="客户简称"
               placeholder="请输入"
               input-align="right"
@@ -87,20 +82,18 @@
             <div class="space"></div>
             <van-field
               v-model="customerOfficialWebsite"
-              name="客户官网"
               label="客户官网"
               placeholder="请输入"
               input-align="right"
             />
             <van-field
               v-model="customerBrief"
-              name="客户简介"
               label="客户简介"
               placeholder="请输入"
               input-align="right"
             />
             <div class="space"></div>
-            <van-field name="相关图片" label="相关图片" />
+            <van-field label="相关图片" />
             <van-uploader
               :after-read="afterRead"
               multiple
@@ -113,7 +106,7 @@
               />
             </van-uploader>
             <div class="space"></div>
-            <van-field name="备注" label="备注" />
+            <van-field label="备注" />
             <van-field
               v-model="remark"
               rows="3"
@@ -231,7 +224,7 @@ export default {
       isCategory: false,
       timeCategory: 0,
       titleName: this.$route.query.templateName,
-      templateIds: "1",
+      templateIds: this.$route.query.templateId,
       type: "",
       area: "",
       // 省市县三级联动
@@ -287,7 +280,7 @@ export default {
     getCode() {
       // 序列号
       let Datas = {
-        templateId: this.$route.query.templateId
+        templateId:  this.templateIds,
       };
       getSeqList(Datas).then(res => {
         if (res.code == 200) {

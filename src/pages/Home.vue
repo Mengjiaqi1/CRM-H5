@@ -61,11 +61,13 @@
         <div class="list_center">
           <div class="list">
             <li>
-              <img src="../common/images/chance.png" alt="" />
-              <span>全部机会</span>
+              <router-link tag="li" to="/">
+                <img src="../common/images/chance.png" alt="" />
+                <span>全部机会</span>
+              </router-link>
             </li>
             <li>
-              <router-link tag="li" to="/contact">
+              <router-link tag="li" to="/">
                 <img src="../common/images/follow.png" alt="" />
                 <span>跟进记录</span>
               </router-link>
@@ -74,7 +76,7 @@
               <img src="../common/images/order.png" alt="" />
               <span>合同订单</span>
             </li>
-            <router-link tag="li" to="/contactDetails">
+            <router-link tag="li" to="/contact">
               <img src="../common/images/contacts.png" alt="" />
               <span>联系人</span>
             </router-link>
@@ -84,7 +86,7 @@
               <img src="../common/images/productm.png" alt="" />
               <span>产品管理</span>
             </li>
-            <router-link tag="li" to="/billingInformationDetail">
+            <router-link tag="li" to="/invoice">
               <img src="../common/images/Payment.png" alt="" />
               <span>开票信息</span>
             </router-link>
