@@ -8,17 +8,6 @@
       </div>
     </myHeader>
     <main>
-      <svg class="icon"
-           aria-hidden="true">
-        <use xlink:href="#icon-lvyuerecord"></use>
-      </svg>
-      <svg class="icon"
-           aria-hidden="true">
-        <use xlink:href="#icon-doctor"></use>
-      </svg>
-
-      <!-- //at.alicdn.com/t/font_1973383_mqc6dx2e7xj.js -->
-
       <div class="main_tit">
         <p class="number">{{ customerNo }}</p>
         <p>
@@ -40,16 +29,51 @@
                 <van-field v-model="customerNo"
                            label="编号"
                            readonly />
-                <div class="relevance_wrap">
+                <div class="relevance_wrap"
+                     v-if="relationBeiyou">
                   <div class="relevance">
-                    <p class="customer">关联餐饮客户</p>
-                    <p class="company"><span>廊坊盛世 (合作经营)</span></p>
+                    <p class="customer">关联北邮客户</p>
+                    <p class="company">
+                      <span>{{ relationBeiyou ? relationBeiyou : "-" }}</span>
+                    </p>
                   </div>
                 </div>
-                <div class="relevance_wrap">
+                <div class="relevance_wrap"
+                     v-if="relationCanyin">
                   <div class="relevance">
                     <p class="customer">关联餐饮客户</p>
-                    <p class="company"><span>廊坊盛世 (合作经营)</span></p>
+                    <p class="company">
+                      <span>{{ relationCanyin ? relationCanyin : "-" }}</span>
+                    </p>
+                  </div>
+                </div>
+                <div class="relevance_wrap"
+                     v-if="relationLvzhou">
+                  <div class="relevance">
+                    <p class="customer">关联绿洲客户</p>
+                    <p class="company">
+                      <span>{{ relationLvzhou ? relationLvzhou : "-" }}</span>
+                    </p>
+                  </div>
+                </div>
+                <div class="relevance_wrap"
+                     v-if="relationQicai">
+                  <div class="relevance">
+                    <p class="customer">关联器材客户</p>
+                    <p class="company">
+                      <span>{{ relationQicai ? relationQicai : "-" }}</span>
+                    </p>
+                  </div>
+                </div>
+                <div class="relevance_wrap"
+                     v-if="relationYouzhong">
+                  <div class="relevance">
+                    <p class="customer">关联邮中客户</p>
+                    <p class="company">
+                      <span>{{
+                        relationYouzhong ? relationYouzhong : "-"
+                      }}</span>
+                    </p>
                   </div>
                 </div>
                 <van-field v-model="Bank"
@@ -74,11 +98,11 @@
             <div class="File_cabinet">
               <div class="titwrap">
                 <div class="tit">
-                  <span class="total">共计文件</span><span class="num">2</span>
+                  <span class="total">共计文件</span><span class="num">{{ total }}</span>
                 </div>
                 <div class="file_upload">
                   <van-uploader class="uploadImg"
-                                :after-read="afterRead">
+                                :after-read="onRead">
                     <img src="../../common/images/upload.png"
                          alt="" />
                   </van-uploader>
@@ -147,7 +171,8 @@
 </template>
 <script>
 import upLoaderImg from "../../common/js/upLoaderImg";
-import { findByCustomerNo, remove, add } from "../../services/CustomerDetails";
+import { remove, add } from "../../services/CustomerDetails";
+import { findByContactsNo } from "../../services//BillingDetails";
 import { get } from "../../services/http.js";
 export default {
   data () {
@@ -162,6 +187,11 @@ export default {
       account: "", // 银行账户
       taxpayer: "", // 纳税人
       accountName: "", // 公司名称
+      relationBeiyou: "", //关联北邮客户
+      relationCanyin: "", //关联餐饮客户
+      relationLvzhou: "", //关联绿洲客户
+      relationQicai: "", //关联器材客户
+      relationYouzhong: "", //关联邮中客户
       Fileshow: false,
       fileList: [],
       images: [],
@@ -169,15 +199,17 @@ export default {
       showImg: false,
       imgUrl: "",
       uploader: [], // 点击图片放大
-      userID: "" //用户id
+      userID: "", //用户id
+      number: "" // 编号
     };
   },
   created () {
+    this.userID = this.$route.query.id;
+    this.number = this.$route.query.number;
     this.getBasicInfor();
-    this.getfindByCustomerNo();
   },
   methods: {
-    //vant 上传文件
+    // 上传文件获取文件id
     async onRead (file) {
       await upLoaderImg(file.file).then(res => {
         this.fileId = res.result.fileId;
@@ -186,13 +218,11 @@ export default {
     },
     // 上传文件
     getAdd () {
-      add(this.customerNo, this.activeName, this.customerNo, this.fileId).then(
-        res => {
-          if (res.code == 200) {
-            console.log(res);
-          }
+      add(this.customerNo, "", this.customerNo, this.fileId).then(res => {
+        if (res.code == 200) {
+          console.log(res);
         }
-      );
+      });
     },
     //删除文件
     handlerDel (id, ind) {
@@ -227,12 +257,9 @@ export default {
         this.$router.push({ path: "/xls", query: { url } });
       }
     },
-    afterRead (file) {
-      console.log(file);
-    },
     // 文件柜
-    getfindByCustomerNo () {
-      findByCustomerNo("LZKH.202008250001", 0, 10).then(res => {
+    getfindByContactsNo () {
+      findByContactsNo(this.number).then(res => {
         if (res.code == 200) {
           this.fileList = res.rows;
           this.total = res.rows.length;
@@ -242,7 +269,7 @@ export default {
 
     //基本信息
     getBasicInfor () {
-      get(`/system/billingInformation/${53}`).then(res => {
+      get(`/system/billingInformation/${this.userID}`).then(res => {
         if (res.code == 200) {
           console.log(res);
           this.customerNo = res.data.number;
@@ -250,6 +277,11 @@ export default {
           this.account = res.data.bankAccount;
           this.taxpayer = res.data.taxpayerNumber;
           this.accountName = res.data.accountName;
+          this.relationBeiyou = res.data.relationBeiyou;
+          this.relationCanyin = res.data.relationCanyin;
+          this.relationQicai = res.data.relationQicai;
+          this.relationYouzhong = res.data.relationYouzhong;
+          this.getfindByContactsNo();
         }
       });
     }

@@ -8,47 +8,42 @@
       <div class="my_forms">
         <div class="my_forms_tit">我的表单</div>
         <div class="my_forms_list">
-          <div
-            class="my_forms_listEven"
-            v-for="(el, index) in queryMenuData"
-            :key="index"
-            @click="changeQueryData(index, el.name, el.icon, el.id)"
-          >
+          <div class="my_forms_listEven"
+               v-for="(el, index) in queryMenuData"
+               :key="index"
+               @click="changeQueryData(index, el.name, el.icon, el.id)">
             <div class="my_forms_top">
-              <img src="../common/images/forms_customer.png" alt="" />
-              <img
-                src="../common/images/forms_reduce.png"
-                alt=""
-                class="addImg"
-              />
+              <img src="../common/images/forms_customer.png"
+                   alt="" />
+              <img src="../common/images/forms_reduce.png"
+                   alt=""
+                   class="addImg" />
             </div>
             <span class="my_forms_text">{{ el.name }}</span>
           </div>
         </div>
         <div class="none"></div>
         <div class="my_forms_content">
-          <van-tabs v-model="active" animated>
-            <van-tab v-for="each in MenuData" :key="each.id" :title="each.name">
-              <div
-                v-for="val in each.children"
-                :key="val.id"
-                class="Forms_customer"
-              >
+          <van-tabs v-model="active"
+                    animated>
+            <van-tab v-for="each in MenuData"
+                     :key="each.id"
+                     :title="each.name">
+              <div v-for="val in each.children"
+                   :key="val.id"
+                   class="Forms_customer">
                 <div class="Forms_tit">{{ val.name }}</div>
                 <div class="my_forms_list my_forms_content_list">
-                  <div
-                    class="my_forms_listEven my_forms_listTop"
-                    v-for="el in val.children"
-                    :key="el.id"
-                    @click="changeForms(el.name, el.icon, el.id)"
-                  >
+                  <div class="my_forms_listEven my_forms_listTop"
+                       v-for="el in val.children"
+                       :key="el.id"
+                       @click="changeForms(el.name, el.icon, el.id)">
                     <div class="my_forms_top">
-                      <img src="../common/images/forms_all.png" alt="" />
+                      <img src="../common/images/forms_all.png"
+                           alt="" />
                       <span class="my_forms_img">
-                        <img
-                          :src="el.checked ? forms_reduce : forms_add"
-                          class="addImg"
-                        />
+                        <img :src="el.checked ? forms_reduce : forms_add"
+                             class="addImg" />
                       </span>
                     </div>
                     <span class="my_forms_text">{{ el.name }}</span>
@@ -65,7 +60,7 @@
 <script>
 import { getTreeselect, getcustomIndex, getCreate } from "../services/forms";
 export default {
-  data() {
+  data () {
     return {
       active: 0,
       typeFlag: false,
@@ -80,7 +75,7 @@ export default {
       count: 1
     };
   },
-  created() {
+  created () {
     this.treeselect();
     if (this.typeFlag == false) {
       this.changeForms();
@@ -88,10 +83,10 @@ export default {
 
     this.changeQueryData();
   },
-  mounted() {},
+  mounted () { },
   methods: {
     //我的表单 删除表单
-    changeQueryData(ind, name, icon, id) {
+    changeQueryData (ind, name, icon, id) {
       this.queryMenuData.map(each => {
         if (each.menuId == id) {
           this.queryMenuData.splice(ind, 1);
@@ -105,7 +100,7 @@ export default {
       });
     },
     //查询我的表单
-    getcustomIndex() {
+    getcustomIndex () {
       getcustomIndex().then(res => {
         if (res && res.code == "200") {
           this.queryMenuData = res && res.data;
@@ -124,7 +119,7 @@ export default {
     },
 
     // 获取表单
-    treeselect() {
+    treeselect () {
       getTreeselect().then(res => {
         if (res && res.code == "200") {
           this.MenuData = res.data;
@@ -133,7 +128,7 @@ export default {
     },
 
     // 修改自定义表单 增加删除表单
-    changeForms(name, icon, id) {
+    changeForms (name, icon, id) {
       this.MenuData &&
         this.MenuData.map(each => {
           if (each.children) {
