@@ -1299,10 +1299,10 @@ export default {
             }
           }
         }
-        .custom_contents>.space:last-child{
-          height: 0rem;
-          background-color: #FFFFFF;
-        }
+        /*.custom_contents .space:last-child{*/
+        /*  height: 0rem;*/
+        /*  background-color: #FFFFFF;*/
+        /*}*/
       }
     }
   }

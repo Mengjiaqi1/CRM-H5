@@ -5,6 +5,9 @@ import store from "./store";
 import "@/common/js/flexible.js";
 import "@/common/style/index.scss";
 import "@/common/fonts/iconfont.js";
+// icon 图标引入
+import "@/assets/iconfont/iconfont.scss";
+import "@/assets/iconfont/iconfont.js";
 import Axios from "axios";
 import echarts from "echarts";
 import Vconsole from "vconsole";

@@ -76,7 +76,7 @@
       // 初始化数据
       getCustomInfo(){
         let Data = {
-            deptType:"1",
+            deptType:1,
             // type:2,
             // year:this.newYears,
             // yearMonth:this.yearMonthb,
@@ -85,7 +85,7 @@
             // yearState:this.half, //新
             // quarter:this.quarter,   //新
             pageNum:this.pageNum++,
-            pageSize:10,
+            // pageSize:10,
         }
         getCustomData(Data).then(res => {
           if (res.code == 200) {
@@ -99,7 +99,8 @@
              this.refreshing = false;
             }
             if(res.rows.length>0){
-              this.inCustomList = this.inCustomList.concat(res.rows);
+              // this.inCustomList = this.inCustomList.concat(res.rows);
+                this.inCustomList = res.rows;
               console.log(res.rows.length,this.inCustomList,res.rows.length,this.inCustomList.concat(res.rows),'000111')
               this.loading = false;
               if(res.rows.length !== 10){
