@@ -1,30 +1,26 @@
 <template>
   <header>
     <div class="h_left">
-      <img
-        src="../common/images/d_right.png"
-        class="goBack"
-        @click="$router.go(-1)"
-        alt=""
-      />
+      <img src="../common/images/d_right.png"
+           class="goBack"
+           @click="$router.go(-1)"
+           alt="" />
 
-      <img
-        src="../common/images/d_close.png"
-        class="close"
-        @click="changeClose"
-        alt=""
-      />
+      <img src="../common/images/d_close.png"
+           class="close"
+           @click="changeClose"
+           alt="" />
     </div>
     <slot></slot>
   </header>
 </template>
 <script>
 export default {
-  data() {
+  data () {
     return {};
   },
   methods: {
-    changeClose() {
+    changeClose () {
       location.replace("/");
     }
   }
@@ -42,7 +38,7 @@ header {
   width: 100%;
   height: 0.44rem;
   padding: 0 0.15rem;
-  background: rgba(255, 255, 255, 1);
+  background: #fff;
   display: flex;
   justify-content: space-between;
   box-sizing: border-box;

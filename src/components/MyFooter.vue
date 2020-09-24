@@ -25,11 +25,11 @@
 <script>
 export default {
   data() {
-    return {};
+    return {}
   },
   created() {},
-  methods: {}
-};
+  methods: {},
+}
 </script>
 <style lang="scss" scoped>
 footer {
@@ -57,23 +57,23 @@ footer {
       height: 0.28rem;
       background-repeat: no-repeat;
       &.home {
-        background-image: url("../common/images/home_back.png");
+        background-image: url('../common/images/home_back.png');
         background-size: 0.28rem 0.28rem;
       }
       &.visitor {
-        background-image: url("../common/images/visitor_back.png");
+        background-image: url('../common/images/visitor_back.png');
         background-size: 0.28rem 0.28rem;
       }
       &.work {
-        background-image: url("../common/images/work_back.png");
+        background-image: url('../common/images/work_back.png');
         background-size: 0.28rem 0.28rem;
       }
       &.news {
-        background-image: url("../common/images/news_back.png");
+        background-image: url('../common/images/news_back.png');
         background-size: 0.28rem 0.28rem;
       }
       &.mine {
-        background-image: url("../common/images/mine.png");
+        background-image: url('../common/images/mine.png');
         background-size: 0.28rem 0.28rem;
       }
     }
@@ -86,23 +86,23 @@ footer {
   .router-link-active {
     color: #666666;
     i.home {
-      background-image: url("../common/images/home.png");
+      background-image: url('../common/images/home.png');
       background-size: 0.28rem 0.28rem;
     }
     i.visitor {
-      background-image: url("../common/images/visitor.png");
+      background-image: url('../common/images/visitor.png');
       background-size: 0.28rem 0.28rem;
     }
     i.work {
-      background-image: url("../common/images/work.png");
+      background-image: url('../common/images/work.png');
       background-size: 0.28rem 0.28rem;
     }
     i.news {
-      background-image: url("../common/images/news.png");
+      background-image: url('../common/images/news.png');
       background-size: 0.28rem 0.28rem;
     }
     i.mine {
-      background-image: url("../common/images/mine_back.png");
+      background-image: url('../common/images/mine_back.png');
       background-size: 0.28rem 0.28rem;
     }
   }

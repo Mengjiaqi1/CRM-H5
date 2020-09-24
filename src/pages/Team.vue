@@ -1,34 +1,38 @@
 <template>
   <div class="wrap">
     <main>
+      <div class="header">
+        <div class="h_left">
+          <img src="../common/images/d_right.png"
+               class="goBack"
+               @click="changeBack"
+               alt="" />
+          <img src="../common/images/d_close.png"
+               class="close"
+               @click="changeClose"
+               alt="" />
+        </div>
+      </div>
       <div class="chart_type">
         <div class="custom_tit">团队负责人</div>
         <div class="add_card">
           <div class="fluid container">
             <div class="col-md-3">
-              <draggable
-                class="list-group"
-                tag="ul"
-                :name="'flip-list'"
-                disabled="false"
-              >
-                <li
-                  class="list-group-item"
-                  v-for="element in principalList"
-                  :key="element.userId"
-                >
+              <draggable class="list-group"
+                         tag="ul"
+                         :name="'flip-list'"
+                         disabled="false">
+                <li class="list-group-item"
+                    v-for="element in principalList"
+                    :key="element.userId">
                   <div class="headwrap">
                     <div class="head">
-                      <img
-                        :class="element.userProfile == '' ? 'ImgHide' : ''"
-                        :src="element.userProfile + '_100x100.jpg'"
-                        alt=""
-                      />
-                      <p
-                        :class="
+                      <img :class="element.userProfile == '' ? 'ImgHide' : ''"
+                           :src="element.userProfile + '_100x100.jpg'"
+                           alt="" />
+                      <p :class="
                           element.userProfile == '' ? 'ImgShow' : 'ImgHide'
-                        "
-                      >
+                        ">
                         {{
                           element.userName.length >= 3
                             ? element.userName.substring(
@@ -42,14 +46,12 @@
                     <span class="text">{{ element.userName }} </span>
                   </div>
                   <span class="badge">
-                    <img
-                      :src="forms_reduce"
-                      alt=""
-                      class="reducer"
-                      @click="
+                    <img :src="forms_reduce"
+                         alt=""
+                         class="reducer"
+                         @click="
                         removeprincipal(element.customerNo, element.userId)
-                      "
-                    />
+                      " />
                   </span>
                 </li>
               </draggable>
@@ -62,29 +64,21 @@
         <div class="add_card">
           <div class="fluid container">
             <div class="col-md-3">
-              <draggable
-                class="list-group"
-                tag="ul"
-                :name="'flip-list'"
-                disabled="false"
-              >
-                <li
-                  class="list-group-item"
-                  v-for="element in partnerList"
-                  :key="element.userId"
-                >
+              <draggable class="list-group"
+                         tag="ul"
+                         :name="'flip-list'"
+                         disabled="false">
+                <li class="list-group-item"
+                    v-for="element in partnerList"
+                    :key="element.userId">
                   <div class="headwrap">
                     <div class="head">
-                      <img
-                        :class="element.userProfile == '' ? 'ImgHide' : ''"
-                        :src="element.userProfile + '_100x100.jpg'"
-                        alt=""
-                      />
-                      <p
-                        :class="
+                      <img :class="element.userProfile == '' ? 'ImgHide' : ''"
+                           :src="element.userProfile + '_100x100.jpg'"
+                           alt="" />
+                      <p :class="
                           element.userProfile == '' ? 'ImgShow' : 'ImgHide'
-                        "
-                      >
+                        ">
                         {{
                           element.userName.length >= 3
                             ? element.userName.substring(
@@ -98,12 +92,10 @@
                     <span class="text">{{ element.userName }} </span>
                   </div>
                   <span class="badge">
-                    <img
-                      :src="forms_reduce"
-                      alt=""
-                      class="reducer"
-                      @click="removepartner(element.customerNo, element.userId)"
-                    />
+                    <img :src="forms_reduce"
+                         alt=""
+                         class="reducer"
+                         @click="removepartner(element.customerNo, element.userId)" />
                   </span>
                 </li>
               </draggable>
@@ -113,13 +105,17 @@
       </div>
     </main>
     <div class="addcontacts">
-      <div class="add" @click="goOranization">
-        <img src="../common/images/add.png" alt="" />
+      <div class="add"
+           @click="goOranization">
+        <img src="../common/images/add.png"
+             alt="" />
       </div>
     </div>
     <div class="footer">
-      <van-button type="info" @click="changeCall">电话会议</van-button>
-      <van-button type="primary" @click="changeDing">Ding</van-button>
+      <van-button type="info"
+                  @click="changeCall">电话会议</van-button>
+      <van-button type="primary"
+                  @click="changeDing">Ding</van-button>
     </div>
   </div>
 </template>
@@ -129,7 +125,7 @@ import { findChargeList, add, remove } from "../services/organization";
 import * as dd from "dingtalk-jsapi";
 var users = [];
 export default {
-  data() {
+  data () {
     return {
       addCard: [
         { menuId: 0, name: "1" },
@@ -147,20 +143,26 @@ export default {
       removeUser: [] //删除工号
     };
   },
-  created() {
+  created () {
     this.customerNo = this.$store.state.customerNo;
     this.getfindChargeList();
   },
   methods: {
+    changeBack () {
+      this.$router.push({ path: "/customerDetails" });
+    },
+    changeClose () {
+      location.replace("/");
+    },
     //ding一下
-    changeDing() {
+    changeDing () {
       this.users = Array.from(new Set(this.users)).map(each => {
         return each;
       });
       users = this.users;
       dd.biz.ding.create({
         users: users, // 用户列表，工号
-        corpId: "", // 企业id
+        corpId: "ding4549e680a3f82a1c35c2f4657eb6378f", // 企业id
         type: 1, // 附件类型 1：image  2：link
         alertType: 2, // 钉发送方式 0:电话, 1:短信, 2:应用内
         alertDate: { format: "yyyy-MM-dd HH:mm", value: "2015-05-09 08:00" },
@@ -187,38 +189,38 @@ export default {
           taskRemind: 30 // 任务提醒时间，单位分钟0：不提醒；15：提前15分钟；60：提前1个小时；180：提前3个小时；1440：提前一天；
         },
 
-        onSuccess: function() {
+        onSuccess: function () {
           //onSuccess将在点击发送之后调用
         },
-        onFail: function() {}
+        onFail: function () { }
       });
     },
     //电话会议
-    changeCall() {
+    changeCall () {
       this.users = Array.from(new Set(this.users)).map(each => {
         return each;
       });
       users = this.users;
-      dd.ready(function() {
+      dd.ready(function () {
         dd.biz.telephone.call({
           users: users, //用户列表，工号
           corpId: "ding4549e680a3f82a1c35c2f4657eb6378f", //企业id
-          onSuccess: function() {},
-          onFail: function() {}
+          onSuccess: function () { },
+          onFail: function () { }
         });
       });
       dd.error(err => {
         console.log(err, "err");
       });
     },
-    goOranization() {
+    goOranization () {
       this.$router.push({
         path: "/organization",
         query: { id: this.customerNo, userId: this.userId }
       });
     },
     // 查询协同人，负责人
-    getfindChargeList() {
+    getfindChargeList () {
       findChargeList(this.customerNo, "1").then(res => {
         if (res.code == 200) {
           this.partnerList = res.data.partnerList;
@@ -231,14 +233,14 @@ export default {
       });
     },
     // 删除负责人
-    removeprincipal(customerNo, userId) {
+    removeprincipal (customerNo, userId) {
       remove(customerNo, userId, 1).then(res => {
         console.log(res);
       });
       this.getfindChargeList();
     },
     // 删除协同人
-    removepartner(customerNo, type, userId) {
+    removepartner (customerNo, type, userId) {
       add(customerNo, type, userId).then(res => {
         console.log(res);
       });
@@ -257,6 +259,31 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  .header {
+    width: 100%;
+    height: 0.44rem;
+    width: 100%;
+    height: 0.44rem;
+    padding: 0 0.15rem;
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    .h_left {
+      flex: 1;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      .goBack {
+        width: 0.25rem;
+        height: 0.25rem;
+        margin-right: 0.1rem;
+      }
+      .close {
+        width: 0.25rem;
+        height: 0.25rem;
+      }
+    }
+  }
   main {
     // flex: 1;
     // overflow: srcoll;

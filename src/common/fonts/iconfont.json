@@ -1,0 +1,163 @@
+{
+  "id": "1973383",
+  "name": "CRM",
+  "font_family": "font_family",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "16301580",
+      "name": "lvyue record",
+      "font_class": "lvyuerecord",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    },
+    {
+      "icon_id": "16301581",
+      "name": "yushoukuan",
+      "font_class": "yushoukuan",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    },
+    {
+      "icon_id": "16301582",
+      "name": "付款单",
+      "font_class": "fukuandan",
+      "unicode": "e622",
+      "unicode_decimal": 58914
+    },
+    {
+      "icon_id": "16301583",
+      "name": "huikuan record",
+      "font_class": "huikuanrecord",
+      "unicode": "e623",
+      "unicode_decimal": 58915
+    },
+    {
+      "icon_id": "16301584",
+      "name": "xiaoxiang invoice",
+      "font_class": "xiaoxianginvoice",
+      "unicode": "e624",
+      "unicode_decimal": 58916
+    },
+    {
+      "icon_id": "16301370",
+      "name": "Product category",
+      "font_class": "Productcategory",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "16301098",
+      "name": "Marketing activities",
+      "font_class": "Marketingactivities",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "16301029",
+      "name": "Genjin record",
+      "font_class": "Genjinrecord1",
+      "unicode": "e617",
+      "unicode_decimal": 58903
+    },
+    {
+      "icon_id": "16301030",
+      "name": "Sign in",
+      "font_class": "Signin",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "16301031",
+      "name": "Work report",
+      "font_class": "Workreport",
+      "unicode": "e619",
+      "unicode_decimal": 58905
+    },
+    {
+      "icon_id": "16301032",
+      "name": "Key opportunities",
+      "font_class": "Keyopportunities1",
+      "unicode": "e61a",
+      "unicode_decimal": 58906
+    },
+    {
+      "icon_id": "16301033",
+      "name": "Contract order",
+      "font_class": "Contractorder1",
+      "unicode": "e61b",
+      "unicode_decimal": 58907
+    },
+    {
+      "icon_id": "16301034",
+      "name": "Quotation",
+      "font_class": "Quotation",
+      "unicode": "e61c",
+      "unicode_decimal": 58908
+    },
+    {
+      "icon_id": "16301035",
+      "name": "All opportunities",
+      "font_class": "Allopportunities1",
+      "unicode": "e61d",
+      "unicode_decimal": 58909
+    },
+    {
+      "icon_id": "16301036",
+      "name": "Product management",
+      "font_class": "Productmanagement",
+      "unicode": "e61e",
+      "unicode_decimal": 58910
+    },
+    {
+      "icon_id": "16301037",
+      "name": "Customers ghc",
+      "font_class": "Customersghc1",
+      "unicode": "e61f",
+      "unicode_decimal": 58911
+    },
+    {
+      "icon_id": "16301038",
+      "name": "contacts",
+      "font_class": "contacts1",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
+      "icon_id": "16300707",
+      "name": "customers chachong",
+      "font_class": "customerschachong",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    },
+    {
+      "icon_id": "16268545",
+      "name": "All customers",
+      "font_class": "Allcustomers1",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "16226098",
+      "name": "Key customers",
+      "font_class": "Keycustomers",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "16226099",
+      "name": "Fangke Plan",
+      "font_class": "FangkePlan",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
+      "icon_id": "16226100",
+      "name": "kaipiao information",
+      "font_class": "kaipiaoinformation",
+      "unicode": "e613",
+      "unicode_decimal": 58899
+    }
+  ]
+}

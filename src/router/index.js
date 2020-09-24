@@ -25,14 +25,15 @@ import CustomerDetails from "../pages/Custom/CustomerDetails";
 import ContactDetails from "../pages/Contacts/ContactDetails.vue";
 import Contact from "../pages/Contacts/Contact";
 import store from "../store";
-import { getCookie } from "../untils/auth";
+import {
+    getCookie
+} from "../untils/auth";
 import Team from "../pages/Team";
 import NewContacts from "../pages/Contacts/NewContacts.vue";
 import Associated from "../pages/Custom/Associated.vue";
 import Xls from "../pages/Xls.vue";
-import BillingInformationDetail from "../pages/BillingInformationDetails.vue";
+import BillingInformationDetail from "../pages/BillingInformation/BillingInformationDetails.vue";
 Vue.use(VueRouter);
-console.log(BillingInformationDetail, "xainqin");
 const routes = [
     //首页从定向
     {

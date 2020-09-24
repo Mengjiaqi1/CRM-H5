@@ -4,7 +4,7 @@ import router from "./router";
 import store from "./store";
 import "@/common/js/flexible.js";
 import "@/common/style/index.scss";
-import "./assets/iconfont/iconfont.css";
+import "@/common/fonts/iconfont.js";
 import Axios from "axios";
 import echarts from "echarts";
 import Vconsole from "vconsole";

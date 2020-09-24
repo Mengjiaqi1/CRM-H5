@@ -3,20 +3,32 @@
     <myHeader>
       <div class="h_center"></div>
       <div class="h_right">
-        <img src="../common/images/build.png" alt="" />
+        <img src="../../common/images/build.png"
+             alt="" />
       </div>
     </myHeader>
     <main>
+      <svg class="icon"
+           aria-hidden="true">
+        <use xlink:href="#icon-lvyuerecord"></use>
+      </svg>
+      <svg class="icon"
+           aria-hidden="true">
+        <use xlink:href="#icon-doctor"></use>
+      </svg>
+
+      <!-- //at.alicdn.com/t/font_1973383_mqc6dx2e7xj.js -->
+
       <div class="main_tit">
-        <p class="number">UHU12345678</p>
-        <p><span class="company">中国邮政集团</span></p>
-        <p class="text">
-          <span class="account">银行账户:</span
-          ><span class="content">中国邮政集团北京邮政公寓</span>
+        <p class="number">{{ customerNo }}</p>
+        <p>
+          <span class="company">{{ accountName }}</span>
         </p>
         <p class="text">
-          <span class="account">编号:</span
-          ><span class="content">UHU12345678</span>
+          <span class="account">银行账户:</span><span class="content">{{ account }}</span>
+        </p>
+        <p class="text">
+          <span class="account">编号:</span><span class="content">{{ customerNo }}</span>
         </p>
       </div>
       <div class="nav">
@@ -25,7 +37,9 @@
             <div class="Basic_infor">
               <div class="none"></div>
               <div class="form">
-                <van-field v-model="customerNo" label="编号" readonly />
+                <van-field v-model="customerNo"
+                           label="编号"
+                           readonly />
                 <div class="relevance_wrap">
                   <div class="relevance">
                     <p class="customer">关联餐饮客户</p>
@@ -38,33 +52,21 @@
                     <p class="company"><span>廊坊盛世 (合作经营)</span></p>
                   </div>
                 </div>
-                <!-- <van-field
-                  v-model="customer"
-                  label="关联客户"
-                  type="text"
-                  readonly
-                /> -->
-                <van-field
-                  v-model="Bank"
-                  type="text"
-                  label="开户行"
-                  autosize
-                  readonly
-                  required
-                />
-                <van-field
-                  v-model="account"
-                  type="text"
-                  label="银行账户"
-                  readonly
-                  required
-                />
-                <van-field
-                  v-model="taxpayer"
-                  type="text"
-                  label="纳税人"
-                  readonly
-                />
+                <van-field v-model="Bank"
+                           type="text"
+                           label="开户行"
+                           autosize
+                           readonly
+                           required />
+                <van-field v-model="account"
+                           type="text"
+                           label="银行账户"
+                           readonly
+                           required />
+                <van-field v-model="taxpayer"
+                           type="text"
+                           label="纳税人"
+                           readonly />
               </div>
             </div>
           </van-tab>
@@ -75,43 +77,51 @@
                   <span class="total">共计文件</span><span class="num">2</span>
                 </div>
                 <div class="file_upload">
-                  <van-uploader class="uploadImg" :after-read="afterRead">
-                    <img src="../common/images/upload.png" alt="" />
+                  <van-uploader class="uploadImg"
+                                :after-read="afterRead">
+                    <img src="../../common/images/upload.png"
+                         alt="" />
                   </van-uploader>
                 </div>
               </div>
               <div class="file_wrap">
-                <div class="file_content" ref="fileContent">
-                  <van-swipe-cell>
+                <div class="file_content"
+                     ref="fileContent">
+                  <van-swipe-cell v-for="(each, index) in fileList"
+                                  :key="each.cabinetId">
                     <div class="file_content_li">
-                      <div class="left" @click="changeImg('http://baidu.png')">
-                        <img src="../common/images/excel.png" alt="" />
+                      <div class="left"
+                           @click="changeImg('http://baidu.png')">
+                        <img src="../../common/images/excel.png"
+                             alt="" />
                         <van-uploader v-model="uploader" />
                       </div>
                       <div class="center">
-                        <div class="Scheduling">项目排期.rar</div>
+                        <div class="Scheduling">{{ each.fileOldName }}</div>
                         <div class="nameAndtime">
-                          <span class="surname">何强</span>
+                          <span class="surname">{{ each.createUserName }}</span>
                           <li class="time">
-                            <span class="ymd">2020-12-01</span>
-                            <span class="hsm">12:32:21</span>
+                            <span>{{ each.createTime }}</span>
                           </li>
                         </div>
-                        <div class="size">1.1M</div>
+                        <div class="size">
+                          {{ (each.fileSize / 1024).toFixed(1) }}KB
+                        </div>
                       </div>
-                      <div class="right" @click="handlecheck">
-                        <img src="check" alt="" />
+                      <div class="right"
+                           @click="handlecheck(each.url, each.cabinetId)">
+                        <img :src="uploadType(each.url) ? check : xiazai"
+                             alt="" />
                       </div>
                     </div>
                     <template #right>
-                      <van-button type="danger" class="delete-button-none" />
-                      <van-button
-                        square
-                        text="删除"
-                        type="danger"
-                        class="delete-button"
-                        @click="handlerDel(index)"
-                      />
+                      <van-button type="danger"
+                                  class="delete-button-none" />
+                      <van-button square
+                                  text="删除"
+                                  type="danger"
+                                  class="delete-button"
+                                  @click="handlerDel(each.cabinetId, index)" />
                     </template>
                   </van-swipe-cell>
                 </div>
@@ -121,100 +131,130 @@
         </van-tabs>
       </div>
     </main>
-    <van-overlay :show="showImg" @click="showImg = false">
-      <div class="wrapper" @click="showImg = false" @click.stop>
+    <van-overlay :show="showImg"
+                 @click="showImg = false">
+      <div class="wrapper"
+           @click="showImg = false"
+           @click.stop>
         <div class="block">
-          <img :src="imgUrl" alt="" id="img" />
+          <img :src="imgUrl"
+               alt=""
+               id="img" />
         </div>
       </div>
     </van-overlay>
   </div>
 </template>
 <script>
-import upLoaderImg from '../common/js/upLoaderImg'
-import {
-  findBase,
-  findRecordBaseList,
-  findByCustomerNo,
-  findRecordsCount,
-  remove,
-  add,
-} from '../services/CustomerDetails'
+import upLoaderImg from "../../common/js/upLoaderImg";
+import { findByCustomerNo, remove, add } from "../../services/CustomerDetails";
+import { get } from "../../services/http.js";
 export default {
-  data() {
+  data () {
     return {
       reg: /\.(png|jpg|gif|jpeg|webp)$/,
       total: 0,
-      check: require('../common/images/check.png'),
-      xiazai: require('../common/images/xiazai.png'),
-      customerNo: '', // 编号
-      customer: '', //关联客户
-      Bank: '', // 开户行
-      account: '', // 银行账户
-      taxpayer: '', // 纳税人
+      check: require("../../common/images/check.png"),
+      xiazai: require("../../common/images/xiazai.png"),
+      customerNo: "", // 编号
+      customer: "", //关联客户
+      Bank: "", // 开户行
+      account: "", // 银行账户
+      taxpayer: "", // 纳税人
+      accountName: "", // 公司名称
       Fileshow: false,
       fileList: [],
       images: [],
       show: false,
       showImg: false,
-      imgUrl: '',
+      imgUrl: "",
       uploader: [], // 点击图片放大
-    }
+      userID: "" //用户id
+    };
+  },
+  created () {
+    this.getBasicInfor();
+    this.getfindByCustomerNo();
   },
   methods: {
     //vant 上传文件
-    async onRead(file) {
-      await upLoaderImg(file.file).then((res) => {
-        this.fileId = res.result.fileId
-      })
-      await this.getAdd()
+    async onRead (file) {
+      await upLoaderImg(file.file).then(res => {
+        this.fileId = res.result.fileId;
+      });
+      await this.getAdd();
     },
-    getAdd() {
+    // 上传文件
+    getAdd () {
       add(this.customerNo, this.activeName, this.customerNo, this.fileId).then(
-        (res) => {
+        res => {
           if (res.code == 200) {
-            console.log(res)
+            console.log(res);
           }
         }
-      )
+      );
     },
-    handlerDel(id, ind) {
-      this.fileList.splice(ind, 1)
-      remove(id).then((res) => {
+    //删除文件
+    handlerDel (id, ind) {
+      this.fileList.splice(ind, 1);
+      remove(id).then(res => {
         if (res.code == 200) {
-          console.log(res)
+          console.log(res);
           this.$toast({
-            message: '删除成功',
-            position: 'center',
-          })
+            message: "删除成功",
+            position: "center"
+          });
         }
-      })
+      });
     },
     //正则判断上传文件类型
-    uploadType(url) {
+    uploadType (url) {
       return /(png|jpg|gif|jpeg|webp)$/.test(
-        url.substring(url.lastIndexOf('.') + 1, url.length)
-      )
+        url.substring(url.lastIndexOf(".") + 1, url.length)
+      );
     },
     // 文件柜
-    changeImg(url) {
-      this.uploader.push({ url: url })
+    changeImg (url) {
+      this.uploader.push({ url: url });
     },
     // 文件柜查看文件
-    handlecheck(url) {
+    handlecheck (url) {
       if (this.uploadType(url)) {
-        this.showImg = true
-        this.imgUrl = url
+        this.showImg = true;
+        this.imgUrl = url;
       } else {
-        this.showImg = false
-        this.$router.push({ path: '/xls', query: { url } })
+        this.showImg = false;
+        this.$router.push({ path: "/xls", query: { url } });
       }
     },
-    afterRead(file) {
-      console.log(file)
+    afterRead (file) {
+      console.log(file);
     },
-  },
-}
+    // 文件柜
+    getfindByCustomerNo () {
+      findByCustomerNo("LZKH.202008250001", 0, 10).then(res => {
+        if (res.code == 200) {
+          this.fileList = res.rows;
+          this.total = res.rows.length;
+        }
+      });
+    },
+
+    //基本信息
+    getBasicInfor () {
+      get(`/system/billingInformation/${53}`).then(res => {
+        if (res.code == 200) {
+          console.log(res);
+          this.customerNo = res.data.number;
+          this.Bank = res.data.bankDeposit;
+          this.account = res.data.bankAccount;
+          this.taxpayer = res.data.taxpayerNumber;
+          this.accountName = res.data.accountName;
+        }
+      });
+    }
+  }
+};
 </script>
 <style lang="scss" scoped>
 .wrap {
@@ -222,6 +262,13 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
+  .icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+  }
   main {
     flex: 1;
     overflow: scroll;
@@ -275,7 +322,6 @@ export default {
     .nav {
       width: 100%;
       height: 100%;
-      // background: #f8f9fa;
       margin-top: 0.1rem;
       .none {
         width: 100%;
@@ -285,7 +331,6 @@ export default {
           height: 100%;
         }
       }
-
       /deep/.van-tabs__wrap--scrollable {
         padding-left: 0.12rem;
         padding-right: 0.12rem;
@@ -316,7 +361,7 @@ export default {
         left: 0.13rem;
         color: #ee0a24;
         font-size: 0.14rem;
-        content: '*';
+        content: "*";
       }
       /deep/.van-tabs__wrap--scrollable {
         padding-left: 0.12rem;
@@ -346,7 +391,7 @@ export default {
           .relevance_wrap {
             width: 100%;
             background: #fff;
-            padding-left: 0.16rem;
+            padding-left: 0.1rem;
             padding-right: 0.16rem;
             box-sizing: border-box;
             .relevance {
@@ -408,7 +453,6 @@ export default {
         width: 100%;
         height: 100%;
         box-sizing: border-box;
-        // background: #f8f9fa;
         .titwrap {
           width: 100%;
           height: 0.42rem;
@@ -534,18 +578,18 @@ export default {
 
               .Scheduling {
                 width: 2rem;
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
+                text-align: justify;
+                text-justify: newspaper;
+                word-break: break-all;
+                text-align: left;
                 font-size: 0.16rem;
-                font-family: PingFangSC-Regular, PingFang SC;
                 font-weight: 400;
                 color: #333333;
                 line-height: 0.22rem;
-                display: flex;
               }
               .nameAndtime {
                 display: flex;
+                line-height: 0.17rem;
                 margin-top: 0.05rem;
                 .surname {
                   display: flex;
@@ -574,9 +618,10 @@ export default {
               align-items: center;
               justify-content: center;
               margin-right: 0.08rem;
+              margin-top: 0.2rem;
               img {
-                widows: 0.14rem;
-                height: 0.14rem;
+                width: 0.2rem;
+                height: 0.2rem;
               }
             }
           }

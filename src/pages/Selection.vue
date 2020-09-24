@@ -28,15 +28,19 @@
           <div
             v-for="(each, index) in timeData"
             :key="index"
-            v-if="index<num"
+            v-if="index < num"
             :class="timeSelec == index ? 'active' : 'each'"
             @click="changeTime(index)"
           >
-            <span v-if="index<num">{{each.time}}</span>
+            <span v-if="index < num">{{ each.time }}</span>
           </div>
           <!-- {{showList}} -->
-          <span  v-if="timeData.length>5" class="more_show" @click="showMore">{{isShow?'更多':'收起'}}</span>
-
+          <span
+            v-if="timeData.length > 5"
+            class="more_show"
+            @click="showMore"
+            >{{ isShow ? "更多" : "收起" }}</span
+          >
         </div>
       </div>
     </main>
@@ -66,34 +70,46 @@
       </div>
     </footer>
     <!--年份-->
-    <van-popup v-model="isYearShow" position="bottom" :style="{ height: '30%' }">
+    <van-popup
+      v-model="isYearShow"
+      position="bottom"
+      :style="{ height: '30%' }"
+    >
       <van-datetime-picker
-              v-model="currentDateYear"
-              @cancel="cancelPickerYear"
-              @confirm="confirmPickerYear"
-              type="year"
-              :columns-order="['year']"
-              :formatter="formatter"
+        v-model="currentDateYear"
+        @cancel="cancelPickerYear"
+        @confirm="confirmPickerYear"
+        type="year"
+        :columns-order="['year']"
+        :formatter="formatter"
       />
     </van-popup>
     <!--半年-->
-    <van-popup v-model="isHalfYear" position="bottom" :style="{ height: '30%' }">
+    <van-popup
+      v-model="isHalfYear"
+      position="bottom"
+      :style="{ height: '30%' }"
+    >
       <div class="half_year_text">
         <span class="half_year_cancel" @click="halfCancel">取消</span>
         <span class="half_year_confirm" @click="halfConfirm">确认</span>
       </div>
-      <div   class="half_time"
-             v-for="(each, index) in halfTime"
-             :key="index"
-             :class="timeHalf == index ? 'activeText' : 'eachText'"
-             @click="changeHalfTime(index,each.name,each.id)"
+      <div
+        class="half_time"
+        v-for="(each, index) in halfTime"
+        :key="index"
+        :class="timeHalf == index ? 'activeText' : 'eachText'"
+        @click="changeHalfTime(index, each.name, each.id)"
       >
-        <span style="float: left">{{each.name}}</span>
-        <span v-if="checkedId==each.id" style="float: right;">
-          <img src="../common/images/checked.png" alt="" style="width: 0.28rem;height: 0.28rem">
+        <span style="float: left">{{ each.name }}</span>
+        <span v-if="checkedId == each.id" style="float: right;">
+          <img
+            src="../common/images/checked.png"
+            alt=""
+            style="width: 0.28rem;height: 0.28rem"
+          />
         </span>
       </div>
-
     </van-popup>
     <!--季度-->
     <van-popup v-model="isQuarter" position="bottom" :style="{ height: '35%' }">
@@ -101,89 +117,100 @@
         <span class="half_year_cancel" @click="quarterCancel">取消</span>
         <span class="half_year_confirm" @click="quarterConfirm">确认</span>
       </div>
-      <div   class="half_time"
-             v-for="(each, index) in quarterTime"
-             :key="index"
-             :class="timeQuarter == index ? 'activeText' : 'eachText'"
-             @click="changeQuarterTime(index,each.name,each.id)"
+      <div
+        class="half_time"
+        v-for="(each, index) in quarterTime"
+        :key="index"
+        :class="timeQuarter == index ? 'activeText' : 'eachText'"
+        @click="changeQuarterTime(index, each.name, each.id)"
       >
-        <span style="float: left">{{each.name}}</span>
-        <span v-if="checkedIds==each.id" style="float: right;">
-          <img src="../common/images/checked.png" alt="" style="width: 0.28rem;height: 0.28rem">
+        <span style="float: left">{{ each.name }}</span>
+        <span v-if="checkedIds == each.id" style="float: right;">
+          <img
+            src="../common/images/checked.png"
+            alt=""
+            style="width: 0.28rem;height: 0.28rem"
+          />
         </span>
       </div>
     </van-popup>
     <!--月份-->
-    <van-popup v-model="isMouthshow" position="bottom" :style="{ height: '30%' }">
+    <van-popup
+      v-model="isMouthshow"
+      position="bottom"
+      :style="{ height: '30%' }"
+    >
       <van-datetime-picker
-              v-model="currentDate"
-              @cancel="cancelPickerMonth"
-              @confirm="confirmPickerMonth"
-              type="year-month"
-              :min-date="minDate"
-              :max-date="maxDate"
+        v-model="currentDate"
+        @cancel="cancelPickerMonth"
+        @confirm="confirmPickerMonth"
+        type="year-month"
+        :min-date="minDate"
+        :max-date="maxDate"
       />
     </van-popup>
     <!--自定义-->
     <van-popup v-model="isCustom">
-        <div class="custom_content">
-          <p class="custom_content-text">开始时间</p>
-          <input
-                  class="height-amount-input"
-                  placeholder="请选择"
-                  ref="termEnd"
-                  @click="showDatePicker('termStart')"
-                  @blur="handleBlur"
-                  v-model="inputData.start_Time"
-                  readonly="readonly" />
-          <p class="custom_content-text">结束日期</p>
-          <input
-            class="height-amount-input"
-            placeholder="请选择"
-            ref="termEnd"
-            v-model="inputData.end_Time"
-            @click="showDatePickers('termEnd')"
-            @blur="handleBlur"
-            readonly="readonly" />
-          <div class="selecBox">
-
-            <div style="width: 30%;margin-left: 10%;"
-                    :class="[cancelShow == 2 ? 'selecActive' : 'confirm']"
-                    @click="changeCancelTime()"
-            >
-              取消
-            </div>
-            <div
-                    style="width: 30%;margin-right: 10%;"
-                    :class="[cancelShow == 1 ? 'selecActive' : 'confirm']"
-                    @click="changeConfirmTime()"
-            >
-              确认
-            </div>
+      <div class="custom_content">
+        <p class="custom_content-text">开始时间</p>
+        <input
+          class="height-amount-input"
+          placeholder="请选择"
+          ref="termEnd"
+          @click="showDatePicker('termStart')"
+          @blur="handleBlur"
+          v-model="inputData.start_Time"
+          readonly="readonly"
+        />
+        <p class="custom_content-text">结束日期</p>
+        <input
+          class="height-amount-input"
+          placeholder="请选择"
+          ref="termEnd"
+          v-model="inputData.end_Time"
+          @click="showDatePickers('termEnd')"
+          @blur="handleBlur"
+          readonly="readonly"
+        />
+        <div class="selecBox">
+          <div
+            style="width: 30%;margin-left: 10%;"
+            :class="[cancelShow == 2 ? 'selecActive' : 'confirm']"
+            @click="changeCancelTime()"
+          >
+            取消
+          </div>
+          <div
+            style="width: 30%;margin-right: 10%;"
+            :class="[cancelShow == 1 ? 'selecActive' : 'confirm']"
+            @click="changeConfirmTime()"
+          >
+            确认
           </div>
         </div>
+      </div>
     </van-popup>
     <!--年月日-->
     <van-popup v-model="isPopShow" position="bottom" :style="{ height: '30%' }">
       <van-datetime-picker
-              @cancel="cancelPicker"
-              @confirm="confirmPicker"
-              v-model="startTime"
-              v-if="showTime"
-              type="date"
-              :min-date="minDate"
-              :max-date="maxDate"
+        @cancel="cancelPicker"
+        @confirm="confirmPicker"
+        v-model="startTime"
+        v-if="showTime"
+        type="date"
+        :min-date="minDate"
+        :max-date="maxDate"
       />
     </van-popup>
     <van-popup v-model="isPop" position="bottom" :style="{ height: '30%' }">
       <van-datetime-picker
-              @cancel="cancelPickers"
-              @confirm="confirmPickers"
-              v-if="showTime"
-              v-model="endTime"
-              type="date"
-              :min-date="minDate"
-              :max-date="maxDate"
+        @cancel="cancelPickers"
+        @confirm="confirmPickers"
+        v-if="showTime"
+        v-model="endTime"
+        type="date"
+        :min-date="minDate"
+        :max-date="maxDate"
       />
     </van-popup>
   </div>
@@ -197,58 +224,58 @@ export default {
       checked: false,
       RadioSelec: 1,
       timeSelec: 1,
-      timeHalf:0,
-      timeQuarter:0,
+      timeHalf: 0,
+      timeQuarter: 0,
       cancelShow: 1,
       // 年份
-      isYearShow:false,
+      isYearShow: false,
       currentDateYear: new Date(),
       // 半年
-      isHalfYear:false,
-      half:'',
-      halfId:'',
+      isHalfYear: false,
+      half: "",
+      halfId: "",
       // 季度
-      isQuarter:false,
-      quarter:'',
-      quarterId:'',
+      isQuarter: false,
+      quarter: "",
+      quarterId: "",
       // 年月
-      isMouthshow:false,
+      isMouthshow: false,
       currentDate: new Date(),
-      minDate: new Date(2000, 1,),
-      maxDate: new Date(2100, 10,),
+      minDate: new Date(2000, 1),
+      maxDate: new Date(2100, 10),
       // 自定义
-      isCustom:false,
+      isCustom: false,
       startTime: new Date(), // 开始时间
       endTime: new Date(), // 结束时间
       isPopShow: false, // 弹出层隐藏与显示
       isPop: false, // 弹出层隐藏与显示
-      showTime:false,
+      showTime: false,
       // 更多收起
       num: 5,
-      isShow:true,
+      isShow: true,
       // 参数
-      type:1,
-      year:'',
-      newYears:'',
-      newYear:'',
-      yearMonth:'',
-      yearState:'',
-      yearMonths:'',
-      yearMonthb:'',
+      type: 1,
+      year: "",
+      newYears: "",
+      newYear: "",
+      yearMonth: "",
+      yearState: "",
+      yearMonths: "",
+      yearMonthb: "",
 
-      beginTime:'',
-      endTime:'',
-      timeBetween:'',
-      start_time:'',
-      end_Time:'',
+      beginTime: "",
+      endTime: "",
+      timeBetween: "",
+      start_time: "",
+      end_Time: "",
       // timeDiff:'',
       // 半年选中图片
-      checkedId:null,
-      checkedIds:null,
+      checkedId: null,
+      checkedIds: null,
 
-      inputData:{
-        start_Time:'',
-        end_Time:'',
+      inputData: {
+        start_Time: "",
+        end_Time: ""
       },
       sectionData: [
         {
@@ -311,7 +338,7 @@ export default {
         {
           time: "自定义",
           id: "10"
-        },
+        }
       ],
       halfTime: [
         {
@@ -340,14 +367,14 @@ export default {
           name: "第四季度",
           id: "4"
         }
-      ],
+      ]
     };
   },
   creates() {},
   methods: {
     showMore() {
-        this.isShow = !this.isShow
-        this.num = this.isShow ? 5 : this.timeData.length;
+      this.isShow = !this.isShow;
+      this.num = this.isShow ? 5 : this.timeData.length;
     },
     changeSeCempty() {
       this.RadioSelec = null;
@@ -357,285 +384,316 @@ export default {
     },
     changeTime(ind) {
       this.timeSelec = ind;
-      this.flag = !this.flag
-      if(ind>=0 && ind<=5) { //今日至上周--清除的是年份和月份，自定义、半年、季度的值
-          this.type = ind;
-          this.newYears= ''
-          this.yearMonthb = ''
-          this.beginTime = ''
-          this.endTime = ''
-          this.quarterId ='' //新
-          this.halfId='' //新
+      this.flag = !this.flag;
+      if (ind >= 0 && ind <= 5) {
+        //今日至上周--清除的是年份和月份，自定义、半年、季度的值
+        this.type = ind;
+        this.newYears = "";
+        this.yearMonthb = "";
+        this.beginTime = "";
+        this.endTime = "";
+        this.quarterId = ""; //新
+        this.halfId = ""; //新
       }
-      if(ind == 9){ //月份--清楚年份和季度，半年、自定义的值
-          this.newYears= ''
-          this.beginTime = ''
-          this.endTime = ''
-          this.quarterId ='' //新
-          this.halfId='' //新
+      if (ind == 9) {
+        //月份--清楚年份和季度，半年、自定义的值
+        this.newYears = "";
+        this.beginTime = "";
+        this.endTime = "";
+        this.quarterId = ""; //新
+        this.halfId = ""; //新
       }
-      if(ind == 10) { //自定义--清楚的是年份和月份的值
-          this.newYears = ''
-          this.yearMonthb = ''
-          this.quarterId ='' //新
-          this.halfId = '' //新
-          this.type = '';//新
+      if (ind == 10) {
+        //自定义--清楚的是年份和月份的值
+        this.newYears = "";
+        this.yearMonthb = "";
+        this.quarterId = ""; //新
+        this.halfId = ""; //新
+        this.type = ""; //新
       }
       //年份、半年、季度、自定义--清除的是月份的值
       // if(ind == 6 || ind == 7 || ind == 8 || ind == 10){
       //     this.yearMonthb = ''
       // }
-      if(ind == 6){ //年份
-          this.type = '';//新
-          this.yearMonthb = ''; //新
-          this.beginTime = '';//新
-          this.endTime = '';//新
-          this.newYears = this.newYear.substring(0,this.newYear.length-1);
-          this.half  =  name;
-          this.quarter = name;
-          console.log(this.half,this.timeData[7].time,this.newYears,'woshishui')
-
+      if (ind == 6) {
+        //年份
+        this.type = ""; //新
+        this.yearMonthb = ""; //新
+        this.beginTime = ""; //新
+        this.endTime = ""; //新
+        this.newYears = this.newYear.substring(0, this.newYear.length - 1);
+        this.half = name;
+        this.quarter = name;
+        console.log(
+          this.half,
+          this.timeData[7].time,
+          this.newYears,
+          "woshishui"
+        );
       }
-      if(ind == 7){ //半年
-          this.type = '';//新
-          this.yearMonthb = '' //新
-          this.beginTime = ''//新
-          this.endTime = ''//新
-          this.quarterId ='' //新
+      if (ind == 7) {
+        //半年
+        this.type = ""; //新
+        this.yearMonthb = ""; //新
+        this.beginTime = ""; //新
+        this.endTime = ""; //新
+        this.quarterId = ""; //新
       }
-      if(ind == 8){ //季度
-          this.type = '';//新
-          this.yearMonthb = '' //新
-          this.beginTime = ''//新
-          this.endTime = ''//新
-          this.halfId ='' //新
+      if (ind == 8) {
+        //季度
+        this.type = ""; //新
+        this.yearMonthb = ""; //新
+        this.beginTime = ""; //新
+        this.endTime = ""; //新
+        this.halfId = ""; //新
       }
-      if(ind == 9){ //年月
-          this.type = '';//新
-          this.year = '' //新
-          this.beginTime = ''//新
-          this.endTime = ''//新
-          this.quarterId ='' //新
-          this.halfId ='' //新
+      if (ind == 9) {
+        //年月
+        this.type = ""; //新
+        this.year = ""; //新
+        this.beginTime = ""; //新
+        this.endTime = ""; //新
+        this.quarterId = ""; //新
+        this.halfId = ""; //新
       }
       // ind->index 控制type的值是否为空，如果index的范围不再0-5之间type值为空
-      if(ind>=6&&ind<=10) {
-          this.type = ''
+      if (ind >= 6 && ind <= 10) {
+        this.type = "";
       }
       // 控制弹窗
-      if (ind == '6'){
+      if (ind == "6") {
         this.isYearShow = true;
-      };
-      if (ind == '7'){
+      }
+      if (ind == "7") {
         this.isHalfYear = true;
-      };
-      if (ind == '8'){
+      }
+      if (ind == "8") {
         this.isQuarter = true;
       }
-      if (ind == '9'){
+      if (ind == "9") {
         this.isMouthshow = true;
-      };
-      if (ind == '10'){
+      }
+      if (ind == "10") {
         this.isCustom = true;
-        this.inputData.start_Time='';
-        this.inputData.end_Time='';
+        this.inputData.start_Time = "";
+        this.inputData.end_Time = "";
       }
       // 控制恢复选中框内的汉字
-      if((ind>=0&&ind<=5)||ind=='9'||ind=='10'||ind=='7') {
-          this.timeData[6].time='年份';
-          this.timeData[7].time='半年';
-          this.timeData[8].time='季度';
-          this.timeData[10].time='自定义'
+      if ((ind >= 0 && ind <= 5) || ind == "9" || ind == "10" || ind == "7") {
+        this.timeData[6].time = "年份";
+        this.timeData[7].time = "半年";
+        this.timeData[8].time = "季度";
+        this.timeData[10].time = "自定义";
       }
-      if(ind==6||ind==7||ind==8||(ind>=0&&ind<=5)||ind==10){
-          this.timeData[9].time='月份'
-          this.timeData[10].time='自定义'
+      if (
+        ind == 6 ||
+        ind == 7 ||
+        ind == 8 ||
+        (ind >= 0 && ind <= 5) ||
+        ind == 10
+      ) {
+        this.timeData[9].time = "月份";
+        this.timeData[10].time = "自定义";
       }
-      if(ind==8) {
-          this.timeData[6].time='年份';
-          this.timeData[7].time='半年';
+      if (ind == 8) {
+        this.timeData[6].time = "年份";
+        this.timeData[7].time = "半年";
       }
     },
     changeTimeEmpty() {
       this.timeSelec = null;
-      this.type = ''
-      this.timeData[6].time='年份';
-      this.timeData[7].time='半年';
-      this.timeData[8].time='季度';
-      this.timeData[9].time='月份';
-      this.timeData[10].time='自定义';
+      this.type = "";
+      this.timeData[6].time = "年份";
+      this.timeData[7].time = "半年";
+      this.timeData[8].time = "季度";
+      this.timeData[9].time = "月份";
+      this.timeData[10].time = "自定义";
     },
 
     changeCancel() {
-        console.log(this.timeSelec,111)
+      console.log(this.timeSelec, 111);
       this.cancelShow = 1;
-        this.timeSelec = 1
-        this.type = 1
-      this.RadioSelec=1;
+      this.timeSelec = 1;
+      this.type = 1;
+      this.RadioSelec = 1;
     },
     // 确定
     changeConfirm() {
       this.cancelShow = 2;
       // 半年
-      if(this.timeSelec =='7'){
+      if (this.timeSelec == "7") {
         this.$toast({
           message: "请选择年份",
           position: "center"
         });
       }
       // 季度
-      if(this.timeSelec =='8'){
+      if (this.timeSelec == "8") {
         this.$toast({
           message: "请选择年份",
           position: "center"
         });
       }
       // 年月
-      if(this.timeSelec =='9'){
-          this.yearMonth = this.timeData[9].time;
-          this.yearMonths = this.yearMonth.replace(/[年]/g,"-");
-          this.yearMonthb = this.yearMonths.replace(/[月]/,"");
+      if (this.timeSelec == "9") {
+        this.yearMonth = this.timeData[9].time;
+        this.yearMonths = this.yearMonth.replace(/[年]/g, "-");
+        this.yearMonthb = this.yearMonths.replace(/[月]/, "");
       }
       // 自定义
-      if(this.timeSelec =='10'){
-          this.timeBetween = this.timeData[10].time
-          this.beginTime = this.timeBetween.substring(0,10);
-          this.endTime = this.timeBetween.substring(11,21);
+      if (this.timeSelec == "10") {
+        this.timeBetween = this.timeData[10].time;
+        this.beginTime = this.timeBetween.substring(0, 10);
+        this.endTime = this.timeBetween.substring(11, 21);
       }
       let Data = {
-          deptType:this.RadioSelec,
-          type:this.type,
-          year:this.newYears,
-          yearMonth:this.yearMonthb,
-          beginTime:this.beginTime,
-          endTime:this.endTime,
-          yearState:this.halfId, //新
-          quarter:this.quarterId,   //新
-      }
-      console.log(Data,'hjfdshjfdsfdj')
-      if(this.RadioSelec!=null){
-        if((this.timeSelec>=0 && this.timeSelec<=5)||this.timeSelec =='6'||(this.timeSelec =='7'&&this.timeSelec =='6')||(this.timeSelec =='8'&&this.timeSelec =='6')||this.timeSelec =='9'||this.timeSelec =='10'){
+        deptType: this.RadioSelec,
+        type: this.type,
+        year: this.newYears,
+        yearMonth: this.yearMonthb,
+        beginTime: this.beginTime,
+        endTime: this.endTime,
+        yearState: this.halfId, //新
+        quarter: this.quarterId //新
+      };
+
+      if (this.RadioSelec != null) {
+        if (
+          (this.timeSelec >= 0 && this.timeSelec <= 5) ||
+          this.timeSelec == "6" ||
+          (this.timeSelec == "7" && this.timeSelec == "6") ||
+          (this.timeSelec == "8" && this.timeSelec == "6") ||
+          this.timeSelec == "9" ||
+          this.timeSelec == "10"
+        ) {
           getData(Data).then(res => {
             if (res.code == "200") {
               this.$router.push({ path: "/" });
             }
           });
         }
-      }else{
+      } else {
         this.$toast({
-            message: "请选择部门",
-            position: "center"
+          message: "请选择部门",
+          position: "center"
         });
       }
     },
     // 年份
-    cancelPickerYear() { // 选择器取消按钮点击事件
+    cancelPickerYear() {
+      // 选择器取消按钮点击事件
       this.isYearShow = false;
       this.datePicker = "";
     },
-    confirmPickerYear(value) {// 确定按钮，时间格式化并显示在页面上
+    confirmPickerYear(value) {
+      // 确定按钮，时间格式化并显示在页面上
       var date = value;
-      var timer = date.getFullYear() + "年"
-      this.timeData[6].time = timer;//月份的index值是6，直接给timeData下标为6的time赋值当前选中的日期的值
+      var timer = date.getFullYear() + "年";
+      this.timeData[6].time = timer; //月份的index值是6，直接给timeData下标为6的time赋值当前选中的日期的值
       this.newYear = timer;
-      this.newYears = this.newYear.substring(0,this.newYear.length-1);
+      this.newYears = this.newYear.substring(0, this.newYear.length - 1);
       this.isYearShow = false;
     },
     formatter(type, val) {
-      if (type === 'year') {
-        return val + '年';
+      if (type === "year") {
+        return val + "年";
       }
     },
     // 半年
-    changeHalfTime(ind,name,id){
+    changeHalfTime(ind, name, id) {
       this.timeHalf = ind;
-      this.flag = !this.flag
+      this.flag = !this.flag;
       this.half = name;
       this.halfId = id;
-      if(this.checkedId = id){
-            console.log(this.checkedId,'123');//选中图片id
+      if ((this.checkedId = id)) {
+        console.log(this.checkedId, "123"); //选中图片id
       }
-      console.log(ind,name,this.halfId,id,'我是张桑拿网无');
+      console.log(ind, name, this.halfId, id, "我是张桑拿网无");
     },
-    halfCancel(){
+    halfCancel() {
       this.isHalfYear = false;
     },
-    halfConfirm(){
-      if(this.half){
-        this.timeData[7].time =  this.half;
+    halfConfirm() {
+      if (this.half) {
+        this.timeData[7].time = this.half;
       }
-      if(this.timeHalf=="0"){
-          this.halfId ='1' //新
+      if (this.timeHalf == "0") {
+        this.halfId = "1"; //新
       }
-      if(this.timeHalf=="1"){
-
-          this.halfId ='2' //新
+      if (this.timeHalf == "1") {
+        this.halfId = "2"; //新
       }
       this.isHalfYear = false;
     },
     // 季度
-    changeQuarterTime(ind,name,id) {
+    changeQuarterTime(ind, name, id) {
       this.timeQuarter = ind;
-      this.flag = !this.flag
+      this.flag = !this.flag;
       this.quarter = name;
       this.quarterId = id;
-      if(this.checkedIds = id){
-          console.log(this.checkedIds,'123');//选中图片id
+      if ((this.checkedIds = id)) {
+        console.log(this.checkedIds, "123"); //选中图片id
       }
-      console.log(ind,name,this.quarter,id,'111');
+      console.log(ind, name, this.quarter, id, "111");
     },
-    quarterCancel(){
+    quarterCancel() {
       this.isQuarter = false;
     },
-    quarterConfirm(){
-      if(this.quarter){
-          this.timeData[8].time = this.quarter;
+    quarterConfirm() {
+      if (this.quarter) {
+        this.timeData[8].time = this.quarter;
       }
-      if(this.timeQuarter=="0"){
-          this.quarterId = '1' //新
+      if (this.timeQuarter == "0") {
+        this.quarterId = "1"; //新
       }
-      if(this.timeQuarter=="1"){
-          this.quarterId = '2' //新
+      if (this.timeQuarter == "1") {
+        this.quarterId = "2"; //新
       }
-      if(this.timeQuarter=="2"){
-          this.quarterId = '3' //新
+      if (this.timeQuarter == "2") {
+        this.quarterId = "3"; //新
       }
-      if(this.timeQuarter=="3"){
-          this.quarterId = '4' //新
+      if (this.timeQuarter == "3") {
+        this.quarterId = "4"; //新
       }
       this.isQuarter = false;
     },
     // 年月
-    cancelPickerMonth() { // 选择器取消按钮点击事件
+    cancelPickerMonth() {
+      // 选择器取消按钮点击事件
       this.isMouthshow = false;
       this.datePicker = "";
     },
-    confirmPickerMonth(value) {// 确定按钮，时间格式化并显示在页面上
+    confirmPickerMonth(value) {
+      // 确定按钮，时间格式化并显示在页面上
       var date = value;
       var m = date.getMonth() + 1;
       if (m >= 1 && m <= 9) {
         m = "0" + m;
       }
-      var timer = date.getFullYear() + "年" + m + "月"
-      this.timeData[9].time = timer;//月份的index值是9，直接给timeData下标为9的time赋值当前选中的日期的值
-        this.beginTime = ""
-        this.endTime=""
-        this.isMouthshow = false;
+      var timer = date.getFullYear() + "年" + m + "月";
+      this.timeData[9].time = timer; //月份的index值是9，直接给timeData下标为9的time赋值当前选中的日期的值
+      this.beginTime = "";
+      this.endTime = "";
+      this.isMouthshow = false;
     },
     // 自定义
-    showDatePicker(picker) { //弹出层并显示时间选择器
+    showDatePicker(picker) {
+      //弹出层并显示时间选择器
       this.isPopShow = true;
       this.datePicker = picker;
-      this.showTime =true;
+      this.showTime = true;
     },
-    showDatePickers() { //弹出层并显示时间选择器
+    showDatePickers() {
+      //弹出层并显示时间选择器
       this.isPop = true;
-      this.showTime =true;
+      this.showTime = true;
     },
-    cancelPicker() { // 选择器取消按钮点击事件
+    cancelPicker() {
+      // 选择器取消按钮点击事件
       this.isPopShow = false;
     },
-    confirmPicker(value) {// 确定按钮，时间格式化并显示在页面上
+    confirmPicker(value) {
+      // 确定按钮，时间格式化并显示在页面上
       var date = value;
       var m = date.getMonth() + 1;
       var d = date.getDate();
@@ -645,16 +703,18 @@ export default {
       if (d >= 0 && d <= 9) {
         d = "0" + d;
       }
-      var timer = date.getFullYear() + "-" + m + "-" + d
+      var timer = date.getFullYear() + "-" + m + "-" + d;
       this.inputData.start_Time = timer;
-        this.beginTime = ""
-        this.endTime=""
+      this.beginTime = "";
+      this.endTime = "";
       this.isPopShow = false;
     },
-    cancelPickers() { // 选择器取消按钮点击事件
+    cancelPickers() {
+      // 选择器取消按钮点击事件
       this.isPop = false;
     },
-    confirmPickers(value) {// 确定按钮，时间格式化并显示在页面上
+    confirmPickers(value) {
+      // 确定按钮，时间格式化并显示在页面上
       var dates = value;
       var m = dates.getMonth() + 1;
       var d = dates.getDate();
@@ -664,7 +724,7 @@ export default {
       if (d >= 0 && d <= 9) {
         d = "0" + d;
       }
-      var timers = dates.getFullYear() + "-" + m + "-" + d
+      var timers = dates.getFullYear() + "-" + m + "-" + d;
       this.inputData.end_Time = timers;
       this.isPop = false;
       this.datePicker = "";
@@ -673,36 +733,34 @@ export default {
       this.isCustom = false;
     },
     changeConfirmTime() {
-      if(this.inputData.start_Time==''||this.inputData.end_Time==''){
+      if (this.inputData.start_Time == "" || this.inputData.end_Time == "") {
         this.isCustom = true;
         this.$toast({
-            message: "请选择有效日期",
-            position: "center"
+          message: "请选择有效日期",
+          position: "center"
         });
-      }else{
-          let start_Time = this.inputData.start_Time;
-          let start = new Date(start_Time).getTime();
-          let end_Time = this.inputData.end_Time;
-          let end = new Date(end_Time).getTime();
-          if(start>end){
-            this.$toast({
-                message: "开始时间不能大于结束时间",
-                position: "center"
-            });
-          }else{
-            this.isCustom = false;
-            this.timeData[10].time = this.inputData.start_Time +'\n'+ this.inputData.end_Time ;
-          }
-
+      } else {
+        let start_Time = this.inputData.start_Time;
+        let start = new Date(start_Time).getTime();
+        let end_Time = this.inputData.end_Time;
+        let end = new Date(end_Time).getTime();
+        if (start > end) {
+          this.$toast({
+            message: "开始时间不能大于结束时间",
+            position: "center"
+          });
+        } else {
+          this.isCustom = false;
+          this.timeData[10].time =
+            this.inputData.start_Time + "\n" + this.inputData.end_Time;
+        }
       }
     },
-    handleBlur(){
-        document.body.scrollTop = document.documentElement.scrollTop = 0;
-    },
+    handleBlur() {
+      document.body.scrollTop = document.documentElement.scrollTop = 0;
+    }
   },
-  components: {
-
-  }
+  components: {}
 };
 </script>
 <style lang="scss" scoped>
@@ -786,11 +844,12 @@ export default {
         margin-bottom: 0.11rem;
         box-sizing: border-box;
       }
-      .month-height-color,.van-field__control:disabled{
-        outline:none;
+      .month-height-color,
+      .van-field__control:disabled {
+        outline: none;
         color: rgba(0, 106, 255, 1) !important;
       }
-      .more_show{
+      .more_show {
         width: 31%;
         margin-top: 0.1rem;
         color: #666;
@@ -805,25 +864,24 @@ export default {
     bottom: 0;
     left: 0;
   }
-  .custom_content{
+  .custom_content {
     width: 3rem;
     /*height: 230px;*/
     padding: 0.2rem 0.2rem;
-    .custom_content-text{
+    .custom_content-text {
       text-align: left;
       margin-bottom: 0.2rem;
     }
-    input{
+    input {
       width: 100%;
       height: 0.32rem;
       line-height: 0.32rem;
       border: 0.01rem solid #ccc;
       margin-bottom: 0.2rem;
     }
-    input::-webkit-input-placeholder{
+    input::-webkit-input-placeholder {
       padding-left: 0.1rem;
     }
-
   }
   /*公共样式取消，确认*/
   .selecBox {
@@ -877,29 +935,29 @@ export default {
     }
   }
   /*半年样式*/
-  .half_time{
+  .half_time {
     height: 44px;
     line-height: 44px;
     text-align: left;
     padding: 0rem 0.2rem;
   }
-  .half_year_text{
+  .half_year_text {
     height: 44px;
     line-height: 44px;
   }
-  .half_year_cancel{
+  .half_year_cancel {
     float: left;
     margin-left: 0.2rem;
   }
-  .half_year_confirm{
+  .half_year_confirm {
     float: right;
     color: #576b95;
     margin-right: 0.2rem;
   }
   /*底部弹出层选中样式*/
-  .activeText{
-     color: #333;
-   }
+  .activeText {
+    color: #333;
+  }
   /*.eachText{*/
   /*  color: #6666;*/
   /*}*/

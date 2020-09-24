@@ -9,7 +9,8 @@ export default new Vuex.Store({
         Flag: true,
         customerId: "",
         customerNo: "", // 客户编号
-        userIdList: [] // 组织构架多选框用户的userId
+        userIdList: [], // 组织构架多选框用户的userId
+        followTime: null // 跟进时间
     },
     mutations: {
         set_token(state, token) {
@@ -26,10 +27,16 @@ export default new Vuex.Store({
         set_customerNo(state, customerNo) {
             state.customerNo = customerNo;
             localStorage.setItem("customerNo", customerNo);
+        },
+        set_followTime(state, time) {
+            state.followTime = time;
+            localStorage.setItem("followTime", time);
         }
     },
     actions: {
-        set_token({ commit }, i) {
+        set_token({
+            commit
+        }, i) {
             commit("set_token", i);
         }
         // set_customerId({ commit }, i) {
