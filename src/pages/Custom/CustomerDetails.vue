@@ -10,7 +10,7 @@
           <div class="h_left">
             <img src="../../common/images/d_right.png"
                  class="goBack"
-                 @click="$router.go(-1)"
+                 @click="changeReturn"
                  alt="" />
             <img src="../../common/images/d_close.png"
                  class="close"
@@ -49,26 +49,23 @@
           <div class="header_t_left"
                @click="goTeam">
             <div class="header_t_center">
-              <!-- <div class="head">
+              <div class="head">
                 <img :class="head == '' ? 'ImgHide' : ''"
                      :src="head + '_100x100.jpg'"
                      alt="" />
                 <p :class="head == '' ? 'ImgShow' : 'ImgHide'">
                   {{
-                    textOnly.length >= 3
-                      ? textOnly.substring(
-                          textOnly.length - 2,
-                          textOnly.length
-                        )
+                    textOnly && textOnly.length >= 3
+                      ? textOnly.substring(textOnly.length - 2, textOnly.length)
                       : textOnly
                   }}
                 </p>
-              </div> -->
-              <img src="../../common/images/2.jpg"
-                   alt="" />
+              </div>
               <p class="text">
                 {{ textOnly }}
-                <span v-if="textList.length">等{{ textList.length }}人 </span>
+                <span class="wait"
+                      v-if="textList.length">等{{ textList.length }}人
+                </span>
               </p>
             </div>
           </div>
@@ -420,7 +417,7 @@
                     <div class="filenav">
                       <van-tabs type="card"
                                 @click="onClickName"
-                                v-model="activeName">
+                                v-model="activeType">
                         <van-tab title="客户"
                                  name="1">
                           <div class="file_content">
@@ -602,6 +599,7 @@ import {
   remove,
   add
 } from "../../services/CustomerDetails";
+
 import { findChargeList } from "../../services/organization";
 import CustomerNav from "@/components/CustomerNav";
 import upLoaderImg from "../../common/js/upLoaderImg";
@@ -650,7 +648,7 @@ export default {
       FollowrecordData: "", // 跟进记录数据
       url: "",
       fileList: [],
-      activeName: "1", // 文件柜类型1客户2合同3机会
+      activeType: "1", // 文件柜类型1客户2合同3机会
       count: "",
       uploader: [], // 点击图片放大
       imgUrl: "",
@@ -659,10 +657,7 @@ export default {
   },
   watch: {},
   created () {
-    this.customerId = this.$route.query.id;
-    this.$store.commit("set_followTime", this.$route.query.time);
-    this.$store.commit("set_customerId", this.$route.query.id);
-    // this.customerId = this.$store.state.customerId;
+    this.customerId = this.$store.state.customerId;
     this.followTime = this.$store.state.followTime;
     this.tel = "王大陆";
     this.getfindBase();
@@ -670,25 +665,22 @@ export default {
     this.getfindRecordsCount();
   },
   methods: {
+    changeReturn () {
+      this.$router.push({ path: "/allcustom" });
+    },
     goTeam () {
       this.$router.push({ path: "/team", query: { id: this.customerNo } });
     },
-    // 查询协同人，负责人
+    // 查询负责人信息
     getfindChargeList () {
       findChargeList(this.customerNo, "1").then(res => {
         if (res.code == 200) {
           this.textList = res.data.principalList;
           this.textOnly = this.textList[0].userName;
           this.head = this.textList[0].userProfile;
-          console.log(this.head, "head");
           this.textTree = `${this.textList[0].userName}、
           ${this.textList[1].userName}、
           ${this.textList[2].userName}`;
-
-          // this.textList.map(each => {
-          //   // this.users.push(each.staffId);
-          //   // this.userId.push(parseInt(each.userId));
-          // });
         }
       });
     },
@@ -712,14 +704,16 @@ export default {
         this.$router.push({ path: "/xls", query: { url } });
       }
     },
+    // 文件柜上传文件
     async onRead (file) {
       await upLoaderImg(file.file).then(res => {
         this.fileId = res.result.fileId;
       });
       await this.getAdd();
     },
+    // 文件柜添加文件
     getAdd () {
-      add(this.customerNo, this.activeName, this.customerNo, this.fileId).then(
+      add(this.customerNo, this.activeType, this.customerNo, this.fileId).then(
         res => {
           if (res.code == 200) {
             console.log(res);
@@ -727,7 +721,7 @@ export default {
         }
       );
     },
-
+    // 文件柜删除文件
     handlerDel (id, ind) {
       this.fileList.splice(ind, 1);
       remove(id).then(res => {
@@ -741,7 +735,7 @@ export default {
       });
     },
     onClickName (name) {
-      this.activeName = name;
+      this.activeType = name;
       this.getfindByCustomerNo();
     },
 
@@ -819,7 +813,7 @@ export default {
     },
     // 文件柜
     getfindByCustomerNo () {
-      findByCustomerNo(this.customerNo, this.activeName, 0, 10).then(res => {
+      findByCustomerNo(this.customerNo, this.activeType, 0, 10).then(res => {
         if (res.code == 200) {
           this.fileList = res.rows;
           this.total = res.rows.length;
@@ -864,7 +858,6 @@ export default {
     // flex: 1;
     // overflow: scroll;
     margin-bottom: 0.6rem;
-    // background: #f8f9fa;
   }
 
   .chenkExecl {
@@ -981,12 +974,6 @@ export default {
             font-weight: 400;
             color: #ffffff;
             line-height: 0.2rem;
-            // &:last-child {
-            //   display: none;
-            // }
-            .Don:last-child {
-              display: none;
-            }
           }
           .time {
             width: 0.6rem;
@@ -1025,7 +1012,12 @@ export default {
           font-weight: 400;
           color: #ffffff;
           line-height: 0.17rem;
-          margin-left: 0.22rem;
+          text-align: center;
+          margin-left: 0.2rem;
+          .wait {
+            font-size: 0.12rem;
+            font-family: PingFangSC-Regular, PingFang SC;
+          }
         }
         img {
           width: 0.24rem;
@@ -1041,16 +1033,16 @@ export default {
         justify-content: center;
         align-items: center;
         .head img {
-          width: 0.28rem;
-          height: 0.28rem;
+          width: 0.24rem;
+          height: 0.24rem;
           border-radius: 50%;
         }
         .ImgHide {
           display: none;
         }
         .ImgShow {
-          width: 0.28rem;
-          height: 0.28rem;
+          width: 0.24rem;
+          height: 0.24rem;
           border-radius: 50%;
           //   margin-right: 0.11rem;
           display: flex;
@@ -1058,7 +1050,7 @@ export default {
           justify-content: center;
           background: #006aff;
           color: #fff;
-          font-size: 0.12rem;
+          font-size: 0.1rem;
           font-family: PingFangSC-Regular, PingFang SC;
           font-weight: 400;
         }

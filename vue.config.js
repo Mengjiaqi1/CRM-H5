@@ -56,7 +56,7 @@ module.exports = {
         });
     },
     // 生产环境是否生成 sourceMap 文件
-    productionSourceMap: true,
+    productionSourceMap: false,
     css: {
         // 是否使用css分离插件 ExtractTextPlugin
         // 是否使用css分离插件 ExtractTextPlugin
@@ -85,7 +85,7 @@ module.exports = {
         proxy: {
             "/api": {
                 // 目标 API 地址
-                target: "http://192.168.100.7:8088",
+                target: "http://192.168.100.10:8088",
                 // 如果要代理 websockets
                 ws: false,
                 changeOrigin: true, // 允许websockets跨域

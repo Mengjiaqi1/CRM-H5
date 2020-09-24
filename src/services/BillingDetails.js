@@ -3,7 +3,9 @@ import {
     post
 } from "./http.js";
 
-//通过id查询开票详情
-export function a() {
-    return get("/system/billingInformation/{id}", {});
+//开票信息详情-文件柜
+export function findByContactsNo(businessNo) {
+    return get("/app/fileCabinet/findByContactsNo", {
+        businessNo
+    });
 }

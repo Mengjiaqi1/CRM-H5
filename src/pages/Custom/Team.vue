@@ -3,11 +3,11 @@
     <main>
       <div class="header">
         <div class="h_left">
-          <img src="../common/images/d_right.png"
+          <img src="../../common/images/d_right.png"
                class="goBack"
                @click="changeBack"
                alt="" />
-          <img src="../common/images/d_close.png"
+          <img src="../../common/images/d_close.png"
                class="close"
                @click="changeClose"
                alt="" />
@@ -107,7 +107,7 @@
     <div class="addcontacts">
       <div class="add"
            @click="goOranization">
-        <img src="../common/images/add.png"
+        <img src="../../common/images/add.png"
              alt="" />
       </div>
     </div>
@@ -121,7 +121,7 @@
 </template>
 <script>
 import draggable from "vuedraggable";
-import { findChargeList, add, remove } from "../services/organization";
+import { findChargeList, add, remove } from "../../services/organization";
 import * as dd from "dingtalk-jsapi";
 var users = [];
 export default {
@@ -132,8 +132,8 @@ export default {
         { menuId: 1, name: "2" },
         { menuId: 2, name: "3" }
       ],
-      forms_add: require("../common/images/home_add.png"),
-      forms_reduce: require("../common/images/home_reducer.png"),
+      forms_add: require("../../common/images/home_add.png"),
+      forms_reduce: require("../../common/images/home_reducer.png"),
       customerNo: "",
       partnerList: [], //协同人
       principalList: [], // 负责人
@@ -338,7 +338,8 @@ export default {
           color: rgba(0, 106, 255, 1);
           background: rgba(242, 247, 255, 1);
           border: 0.01rem solid rgba(0, 106, 255, 1);
-          background: url("../common/images/Select.png") no-repeat bottom right;
+          background: url("../../common/images/Select.png") no-repeat bottom
+            right;
           background-size: 0.18rem 0.18rem;
           box-sizing: border-box;
           img {

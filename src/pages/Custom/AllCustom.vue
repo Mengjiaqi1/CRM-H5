@@ -248,14 +248,10 @@
                       finished-text="没有更多数据"
                       @load="onLoad"
                       style="margin-top: 1.15rem">
-              <router-link tag="div"
-                           class="custom_contents"
-                           v-for="(item, index) in inCustomList"
-                           :key="index"
-                           :to="{
-                  path: '/customerDetails',
-                  query: { id: item.customerId, time: item.lastFollowUpTime }
-                }">
+              <div class="custom_contents"
+                   v-for="(item, index) in inCustomList"
+                   :key="index"
+                   @click="changeDetail(item.customerId, item.lastFollowUpTime)">
                 <div class="custom_content_top clearfix">
                   <p class="custom_content_address fl">
                     {{ item.customerFullName }}
@@ -279,7 +275,7 @@
                   </li>
                 </ul>
                 <div class="space"></div>
-              </router-link>
+              </div>
             </van-list>
           </van-pull-refresh>
         </div>
@@ -589,6 +585,14 @@ export default {
     this.sortDefault();
   },
   methods: {
+    changeDetail (customerId, lastFollowUpTime) {
+      this.$store.commit("set_customerId", customerId);
+      this.$store.commit("set_followTime", lastFollowUpTime);
+      this.$router.push({
+        path: "/customerDetails",
+        query: { id: customerId, time: lastFollowUpTime }
+      });
+    },
     meunTab (title, name) {
       this.templateId = title;
       this.templateName = name;
