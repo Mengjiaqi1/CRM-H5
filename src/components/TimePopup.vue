@@ -2,7 +2,7 @@
   <div class="time">
     <van-popup v-model="msg.isCustom">
       <div class="custom_content">
-        <!--{{msg.isCustom}}{{msg.timePopSelected}}-->
+        {{msg.isCustom}}{{msg.timePopSelected}}
         <p class="custom_content-text">开始时间</p>
         <input
                 class="height-amount-input"

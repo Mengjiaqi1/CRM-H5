@@ -88,10 +88,15 @@
       },
       methods: {
         sortDefault() {
+          // let  Data = {
+          //     formId:1,
+          //     templateId:1,
+          //     userId:1,
+          // }
           let  Data = {
-              formId:1,
-              templateId:1,
-              userId:1,
+              formId:2,
+              templateId:0,
+              // userId:1,
           }
           findSortFieldList(Data).then(res =>{
             if(res.code == 200){
@@ -156,10 +161,16 @@
             } else if(this.getSort==='升序'){
                 this.Sort = "ASC";
             }
+            // let Data = {
+            //     formId:1,
+            //     templateId:1,
+            //     userId:1,
+            //     fieldDesc:this.fieldDescText,
+            //     orderType:this.Sort,
+            // }
             let Data = {
-                formId:1,
-                templateId:1,
-                userId:1,
+                formId:2,
+                templateId:0,
                 fieldDesc:this.fieldDescText,
                 orderType:this.Sort,
             }
@@ -171,7 +182,7 @@
                         position: "center"
                     });
                     this.$router.push({ path: "/AllCustom"});
-
+                    this.$router.push({ path: "/contact"});
                 }
             });
         },

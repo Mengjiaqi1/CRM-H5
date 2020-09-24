@@ -44,10 +44,10 @@
                   </div>
                   <div class="selec_content">
                     <div
-                            v-for="(each, index) in sectionData"
+                            v-for="(each, index) in createTimeData"
                             :key="each.id"
-                            :class="RadioSelec == index ? 'active' : 'each'"
-                            @click="changeSection(index)"
+                            :class="createTimeSelec == index ? 'active' : 'each'"
+                            @click="changeTimeSection(index)"
                     >
                       <span>{{ each.name }}</span>
                     </div>
@@ -60,9 +60,9 @@
                   </div>
                   <div class="selec_content">
                     <div
-                            v-for="(each, index) in noContactData"
+                            v-for="(each, index) in updateTimeData"
                             :key="each.id"
-                            :class="ContactSelec == index ? 'active' : 'each'"
+                            :class="updateTimeSelec == index ? 'active' : 'each'"
                             @click="contactSection(index)"
                     >
                       <span>{{ each.name }}</span>
@@ -94,7 +94,7 @@
                     <div
                             v-for="(each, index) in sexData"
                             :key="each.id"
-                            :class="createrStatus == index ? 'active' : 'each'"
+                            :class="sexStatus == index ? 'active' : 'each'"
                             @click="sexSection(index)"
                     >
                       <span>{{ each.name }}</span>
@@ -149,7 +149,7 @@
           </div>
           <!--联系人总数-->
            <div class="contact_total">
-             联系人<span class="contact_total_count">{{contactTotal}}条</span>
+             联系人<span class="contact_total_count" v-if="contactTotal>0">{{contactTotal}}条</span>
            </div>
         </div>
         <div class="all_custom_list">
@@ -160,9 +160,8 @@
                     :finished="finished"
                     finished-text="没有更多数据"
                     @load="onLoad"
-                    style="margin-top: 0.72rem"
+                    style="margin-top: 0.9rem"
             >
-              <div class="space" style="height: 0.18rem"></div>
               <router-link
                         tag="div"
                         class="custom_contents"
@@ -231,8 +230,6 @@
 <script>
     import {
         getAllContactData,
-        // getScreenList,
-        // sortDefaultList
     } from "../../services/AllContact";
     import {getScreenList, sortDefaultList} from "../../services/AllCustom";
     import TimePopup from "../../components/TimePopup";
@@ -249,8 +246,6 @@
                 // 联系人列表
                 inContactList: [],
                 contactTotal:undefined,
-
-
                 // 加载刷新
                 isLoading: false,
                 loading: false,
@@ -271,18 +266,10 @@
                 searchBtn: false,
                 keywordInput: "",
                 // 筛选初始化数据
-                RadioSelec: null,
-                ContactSelec: null,
-                sexStatus: null,
-                createrStatus: null,
-                chargeStatus: null,
-                giveStatus: null,
-                addressStatus: null,
-                typeStatus: null,
                 createTimeSelec: null,
                 updateTimeSelec: null,
-                distributeTimeSelec: null,
-                returnTimeSelec: null,
+                createrStatus: null,
+                sexStatus: null,
                 // 年月日弹框
                 startTime: new Date(), // 开始时间
                 endTime: new Date(), // 结束时间
@@ -295,26 +282,15 @@
                 // 确定筛选条件初始值
                 formId: 1,
                 userId: 1,
-                lastFollowTimeStart: "",
-                lastFollowTimeEnd: "",
-                notContactTimeType: "",
-                filingType: "",
-                createUserType: "",
-                createUserId: "",
-                personInChargeType: "",
-                personInChargeId: "",
-                deprecatedUserType: "",
-                deprecatedUserId: "",
-                areaId: "",
-                customerType: "",
+                createTimeType:undefined,
                 createTimeStart: "",
                 createTimeEnd: "",
+                updateTimeType:undefined,
                 updateTimeStart: "",
                 updateTimeEnd: "",
-                allocateTimeStart: "",
-                allocateTimeEnd: "",
-                sendBackPondStart: "",
-                sendBackPondEnd: "",
+                createUserType: undefined,
+                createUserId: "",
+                sexType: undefined,
                 isAsc: "",
                 orderByColumn: "",
                 fieldName: "",
@@ -342,7 +318,7 @@
                     orderByColumn: ""
                 },
                 // 创建时间
-                sectionData: [
+                createTimeData: [
                     {
                         name: "最近一周",
                         id: "1"
@@ -361,7 +337,7 @@
                     }
                 ],
                 // 更新时间
-                noContactData: [
+                updateTimeData: [
                     {
                         name: "最近一周",
                         id: "1"
@@ -394,26 +370,14 @@
                         id: "3"
                     }
                 ],
-                createTimeData: [
-                    {
-                        name: "自定义时间",
-                        id: "1"
-                    }
-                ],
-                updateTimeData: [
-                    {
-                        name: "自定义时间",
-                        id: "1"
-                    }
-                ],
                 sexData:[
                     {
                         name: "男",
-                        id: "1"
+                        id: "0"
                     },
                     {
                         name: "女",
-                        id: "2"
+                        id: "1"
                     },
                 ]
 
@@ -430,30 +394,23 @@
                 let Datas = {
                     formId: 2,
                     templateId: 0,
-                    lastFollowTimeType: this.lastFollowTimeType,
-                    lastFollowTimeStart: this.lastFollowTimeStart,
-                    lastFollowTimeEnd: this.lastFollowTimeEnd,
-                    notContactTimeType: this.notContactTimeType,
-                    filingType: this.filingType,
-                    createUserType: this.createUserType,
-                    // createUserId:this.createUserId,
-                    personInChargeType: this.personInChargeType,
-                    // personInChargeId:this.personInChargeId,
-                    // deprecatedUserType:this.deprecatedUserType,
-                    // deprecatedUserId:this.deprecatedUserId,
-                    areaId: this.areaId,
-                    customerType: this.customerType,
+                    // 创建时间
+                    createTimeType: this.createTimeType,
                     createTimeStart: this.createTimeStart,
                     createTimeEnd: this.createTimeEnd,
+                    // 更新时间
+                    updateTimeType:this.updateTimeType,
                     updateTimeStart: this.updateTimeStart,
                     updateTimeEnd: this.updateTimeEnd,
-                    allocateTimeStart: this.allocateTimeStart,
-                    allocateTimeEnd: this.allocateTimeEnd,
-                    sendBackPondStart: this.sendBackPondStart,
-                    sendBackPondEnd: this.sendBackPondEnd,
+                    // 创建人
+                    createUserType: this.createUserType,
+                    // createUserId:this.createUserId,
+                    // 性别
+                    sex: this.sexType,
+                    // 排序
                     isAsc: this.isAsc,
                     orderByColumn: this.orderByColumn,
-                    pageNum: this.pageNum
+                    pageNum: this.pageNum,
                     // pageSize:10,
                 };
                 getAllContactData(Datas).then(res => {
@@ -470,7 +427,8 @@
                                 this.finished = true;
                             }
                         } else {
-                            // this.inContactList = res.rows;
+                            this.inContactList = res.rows;
+                            this.contactTotal = res.total;
                             this.loading = false;
                             this.finished = true;
                         }
@@ -513,9 +471,9 @@
             // 分配时间筛选数据
             sortDefault() {
                 let Data = {
-                    templateId: this.templateId,
-                    formId: 1,
-                    userId: 1
+                    templateId: 0,
+                    formId: 2,
+                    // userId: 1
                 };
                 sortDefaultList(Data).then(res => {
                     if (res.code == 200) {
@@ -590,33 +548,16 @@
                     } else {
                         this.isCustom = false;
                         console.log(this.timePopSelected, "-----");
-                        if (this.timePopSelected == "1") {
-                            this.sectionData[3].name = data.start_Time + "\n" + data.end_Time;
-                            this.lastFollowTimeStart = data.start_Time;
-                            this.lastFollowTimeEnd = data.end_Time;
-                        }
-                        if (this.timePopSelected == "2") {
-                            this.createTimeData[0].name =
-                                data.start_Time + "\n" + data.end_Time;
+                        if (this.timePopSelected == "5") {
+                            this.createTimeData[3].name = data.start_Time + "\n" + data.end_Time;
                             this.createTimeStart = data.start_Time;
                             this.createTimeEnd = data.end_Time;
                         }
-                        if (this.timePopSelected == "3") {
-                            this.updateTimeData[0].name =
+                        if (this.timePopSelected == "6") {
+                            this.updateTimeData[3].name =
                                 data.start_Time + "\n" + data.end_Time;
                             this.updateTimeStart = data.start_Time;
                             this.updateTimeEnd = data.end_Time;
-                        }
-                        if (this.timePopSelected == "4") {
-                            this.distributeData[0].name =
-                                data.start_Time + "\n" + data.end_Time;
-                            this.allocateTimeStart = data.start_Time;
-                            this.allocateTimeEnd = data.end_Time;
-                        }
-                        if (this.timePopSelected == "5") {
-                            this.returnData[0].name = data.start_Time + "\n" + data.end_Time;
-                            this.sendBackPondStart = data.start_Time;
-                            this.sendBackPondEnd = data.end_Time;
                         }
                     }
                 }
@@ -633,28 +574,28 @@
                 this.isPop = true;
                 this.showTime = true;
             },
-            // 最后跟进时间
-            changeSection(ind) {
-                this.RadioSelec = ind;
+            // 创建时间
+            changeTimeSection(ind) {
+                this.createTimeSelec = ind;
                 if (ind >= 0 && ind <= 2) {
-                    this.lastFollowTimeType = ind + 1;
-                }
-                if (ind == "3") {
-                    this.isCustom = true;
-                    this.timePopSelected = "4";
-                    this.lastFollowTimeType = "";
-                }
-            },
-            // 更新時間
-            contactSection(ind) {
-                this.ContactSelec = ind;
-                if (ind >= 0 && ind <= 2) {
-                  this.notContactTimeType = ind + 1;
+                    this.createTimeType = ind + 1;
                 }
                 if (ind == "3") {
                     this.isCustom = true;
                     this.timePopSelected = "5";
-                    this.lastFollowTimeType = "";
+                    this.createTimeType = "";
+                }
+            },
+            // 更新时间
+            contactSection(ind) {
+                this.updateTimeSelec = ind;
+                if (ind >= 0 && ind <= 2) {
+                  this.updateTimeType = ind + 1;
+                }
+                if (ind == "3") {
+                    this.isCustom = true;
+                    this.timePopSelected = "6";
+                    this.updateTimeType = "";
                 }
             },
             // 创建人
@@ -664,26 +605,10 @@
                     this.createUserType = ind + 1;
                 }
             },
-            // 归档状态
+            // 性别
             sexSection(ind) {
                 this.sexStatus = ind;
                 this.sexType = ind;
-            },
-            // 创建时间
-            createTimeSection(ind) {
-                this.createTimeSelec = ind;
-                this.isCustom = true;
-                this.timePopSelected = "2";
-                this.inputData.start_Time = "";
-                this.inputData.end_Time = "";
-            },
-            // 更新时间
-            updateTimeSection(ind) {
-                this.updateTimeSelec = ind;
-                this.isCustom = true;
-                this.timePopSelected = "3";
-                this.inputData.start_Time = "";
-                this.inputData.end_Time = "";
             },
             // 设置筛选项
             changeScreen() {
@@ -691,60 +616,29 @@
             },
             // 筛选重置
             changeSet() {
-                if (this.RadioSelec == "4") {
-                    this.sectionData[4].name = "自定义时间";
-                    this.RadioSelec = null;
+                if (this.createTimeSelec == "3") {
+                    this.createTimeSelec[3].name = "自定义时间";
+                    this.createTimeSelec = null;
                 }
-                if (this.RadioSelec >= 0 && this.RadioSelec <= 3) {
-                    this.RadioSelec = null;
+                if (this.createTimeSelec >= 0 && this.createTimeSelec <= 2) {
+                    this.createTimeSelec = null;
                     this.inputData.start_Time = "";
                     this.inputData.end_Time = "";
                 }
-                if (this.ContactSelec >= 0 && this.ContactSelec <= 3) {
-                    this.ContactSelec = null;
+                if (this.updateTimeSelec == "3") {
+                    this.updateTimeSelec[3].name = "自定义时间";
+                    this.updateTimeSelec = null;
                 }
-                if (this.sexStatus >= 0 && this.sexStatus <= 1) {
-                    this.sexStatus = null;
+                if (this.updateTimeSelec >= 0 && this.updateTimeSelec <= 2) {
+                    this.updateTimeSelec = null;
+                    this.inputData.start_Time = "";
+                    this.inputData.end_Time = "";
                 }
                 if (this.createrStatus >= 0 && this.createrStatus <= 2) {
                     this.createrStatus = null;
                 }
-                if (this.chargeStatus >= 0 && this.chargeStatus <= 2) {
-                    this.chargeStatus = null;
-                }
-                if (this.giveStatus >= 0 && this.giveStatus <= 2) {
-                    this.giveStatus = null;
-                }
-                if (this.addressStatus == "0") {
-                    this.addressStatus = null;
-                    this.addressData[0].name = "选择省市区";
-                }
-                if (this.typeStatus >= 0 && this.giveStatus <= 3) {
-                    this.typeStatus = null;
-                }
-                if (this.createTimeSelec == "0") {
-                    this.createTimeSelec = null;
-                    this.createTimeData[0].name = "自定义时间";
-                    this.inputData.start_Time = "";
-                    this.inputData.end_Time = "";
-                }
-                if (this.updateTimeSelec == "0") {
-                    this.updateTimeSelec = null;
-                    this.updateTimeData[0].name = "自定义时间";
-                    this.inputData.start_Time = "";
-                    this.inputData.end_Time = "";
-                }
-                if (this.distributeTimeSelec == "0") {
-                    this.distributeTimeSelec = null;
-                    this.distributeData[0].name = "自定义时间";
-                    this.inputData.start_Time = "";
-                    this.inputData.end_Time = "";
-                }
-                if (this.returnTimeSelec == "0") {
-                    this.returnTimeSelec = null;
-                    this.returnData[0].name = "自定义时间";
-                    this.inputData.start_Time = "";
-                    this.inputData.end_Time = "";
+                if (this.sexStatus >= 0 && this.sexStatus <= 1) {
+                    this.sexStatus = null;
                 }
             },
             // 筛选确认
@@ -1051,7 +945,7 @@
                   color: #999999;
                 }
                 .post_text{
-                  background: #006AFF;
+                  background: #ffb000;
                   color: #fff;
                   font-size: 0.12rem;
                   line-height: 0.17rem;

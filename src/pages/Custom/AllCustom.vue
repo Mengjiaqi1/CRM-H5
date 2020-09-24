@@ -3,17 +3,15 @@
     <myHeader>
       <div class="h_center">全部客户</div>
       <div class="h_right h_more">
-        <div class="search_icon"
-             @click="handleSearch">
-          <input v-model="keywordInput"
-                 disabled
-                 style="display: inline-block;height: 0rem" />
-          <img src="../../common/images/search.png"
-               alt="" />
+        <div class="search_icon" @click="handleSearch">
+          <input
+            v-model="keywordInput"
+            disabled
+            style="display: inline-block;height: 0rem"
+          />
+          <img src="../../common/images/search.png" alt="" />
         </div>
-        <img src="../../common/images/adds.png"
-             alt=""
-             @click="changeBuild" />
+        <img src="../../common/images/adds.png" alt="" @click="changeBuild" />
       </div>
     </myHeader>
     <main>
@@ -21,34 +19,44 @@
         <div class="all_custom_fixed">
           <van-tabs @change="meunTab">
             <!--            <van-tab v-for="each in MenuData" :key="each.id" :title="each.name">-->
-            <van-tab v-for="each in MenuData"
-                     :key="each.templateName"
-                     :title="each.templateName"
-                     :name="each.templateId">
+            <van-tab
+              v-for="each in MenuData"
+              :key="each.templateName"
+              :title="each.templateName"
+              :name="each.templateId"
+            >
               <!--下拉菜单-->
               <div class="space"></div>
               <div class="dropdown-menu clearfix">
-                <van-dropdown-menu :overlay="PublishValue"
-                                   active-color="#006aff"
-                                   class="dropdown fl">
-                  <van-dropdown-item v-model="value1"
-                                     :options="option1"
-                                     @change="customState"
-                                     @open="handleOrtherItem"
-                                     :close-on-click-overlay="true" />
-                  <van-dropdown-item title="范围"
-                                     ref="timeMenu"
-                                     @open="handleOrtherItems">
+                <van-dropdown-menu
+                  :overlay="PublishValue"
+                  active-color="#006aff"
+                  class="dropdown fl"
+                >
+                  <van-dropdown-item
+                    v-model="value1"
+                    :options="option1"
+                    @change="customState"
+                    @open="handleOrtherItem"
+                    :close-on-click-overlay="true"
+                  />
+                  <van-dropdown-item
+                    title="范围"
+                    ref="item"
+                    @open="handleOrtherItems"
+                  >
                     <!--最后跟进时间-->
                     <div class="selection">
                       <div class="selec_tit">
                         <span class="selec_tit_type">最后跟进时间</span>
                       </div>
                       <div class="selec_content">
-                        <div v-for="(each, index) in sectionData"
-                             :key="each.id"
-                             :class="RadioSelec == index ? 'active' : 'each'"
-                             @click="changeSection(index)">
+                        <div
+                          v-for="(each, index) in sectionData"
+                          :key="each.id"
+                          :class="RadioSelec == index ? 'active' : 'each'"
+                          @click="changeSection(index)"
+                        >
                           <span>{{ each.name }}</span>
                         </div>
                       </div>
@@ -59,10 +67,12 @@
                         <span class="selec_tit_type">未联系时间</span>
                       </div>
                       <div class="selec_content">
-                        <div v-for="(each, index) in noContactData"
-                             :key="each.id"
-                             :class="ContactSelec == index ? 'active' : 'each'"
-                             @click="contactSection(index)">
+                        <div
+                          v-for="(each, index) in noContactData"
+                          :key="each.id"
+                          :class="ContactSelec == index ? 'active' : 'each'"
+                          @click="contactSection(index)"
+                        >
                           <span>{{ each.name }}</span>
                         </div>
                       </div>
@@ -73,10 +83,12 @@
                         <span class="selec_tit_type">归档状态</span>
                       </div>
                       <div class="selec_content">
-                        <div v-for="(each, index) in fileData"
-                             :key="each.id"
-                             :class="fileStatus == index ? 'active' : 'each'"
-                             @click="fileSection(index)">
+                        <div
+                          v-for="(each, index) in fileData"
+                          :key="each.id"
+                          :class="fileStatus == index ? 'active' : 'each'"
+                          @click="fileSection(index)"
+                        >
                           <span>{{ each.name }}</span>
                         </div>
                       </div>
@@ -87,10 +99,12 @@
                         <span class="selec_tit_type">创建人</span>
                       </div>
                       <div class="selec_content">
-                        <div v-for="(each, index) in createrData"
-                             :key="each.id"
-                             :class="createrStatus == index ? 'active' : 'each'"
-                             @click="createrSection(index)">
+                        <div
+                          v-for="(each, index) in createrData"
+                          :key="each.id"
+                          :class="createrStatus == index ? 'active' : 'each'"
+                          @click="createrSection(index)"
+                        >
                           <span>{{ each.name }}</span>
                         </div>
                       </div>
@@ -101,117 +115,110 @@
                         <span class="selec_tit_type">负责人</span>
                       </div>
                       <div class="selec_content">
-                        <div v-for="(each, index) in chargeData"
-                             :key="each.id"
-                             :class="chargeStatus == index ? 'active' : 'each'"
-                             @click="chargeSection(index)">
+                        <div
+                          v-for="(each, index) in chargeData"
+                          :key="each.id"
+                          :class="chargeStatus == index ? 'active' : 'each'"
+                          @click="chargeSection(index)"
+                        >
                           <span>{{ each.name }}</span>
                         </div>
                       </div>
                     </div>
-                    <!--弃用-->
-                    <!--                    <div class="selection">-->
-                    <!--                      <div class="selec_tit">-->
-                    <!--                        <span class="selec_tit_type">弃用</span>-->
-                    <!--                      </div>-->
-                    <!--                      <div class="selec_content">-->
-                    <!--                        <div-->
-                    <!--                                v-for="(each, index) in chargeData"-->
-                    <!--                                :key="each.id"-->
-                    <!--                                :class="chargeStatus == index ? 'active' : 'each'"-->
-                    <!--                                @click="chargeSection(index)"-->
-                    <!--                        >-->
-                    <!--                          <span>{{ each.name }}</span>-->
-                    <!--                        </div>-->
-                    <!--                      </div>-->
-                    <!--                    </div>-->
                     <!--客户地址-->
                     <div class="selection">
                       <div class="selec_tit">
                         <span class="selec_tit_type">客户地址</span>
                       </div>
                       <div class="selec_content">
-                        <div v-for="(each, index) in addressData"
-                             :key="each.id"
-                             :class="addressStatus == index ? 'active' : 'each'"
-                             @click="addressSection(index)">
+                        <div
+                          v-for="(each, index) in addressData"
+                          :key="each.id"
+                          :class="addressStatus == index ? 'active' : 'each'"
+                          @click="addressSection(index)"
+                        >
                           <span>{{ each.name }}</span>
                         </div>
                       </div>
                     </div>
                     <!--创建时间-->
-                    <div class="selection"
-                         v-if="isCreat === true">
+                    <div class="selection" v-if="isCreat === true">
                       <div class="selec_tit">
                         <span class="selec_tit_type">创建时间</span>
                       </div>
                       <div class="selec_content">
-                        <div v-for="(each, index) in createTimeData"
-                             :key="each.id"
-                             :class="createTimeSelec == index ? 'active' : 'each'"
-                             @click="createTimeSection(index)">
+                        <div
+                          v-for="(each, index) in createTimeData"
+                          :key="each.id"
+                          :class="createTimeSelec == index ? 'active' : 'each'"
+                          @click="createTimeSection(index)"
+                        >
                           <span>{{ each.name }}</span>
                         </div>
                       </div>
                     </div>
                     <!--更新时间-->
-                    <div class="selection"
-                         v-if="isUpdata === true">
+                    <div class="selection" v-if="isUpdata === true">
                       <div class="selec_tit">
                         <span class="selec_tit_type">更新时间</span>
                       </div>
                       <div class="selec_content">
-                        <div v-for="(each, index) in updateTimeData"
-                             :key="each.id"
-                             :class="updateTimeSelec == index ? 'active' : 'each'"
-                             @click="updateTimeSection(index)">
+                        <div
+                          v-for="(each, index) in updateTimeData"
+                          :key="each.id"
+                          :class="updateTimeSelec == index ? 'active' : 'each'"
+                          @click="updateTimeSection(index)"
+                        >
                           <span>{{ each.name }}</span>
                         </div>
                       </div>
                     </div>
                     <!--客户类型-->
-                    <div class="selection"
-                         v-if="isType === true">
+                    <div class="selection" v-if="isType === true">
                       <div class="selec_tit">
                         <span class="selec_tit_type">客户类型</span>
                       </div>
                       <div class="selec_content">
-                        <div v-for="(each, index) in typeData"
-                             :key="each.id"
-                             :class="typeStatus == index ? 'active' : 'each'"
-                             @click="typeSection(index)">
+                        <div
+                          v-for="(each, index) in typeData"
+                          :key="each.id"
+                          :class="typeStatus == index ? 'active' : 'each'"
+                          @click="typeSection(index)"
+                        >
                           <span>{{ each.name }}</span>
                         </div>
                       </div>
                     </div>
                     <!--公海退回时间-->
-                    <div class="selection"
-                         v-if="isReturn === true">
+                    <div class="selection" v-if="isReturn === true">
                       <div class="selec_tit">
                         <span class="selec_tit_type">公海退回时间</span>
                       </div>
                       <div class="selec_content">
-                        <div v-for="(each, index) in returnData"
-                             :key="each.id"
-                             :class="returnTimeSelec == index ? 'active' : 'each'"
-                             @click="returnTimeSection(index)">
+                        <div
+                          v-for="(each, index) in returnData"
+                          :key="each.id"
+                          :class="returnTimeSelec == index ? 'active' : 'each'"
+                          @click="returnTimeSection(index)"
+                        >
                           <span>{{ each.name }}</span>
                         </div>
                       </div>
                     </div>
                     <!--分配时间-->
-                    <div class="selection"
-                         v-if="isBranch === true">
+                    <div class="selection" v-if="isBranch === true">
                       <div class="selec_tit">
                         <span class="selec_tit_type">分配时间</span>
                       </div>
                       <div class="selec_content">
-                        <div v-for="(each, index) in distributeData"
-                             :key="each.id"
-                             :class="
+                        <div
+                          v-for="(each, index) in distributeData"
+                          :key="each.id"
+                          :class="
                             distributeTimeSelec == index ? 'active' : 'each'
                           "
-                             @click="distributeTimeSection(index)">
+                          @click="distributeTimeSection(index)"
+                        >
                           <span>{{ each.name }}</span>
                         </div>
                       </div>
@@ -219,34 +226,41 @@
                     <!--按钮-->
                     <div style="margin-bottom: 0.5rem"></div>
                     <div class="selecBox selecBox_fixed">
-                      <div style="width: 20%;text-align: center"
-                           @click="changeScreen">
-                        <img src="../../common/images/setColor.png"
-                             alt=""
-                             style="width: 0.2rem;height: 0.2rem" />
+                      <div
+                        style="width: 20%;text-align: center"
+                        @click="changeScreen"
+                      >
+                        <img
+                          src="../../common/images/setColor.png"
+                          alt=""
+                          style="width: 0.2rem;height: 0.2rem"
+                        />
                       </div>
-                      <div style="width: 40%;"
-                           :class="[cancelShow == 2 ? 'selecActive' : 'confirm']"
-                           @click="changeSet()">
+                      <div
+                        style="width: 40%;"
+                        :class="[cancelShow == 2 ? 'selecActive' : 'confirm']"
+                        @click="changeSet()"
+                      >
                         重置
                       </div>
-                      <div style="width: 40%;"
-                           :class="[cancelShow == 1 ? 'selecActive' : 'confirm']"
-                           @click="changeConfirm()">
+                      <div
+                        style="width: 40%;"
+                        :class="[cancelShow == 1 ? 'selecActive' : 'confirm']"
+                        @click="changeConfirm()"
+                      >
                         确认
                       </div>
                     </div>
                   </van-dropdown-item>
-                  <!--                  <van-dropdown-item v-model="value2" :options="option2" @open="handleOrtherItem" :close-on-click-overlay="true">-->
-                  <van-dropdown-item v-model="value2"
-                                     :options="option"
-                                     @change="toggleFieldDesc"
-                                     @open="handleOrtherItem"
-                                     :close-on-click-overlay="true">
-                    <div class="all_custom_set"
-                         @click="handleSet">
-                      <img src="../../common/images/setColor.png"
-                           alt="" />
+                  <van-dropdown-item
+                    v-model="value2"
+                    :options="option"
+                    @change="toggleFieldDesc"
+                    @open="handleOrtherItem"
+                    :close-on-click-overlay="true"
+                  >
+                    <div class="all_custom_set" @click="handleSet">
+                      <img src="../../common/images/setColor.png" alt="" />
                       <span>默认排序设置</span>
                     </div>
                   </van-dropdown-item>
@@ -254,91 +268,90 @@
               </div>
             </van-tab>
           </van-tabs>
+          <div class="space"></div>
         </div>
         <div class="all_custom_list">
-          <van-pull-refresh v-model="isLoading"
-                            @refresh="onRefresh">
-            <van-list v-model="loading"
-                      :immediate-check="false"
-                      :finished="finished"
-                      finished-text="没有更多数据"
-                      @load="onLoad"
-                      style="margin-top: 0.92rem">
-              <div class="space"
-                   style="height: 0.18rem"></div>
-              <router-link tag="div"
-                           class="custom_contents"
-                           v-for="(item, index) in inCustomList"
-                           :key="index"
-                           :to="{
-                  path: '/customerDetails',
-                  query: {
-                    id: item.customerId,
-                    time: item.lastFollowUpTime,
-                    company: item.customerFullName
-                  }
-                }">
-                <div class="custom_content_top clearfix">
-                  <p class="custom_content_address fl">
-                    {{ item.customerFullName }}
-                  </p>
-                </div>
-                <div class="line"></div>
-                <ul class="custom_content_text">
-                  <li class="margin_bottom">
-                    <p>负责人：</p>
-                    <p v-if="item.personInCharge">
-                      {{ item.personInCharge }}
+          <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+            <van-list
+              v-model="loading"
+              :immediate-check="false"
+              :finished="finished"
+              finished-text="没有更多数据"
+              @load="onLoad"
+              style="margin-top: 1.15rem"
+            >
+                <router-link
+                  tag="div"
+                  class="custom_contents"
+                  v-for="(item, index) in inCustomList"
+                  :key="index"
+                  :to="{
+                    path: '/customerDetails',
+                    query: { id: item.customerId }
+                  }"
+                >
+                  <div class="custom_content_top clearfix">
+                    <p class="custom_content_address fl">
+                      {{ item.customerFullName }}
                     </p>
-                    <p v-else>--</p>
-                  </li>
-                  <li>
-                    <p>最近跟进时间：</p>
-                    <p v-if="item.lastFollowUpTime">
-                      {{ item.lastFollowUpTime }}
-                    </p>
-                    <p v-else>--</p>
-                  </li>
-                </ul>
-                <div class="space"></div>
-              </router-link>
+                  </div>
+                  <div class="line"></div>
+                  <ul class="custom_content_text">
+                    <li class="margin_bottom">
+                      <p>负责人：</p>
+                      <p v-if="item.personInCharge">
+                        {{ item.personInCharge }}
+                      </p>
+                      <p v-else>--</p>
+                    </li>
+                    <li>
+                      <p>最近跟进时间：</p>
+                      <p v-if="item.lastFollowUpTime">
+                        {{ item.lastFollowUpTime }}
+                      </p>
+                      <p v-else>--</p>
+                    </li>
+                  </ul>
+                  <div class="space"></div>
+                </router-link>
             </van-list>
           </van-pull-refresh>
         </div>
       </div>
     </main>
     <!--时间自定义-->
-    <TimePopup :msg="{ title, isCustom, isPopShow, timePopSelected }"
-               @child-cancel="handleCancel"
-               @child-confirm="handleConfirm"
-               @child-start-time="showDatePicker"
-               @child-end-time="showDatePickers"></TimePopup>
+    <TimePopup
+      :msg="{ title, isCustom, isPopShow, timePopSelected }"
+      @child-cancel="handleCancel"
+      @child-confirm="handleConfirm"
+      @child-start-time="showDatePicker"
+      @child-end-time="showDatePickers"
+    ></TimePopup>
     <!--按钮-->
-    <van-popup v-model="searchBtn"
-               position="right"
-               class="search_popup">
+    <van-popup v-model="searchBtn" position="right" class="search_popup">
       <div class="search-history">
         <div class="search-history-bgc">
           <div class="search-history-top">
-            <input class="search-history-input"
-                   :focus="true"
-                   @keydown.enter="searchEnter"
-                   ref="searchInput"
-                   v-model="keywordInput"
-                   placeholder="客户名称搜索" />
-            <span class="search-cancel"
-                  @click="hanleCancel">取消</span>
+            <input
+              class="search-history-input"
+              :focus="true"
+              @keydown.enter="searchEnter"
+              ref="searchInput"
+              v-model="keywordInput"
+              placeholder="客户名称搜索"
+            />
+            <span class="search-cancel" @click="hanleCancel">取消</span>
           </div>
         </div>
       </div>
     </van-popup>
     <!--省市县三级联动-->
-    <van-popup v-model="showArea"
-               position="bottom"
-               :style="{ height: '35%' }">
-      <van-area :area-list="areaList"
-                @confirm="onConfirm"
-                @cancel="showArea = false" />
+    <van-popup v-model="showArea" position="bottom" :style="{ height: '35%' }">
+      <van-area
+        :area-list="areaList"
+        @confirm="onConfirm"
+        @cancel="showArea = false"
+      />
     </van-popup>
   </div>
 </template>
@@ -356,7 +369,7 @@ export default {
   components: {
     TimePopup
   },
-  data () {
+  data() {
     return {
       title: "客户总数",
       isCreat: true,
@@ -450,24 +463,6 @@ export default {
       MenuData: [],
       templateId: 1,
       templateName: "绿洲",
-      // MenuData:[
-      //   {
-      //     name:"绿洲",
-      //     id:'0',
-      //   },
-      //   {
-      //     name:"邮中",
-      //     id:'1',
-      //   },
-      //   {
-      //     name:"餐饮",
-      //     id:'2',
-      //   },
-      //   {
-      //     name:"北邮",
-      //     id:'3',
-      //   },
-      // ],
       // 全部option
       option1: [
         { text: "全部", value: 0 },
@@ -572,20 +567,6 @@ export default {
           id: "3"
         }
       ],
-      // giveData:[
-      //   {
-      //     name: "我的",
-      //     id: "1"
-      //   },
-      //   {
-      //     name: "下属的",
-      //     id: "2"
-      //   },
-      //   {
-      //     name: "选择员工",
-      //     id: "3"
-      //   },
-      // ],
       addressData: [
         {
           name: "选择省市区",
@@ -636,21 +617,21 @@ export default {
       ]
     };
   },
-  created () {
+  created() {
     this.findTemplate();
     this.getCustomInfo();
     // 分配时间筛选数据
     this.sortDefault();
   },
   methods: {
-    meunTab (title, name) {
+    meunTab(title, name) {
       this.templateId = title;
       this.templateName = name;
       console.log(title, name, this.templateId, this.templateName, "222");
       this.getCustomInfo();
     },
     // tab菜单模板
-    findTemplate () {
+    findTemplate() {
       let Data = {
         formId: 1
       };
@@ -661,7 +642,7 @@ export default {
       });
     },
     // 初始化列表数据
-    getCustomInfo () {
+    getCustomInfo() {
       let Datas = {
         templateId: this.templateId,
         lastFollowTimeType: this.lastFollowTimeType,
@@ -695,7 +676,7 @@ export default {
           // if(this.templateId){
           if (res.rows.length > 0) {
             this.inCustomList = res.rows;
-            console.log(this.inCustomList, "我是全部客户数据");
+            console.log(this.inCustomList,'我是全部客户数据')
             // this.inCustomList = this.inCustomList.concat(res.rows);
             // this.pageNum++
             this.loading = false;
@@ -713,7 +694,7 @@ export default {
       });
       let Data = {
         formId: 1,
-        templateId: 1
+        templateId: 1,
         // userId: 1
       };
       getScreenList(Data).then(res => {
@@ -728,7 +709,7 @@ export default {
       });
     },
     // 下拉刷新方法
-    onRefresh () {
+    onRefresh() {
       setTimeout(() => {
         Toast("刷新成功");
         this.isLoading = false;
@@ -738,7 +719,7 @@ export default {
       }, 1000);
     },
     // 上拉加载方法
-    onLoad () {
+    onLoad() {
       this.pageNum++;
       this.getCustomInfo();
       // setTimeout(() => {
@@ -749,7 +730,7 @@ export default {
       // }, 500)
     },
     // 分配时间筛选数据
-    sortDefault () {
+    sortDefault() {
       let Data = {
         templateId: this.templateId,
         formId: 1,
@@ -774,7 +755,7 @@ export default {
         }
       });
     },
-    toggleFieldDesc (value) {
+    toggleFieldDesc(value) {
       this.isAsc = this.option[value].isAsc;
       this.orderByColumn = this.option[value].orderByColumn;
 
@@ -782,31 +763,32 @@ export default {
       this.getCustomInfo();
     },
     // 新建
-    changeBuild () {
+    changeBuild() {
       this.$router.push({
         path: "/build",
         query: { templateId: this.templateId, templateName: this.templateName }
       });
     },
     // 筛选
-    customState (value) {
+    customState(value) {
       console.log(value);
     },
     // 打开菜单栏触发事件
-    handleOrtherItem () {
+    handleOrtherItem() {
       this.PublishValue = true;
     },
-    handleOrtherItems () {
+    handleOrtherItems() {
       this.PublishValue = true;
+      console.log(this.$refs.item,'我是打开下拉菜单')
     },
     // 自定义弹框--按钮
-    handleCancel (data) {
-      console.log(data);
+    handleCancel(data) {
+      console.log(data,'123');
       this.isCustom = false;
-      // this.isCreate =false;
       this.PublishValue = true;
+      this.$refs.item.toggle(true);
     },
-    handleConfirm (data) {
+    handleConfirm(data) {
       console.log(data.start_Time, this.inputData.end_Time, "====");
 
       if (data.start_Time == "" || data.end_Time == "") {
@@ -860,19 +842,19 @@ export default {
       }
     },
     // 自定义--开始结束时间--弹框控制
-    showDatePicker () {
+    showDatePicker() {
       //弹出层并显示时间选择器
       this.isPopShow = true;
       // this.timePopSelected = '1';
       this.showTime = true;
     },
-    showDatePickers () {
+    showDatePickers() {
       //弹出层并显示时间选择器
       this.isPop = true;
       this.showTime = true;
     },
     // 最后跟进时间
-    changeSection (ind) {
+    changeSection(ind) {
       this.RadioSelec = ind;
       if (ind >= 0 && ind <= 3) {
         this.lastFollowTimeType = ind + 1;
@@ -884,43 +866,43 @@ export default {
       }
     },
     // 未联系时间
-    contactSection (ind) {
+    contactSection(ind) {
       this.ContactSelec = ind;
       this.notContactTimeType = ind + 1;
     },
     // 归档状态
-    fileSection (ind) {
+    fileSection(ind) {
       this.fileStatus = ind;
       this.filingType = ind;
     },
     // 创建人
-    createrSection (ind) {
+    createrSection(ind) {
       this.createrStatus = ind;
       if (ind >= 0 && ind <= 1) {
         this.createUserType = ind + 1;
       }
     },
     // 负责人
-    chargeSection (ind) {
+    chargeSection(ind) {
       this.chargeStatus = ind;
       if (ind >= 0 && ind <= 1) {
         this.personInChargeType = ind + 1;
       }
     },
     // 弃用
-    giveSection (ind) {
+    giveSection(ind) {
       this.giveStatus = ind;
       if (ind >= 0 && ind <= 1) {
         this.deprecatedUserType = ind + 1;
       }
     },
     // 客户地址
-    addressSection (ind) {
+    addressSection(ind) {
       this.addressStatus = ind;
       this.showArea = true;
     },
     // 省级县三级联动
-    onConfirm (values) {
+    onConfirm(values) {
       this.valueArea = values.map(item => item.name).join(",");
       this.areaCode = values.map(item => item.code).join(",");
       this.areaId = this.areaCode.substr(14, 6);
@@ -929,12 +911,12 @@ export default {
       console.log(values, this.areaCode, this.areaId, "0011223344");
     },
     // 客户类型
-    typeSection (ind) {
+    typeSection(ind) {
       this.typeStatus = ind;
       this.customerType = ind + 1;
     },
     // 创建时间
-    createTimeSection (ind) {
+    createTimeSection(ind) {
       this.createTimeSelec = ind;
       this.isCustom = true;
       this.timePopSelected = "2";
@@ -942,7 +924,7 @@ export default {
       this.inputData.end_Time = "";
     },
     // 更新时间
-    updateTimeSection (ind) {
+    updateTimeSection(ind) {
       this.updateTimeSelec = ind;
       this.isCustom = true;
       this.timePopSelected = "3";
@@ -950,7 +932,7 @@ export default {
       this.inputData.end_Time = "";
     },
     // 分配时间
-    distributeTimeSection (ind) {
+    distributeTimeSection(ind) {
       this.distributeTimeSelec = ind;
       this.isCustom = true;
       this.timePopSelected = "4";
@@ -958,7 +940,7 @@ export default {
       this.inputData.end_Time = "";
     },
     // 公海退回时间
-    returnTimeSection (ind) {
+    returnTimeSection(ind) {
       this.returnTimeSelec = ind;
       this.isCustom = true;
       this.timePopSelected = "5";
@@ -966,11 +948,11 @@ export default {
       this.inputData.end_Time = "";
     },
     // 设置筛选项
-    changeScreen () {
+    changeScreen() {
       this.$router.push({ path: "/limitScreen" });
     },
     // 筛选重置
-    changeSet () {
+    changeSet() {
       if (this.RadioSelec == "4") {
         this.sectionData[4].name = "自定义时间";
         this.RadioSelec = null;
@@ -1028,33 +1010,33 @@ export default {
       }
     },
     // 筛选确认
-    changeConfirm () {
+    changeConfirm() {
       this.PublishValue = false;
-      // this.$nextTick(function () {
-      //   this.$refs.timeMenu.toggle();
-      // })
-      // this.$refs.timeMenu.close();
-      // console.log(this.$refs.timeMenu.toggle(),'0099');
+      this.$nextTick(function () {
+        this.$refs.item.toggle(false);
+      })
+      // this.$refs.item.close();
+      // console.log(this.$refs.item.toggle(),'0099');
       this.getCustomInfo();
     },
     // 搜索
-    handleSearch () {
+    handleSearch() {
       this.searchBtn = true;
     },
-    hanleCancel () {
+    hanleCancel() {
       this.searchBtn = false;
     },
-    searchEnter () {
+    searchEnter() {
       this.formData.keyword = this.keywordInput;
       // this.init()
       this.searchBtn = false;
       // }, 500);
     },
     // 默认排序
-    handleSet () {
+    handleSet() {
       this.$router.push({ path: "/defaultSort" });
     },
-    handleBlur () {
+    handleBlur() {
       document.body.scrollTop = document.documentElement.scrollTop = 0;
     }
   }
@@ -1140,7 +1122,7 @@ export default {
       /deep/.van-dropdown-item__content {
         max-height: 100% !important;
       }
-      /deep/.van-dropdown-menu__bar {
+      /deep/.van-dropdown-menu__bar{
         box-shadow: none !important;
       }
       /*头部内容固定*/
@@ -1316,6 +1298,10 @@ export default {
               margin-bottom: 0.06rem;
             }
           }
+        }
+        .custom_contents>.space:last-child{
+          height: 0rem;
+          background-color: #FFFFFF;
         }
       }
     }

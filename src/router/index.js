@@ -3,27 +3,29 @@ import VueRouter from "vue-router";
 import MyHome from "../views/Home.vue";
 import Visitor from "../pages/Visitor.vue";
 import Work from "../pages/Work.vue";
-import Mine from "../pages/Mine.vue";
+import Mine from "../pages/Mine.vue";//我的
 import News from "../pages/News.vue";
 import Selection from "../pages/Selection";
-import Brief from "../pages/Brief.vue";
-import PKdetalis from "../pages/PKdetalis.vue";
-import Custom from "../pages/Custom/Custom";
+import Brief from "../pages/Brief.vue";//销售简报
+import PKdetalis from "../pages/PKdetalis.vue";//pK详情页
+import Custom from "../pages/Custom/Custom";//当前客户
 import Collection from "../pages/Collection";
 import CommonForms from "../pages/CommonForms";
 import CustomHome from "../pages/CustomHome";
-import AllCustom from "../pages/Custom/AllCustom";
-import Build from "../pages/Custom/Build";
-import LimitScreen from "../pages/Custom/LimitScreen";
-import DefaultSort from "../pages/Custom/DefaultSort";
+import AllCustom from "../pages/Custom/AllCustom";//全部客户
+import Build from "../pages/Custom/Build";//新建客户
+import LimitScreen from "../pages/Custom/LimitScreen";//范围-设置筛选项
+import DefaultSort from "../pages/Custom/DefaultSort";//默认排序设置
 import Setting from "../pages/Setting";
 import ShortcutForms from "../pages/ShortcutKeyForm";
-import Approval from "../pages/Custom/Approval";
+import Approval from "../pages/Custom/Approval";//提醒
 import Organization from "../pages/Organization";
 import Entrance from "../pages/Entrance";
 import CustomerDetails from "../pages/Custom/CustomerDetails";
-import ContactDetails from "../pages/Contacts/ContactDetails.vue";
-import Contact from "../pages/Contacts/Contact";
+import ContactDetails from "../pages/Contacts/ContactDetails.vue";//联系人详情
+import Contact from "../pages/Contacts/Contact";//联系人
+import Invoice from "../pages/Invoice/Invoice";//开票信息
+import addInvoice from "../pages/Invoice/addInvoice";
 import store from "../store";
 import {
     getCookie
@@ -257,7 +259,24 @@ const routes = [
         name: "Approval",
         component: Approval
     },
-
+    // 开票信息
+    {
+        path: "/invoice",
+        name: "Invoice",
+        component: Invoice,
+        meta: {
+            title: "开票信息"
+        }
+    },
+    // 新建开票信息
+    {
+        path: "/addInvoice",
+        name: "addInvoice",
+        component: addInvoice,
+        meta: {
+            title: "新建开票信息"
+        }
+    },
     {
         path: "/home",
         name: "Home",
