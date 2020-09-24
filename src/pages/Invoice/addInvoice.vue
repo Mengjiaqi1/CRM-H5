@@ -8,33 +8,27 @@
       <div class="add_custom">
         <div class="add_title">
           <div class="add_category_left fl">
-<!--            <p class="category_left_text">{{ customerNo }}</p>-->
-            <p class="category_left_text">BY.20200429002</p>
+            <p class="category_left_text">{{invoiceNo}}</p>
           </div>
         </div>
 
         <div class="build_form">
           <van-form @submit="onSubmit" @failed="onFail" validate-first>
-            <van-field
-                    v-model="username"
-                    label="关联邮中客户"
-                    placeholder="请输入"
-                    input-align="right"
+            <div v-for="(item, index) in MenuData" :key="index" class="relation">
+              <van-field
+                      v-model="username"
+                      :label="'关联'+item.templateName+'客户'"
+                      placeholder="请选择"
+                      input-align="right"
+                      right-icon="arrow"
+                      class="relation_event"
+                      readonly
+              />
+            </div>
 
-                    right-icon="arrow"
-                    style="background: #F3F5F6"
-            />
-            <van-field
-                    v-model="bankDeposit"
-                    label="关联邮中客户"
-                    placeholder="请输入"
-                    input-align="right"
-                    right-icon="arrow"
-                    style="background: #F3F5F6"
-            />
             <div class="space"></div>
             <van-field
-                    v-model="username"
+                    v-model="accountName"
                     label="银行账户户名"
                     placeholder="请输入"
                     input-align="right"
@@ -50,7 +44,7 @@
                     :rules="[{ required: true, message: '请输入开户行' }]"
             />
             <van-field
-                    v-model="customerFullName"
+                    v-model="bankAccount"
                     label="银行账号"
                     required
                     placeholder="请输入"
@@ -58,7 +52,7 @@
                     :rules="[{ required: true, message: '请输入客户全称' }]"
             />
             <van-field
-                    v-model="customerFullName"
+                    v-model="taxpayerNumber"
                     label="纳税人识别号"
                     required
                     placeholder="请输入"
@@ -89,18 +83,21 @@
 
             />
             <van-field
-                    v-model="customerAddress"
+                    v-model="address"
                     rows="2"
                     autosize
                     maxlength="60个字符"
                     type="textarea"
                     show-word-limit
+                    right-icon="location-o"
                     placeholder="请输入详细地址"
                     :rules="[{ required: true, message: '请输入地址' }]"
-            />
+            >
+              <van-icon class="iconfont" class-prefix="icon" slot="right-icon" name="location-o" @click="handlelocation">地图</van-icon>
+            </van-field>
             <div class="space"></div>
             <van-field
-                    v-model="customerShortName"
+                    v-model="telephone"
                     label="电话"
                     placeholder="请输入"
                     input-align="right"
@@ -118,7 +115,6 @@
                     placeholder="请输入备注信息"
             />
             <van-field
-                    v-model="file"
                     label="附件"
                     input-align="right"
                     right-icon="back-top"
@@ -195,12 +191,13 @@
 </template>
 <script>
     import area from "../../common/js/area";
+    import * as dd from "dingtalk-jsapi";
     import upLoaderImg from "../../common/js/upLoaderImg";
     import {
         findTemplateList,
-        getSeqList,
+        getNumber,
         addList
-    } from "../../services/AllCustom";
+    } from "../../services/invoice";
     export default {
         components: {
             area
@@ -209,24 +206,22 @@
             return {
                 arr: [],
                 username: "",
+                // 模板数据
                 MenuData: [],
+                // 开票编号
+                invoiceNo: "",
                 message: "",
                 // 数据初始化
-                customerNo: "",
-                customerFullName: "",
-                customerTypeId: "1",
-                createUserId: 3,
-                customerShortName: "",
+                accountName:'',
+                bankDeposit:'',
+                bankAccount:'',
+                taxpayerNumber:'',
                 provinceId: "",
                 cityId: "",
                 areaId: "",
-                customerAddress: "",
-                customerOfficialWebsite: "",
-                customerBrief: "",
+                address:'',
+                telephone:'',
                 remark: "",
-                imageFileIds: [],
-                imageFileIdss: "",
-                uploadImg: {},
                 // add类别
                 isCategory: false,
                 timeCategory: 0,
@@ -286,24 +281,22 @@
             // 序列号
             getCode() {
                 // 序列号
-                let Datas = {
-                    templateId: this.$route.query.templateId
-                };
-                getSeqList(Datas).then(res => {
+                getNumber().then(res => {
                     if (res.code == 200) {
-                        this.customerNo = res.data;
+                        this.invoiceNo = res.msg;
                     }
                 });
             },
             // 省级县三级联动
             onConfirm(values) {
-                this.valueArea = values.map(item => item.name).join("/");
+                this.valueArea = values.map(item => item.name).join("");
                 this.areaCode = values.map(item => item.code).join(",");
-                this.provinceId = this.areaCode.substr(0, 6);
-                this.cityId = this.areaCode.substr(7, 6);
-                this.areaId = this.areaCode.substr(14, 6);
+                console.log(this.valueArea,'我是选中的省市')
+                this.provinceId = values[0].name;
+                this.cityId = values[1].name;
+                this.areaId = values[2].name;
                 this.showArea = false;
-                console.log(values, this.areaCode, "0011223344");
+                console.log(values, this.areaCode,"0011223344");
             },
             // add类别
             changeCategory() {
@@ -350,33 +343,29 @@
                 this.isType = false;
             },
             onSubmit() {
-                //这个东西应该就是个你提交的数组
+                //提交
                 let Data = {
-                    customerNo: this.customerNo,
-                    templateId: this.templateIds,
-                    createUserId: 3,
-                    customerFullName: this.customerFullName,
-                    customerTypeId: this.customerTypeId,
-                    customerShortName: this.customerShortName,
-                    provinceId: this.provinceId,
-                    cityId: this.cityId,
-                    areaId: this.areaId,
-                    customerAddress: this.customerAddress,
-                    customerBrief: this.customerBrief,
-                    customerOfficialWebsite: this.customerOfficialWebsite,
+                    number: this.invoiceNo,
+                    accountName:this.accountName,
+                    bankDeposit:this.bankDeposit,
+                    bankAccount:this.bankAccount,
+                    taxpayerNumber:this.taxpayerNumber,
+                    province: this.provinceId,
+                    city: this.cityId,
+                    area: this.areaId,
+                    address: this.address,
+                    telephone:this.telephone,
                     remark: this.remark,
-                    imageFileIdList: this.arr
                 };
-
                 addList(Data).then(res => {
                     console.log(Data, 2, "===");
                     if (res.code == 200) {
                         // this.MenuData = res.rows;
-                        // this.$toast({
-                        //     message: "保存中",
-                        //     position: "center"
-                        // });
-                        // this.$router.push({ path: "/allCustom" });
+                        this.$toast({
+                            message: "保存中",
+                            position: "center"
+                        });
+                        this.$router.push({ path: "/invoice" });
                     }
                 });
             },
@@ -384,6 +373,40 @@
                 this.$toast({
                     message: "表单验证不通过",
                     position: "center"
+                });
+            },
+            handlelocation(){
+                console.log(123,'2222')
+                dd.ready(function() {
+                    // dd.ready参数为回调函数，在环境准备就绪时触发，jsapi的调用需要保证在该回调函数触发后调用，否则无效。
+                    dd.device.geolocation.get({
+                        targetAccuracy : 200,
+                        coordinate : 1,
+                        withReGeocode : true,
+                        useCache:false, //默认是true，如果需要频繁获取地理位置，请设置false
+                        onSuccess : function(result) {
+                            {
+                                // longitude : Number,
+                                // latitude : Number,
+                                // accuracy : Number,
+                                // address : String,
+                                // province : String,
+                                // city : String,
+                                // district : String,
+                                // road : String,
+                                // netType : String,
+                                // operatorType : String,
+                                // errorMessage : String,
+                                // errorCode : Number,
+                                // isWifiEnabled : Boolean,
+                                // isGpsEnabled : Boolean,
+                                // isFromMock : Boolean,
+                                // provider : wifi|lbs|gps,
+                                // isMobileEnabled : Boolean
+                            }
+                        },
+                        onFail : function(err) {}
+                    });
                 });
             }
         }
@@ -439,6 +462,15 @@
             bottom: 0rem;
             width: 3.5rem;
             background: #f8f9fa;
+          }
+          .relation{
+            .relation_event{
+              border-bottom: 0.01rem solid #ECEFF2;
+              background: #F3F5F6;
+            }
+            /*.relation_event:last-child{*/
+            /*  border-bottom: none;*/
+            /*}*/
           }
         }
         .space {

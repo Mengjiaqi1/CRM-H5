@@ -42,7 +42,7 @@
                   />
                   <van-dropdown-item
                     title="范围"
-                    ref="timeMenu"
+                    ref="item"
                     @open="handleOrtherItems"
                   >
                     <!--最后跟进时间-->
@@ -779,13 +779,14 @@ export default {
     },
     handleOrtherItems() {
       this.PublishValue = true;
+      console.log(this.$refs.item,'我是打开下拉菜单')
     },
     // 自定义弹框--按钮
     handleCancel(data) {
       console.log(data,'123');
       this.isCustom = false;
       this.PublishValue = true;
-      this.$refs.timeMenu.toggle(true);
+      this.$refs.item.toggle(true);
     },
     handleConfirm(data) {
       console.log(data.start_Time, this.inputData.end_Time, "====");
@@ -1012,10 +1013,10 @@ export default {
     changeConfirm() {
       this.PublishValue = false;
       this.$nextTick(function () {
-        this.$refs.timeMenu.toggle(false);
+        this.$refs.item.toggle(false);
       })
-      // this.$refs.timeMenu.close();
-      // console.log(this.$refs.timeMenu.toggle(),'0099');
+      // this.$refs.item.close();
+      // console.log(this.$refs.item.toggle(),'0099');
       this.getCustomInfo();
     },
     // 搜索

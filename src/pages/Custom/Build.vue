@@ -349,17 +349,16 @@ export default {
       // window.localStorage.setItem('token', 'eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6ImQ4YzNjNGQ1LTNiMDgtNDJjNS1iYTEyLTBlNjEwZmQ2Y2Y1NCJ9.YutjxQjQu_l1j2wvDRrCHjS-f8JD1rvDK3WSGc4Uh4k57CIzb85usazT5tVnLCN8V8vMqA8ooKMWJM6qlChZgQ')
     },
     async onSubmit() {
-      //这个东西应该就是个你提交的数组
+      //提交的数组
       //每次点击都清除 循环重新赋值
       this.arr = [];
       //判断this.imageFileIds 是否为空数组
       if (this.imageFileIds.length > 0) {
         await this.imageFileIds.forEach(async item => {
-          let uploadImg = await upLoaderImg(item.file); //这个不是接口的返回结果吗 从这里去取id就好了 fileId在这个地方拿啊 我的姐姐 写这个循环就是为了拿fileid的啊
+          let uploadImg = await upLoaderImg(item.file); //接口的返回结果
           this.arr.push(uploadImg.result.fileId);
           console.log(uploadImg.result.fileId, this.arr, "++++");
         });
-        //              console.log(this.arr,'1.5')
       }
       // let result = this.arr.join(',')
       let Data = {
