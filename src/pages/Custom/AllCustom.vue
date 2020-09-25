@@ -3,17 +3,15 @@
     <myHeader>
       <div class="h_center">全部客户</div>
       <div class="h_right h_more">
-        <div class="search_icon"
-             @click="handleSearch">
-          <input v-model="keywordInput"
-                 disabled
-                 style="display: inline-block;height: 0rem" />
-          <img src="../../common/images/search.png"
-               alt="" />
+        <div class="search_icon" @click="handleSearch">
+          <input
+            v-model="keywordInput"
+            disabled
+            style="display: inline-block;height: 0rem"
+          />
+          <img src="../../common/images/search.png" alt="" />
         </div>
-        <img src="../../common/images/adds.png"
-             alt=""
-             @click="changeBuild" />
+        <img src="../../common/images/adds.png" alt="" @click="changeBuild" />
       </div>
     </myHeader>
     <main>
@@ -21,34 +19,44 @@
         <div class="all_custom_fixed">
           <van-tabs @change="meunTab">
             <!--            <van-tab v-for="each in MenuData" :key="each.id" :title="each.name">-->
-            <van-tab v-for="each in MenuData"
-                     :key="each.templateName"
-                     :title="each.templateName"
-                     :name="each.templateId">
+            <van-tab
+              v-for="each in MenuData"
+              :key="each.templateName"
+              :title="each.templateName"
+              :name="each.templateId"
+            >
               <!--下拉菜单-->
               <div class="space"></div>
               <div class="dropdown-menu clearfix">
-                <van-dropdown-menu :overlay="PublishValue"
-                                   active-color="#006aff"
-                                   class="dropdown fl">
-                  <van-dropdown-item v-model="value1"
-                                     :options="option1"
-                                     @change="customState"
-                                     @open="handleOrtherItem"
-                                     :close-on-click-overlay="true" />
-                  <van-dropdown-item title="范围"
-                                     ref="item"
-                                     @open="handleOrtherItems">
+                <van-dropdown-menu
+                  :overlay="PublishValue"
+                  active-color="#006aff"
+                  class="dropdown fl"
+                >
+                  <van-dropdown-item
+                    v-model="value1"
+                    :options="option1"
+                    @change="customState"
+                    @open="handleOrtherItem"
+                    :close-on-click-overlay="true"
+                  />
+                  <van-dropdown-item
+                    title="范围"
+                    ref="item"
+                    @open="handleOrtherItems"
+                  >
                     <!--最后跟进时间-->
                     <div class="selection">
                       <div class="selec_tit">
                         <span class="selec_tit_type">最后跟进时间</span>
                       </div>
                       <div class="selec_content">
-                        <div v-for="(each, index) in sectionData"
-                             :key="each.id"
-                             :class="RadioSelec == index ? 'active' : 'each'"
-                             @click="changeSection(index)">
+                        <div
+                          v-for="(each, index) in sectionData"
+                          :key="each.id"
+                          :class="RadioSelec == index ? 'active' : 'each'"
+                          @click="changeSection(index)"
+                        >
                           <span>{{ each.name }}</span>
                         </div>
                       </div>
@@ -59,10 +67,12 @@
                         <span class="selec_tit_type">未联系时间</span>
                       </div>
                       <div class="selec_content">
-                        <div v-for="(each, index) in noContactData"
-                             :key="each.id"
-                             :class="ContactSelec == index ? 'active' : 'each'"
-                             @click="contactSection(index)">
+                        <div
+                          v-for="(each, index) in noContactData"
+                          :key="each.id"
+                          :class="ContactSelec == index ? 'active' : 'each'"
+                          @click="contactSection(index)"
+                        >
                           <span>{{ each.name }}</span>
                         </div>
                       </div>
@@ -73,10 +83,12 @@
                         <span class="selec_tit_type">归档状态</span>
                       </div>
                       <div class="selec_content">
-                        <div v-for="(each, index) in fileData"
-                             :key="each.id"
-                             :class="fileStatus == index ? 'active' : 'each'"
-                             @click="fileSection(index)">
+                        <div
+                          v-for="(each, index) in fileData"
+                          :key="each.id"
+                          :class="fileStatus == index ? 'active' : 'each'"
+                          @click="fileSection(index)"
+                        >
                           <span>{{ each.name }}</span>
                         </div>
                       </div>
@@ -87,10 +99,12 @@
                         <span class="selec_tit_type">创建人</span>
                       </div>
                       <div class="selec_content">
-                        <div v-for="(each, index) in createrData"
-                             :key="each.id"
-                             :class="createrStatus == index ? 'active' : 'each'"
-                             @click="createrSection(index)">
+                        <div
+                          v-for="(each, index) in createrData"
+                          :key="each.id"
+                          :class="createrStatus == index ? 'active' : 'each'"
+                          @click="createrSection(index)"
+                        >
                           <span>{{ each.name }}</span>
                         </div>
                       </div>
@@ -101,10 +115,12 @@
                         <span class="selec_tit_type">负责人</span>
                       </div>
                       <div class="selec_content">
-                        <div v-for="(each, index) in chargeData"
-                             :key="each.id"
-                             :class="chargeStatus == index ? 'active' : 'each'"
-                             @click="chargeSection(index)">
+                        <div
+                          v-for="(each, index) in chargeData"
+                          :key="each.id"
+                          :class="chargeStatus == index ? 'active' : 'each'"
+                          @click="chargeSection(index)"
+                        >
                           <span>{{ each.name }}</span>
                         </div>
                       </div>
@@ -115,87 +131,94 @@
                         <span class="selec_tit_type">客户地址</span>
                       </div>
                       <div class="selec_content">
-                        <div v-for="(each, index) in addressData"
-                             :key="each.id"
-                             :class="addressStatus == index ? 'active' : 'each'"
-                             @click="addressSection(index)">
+                        <div
+                          v-for="(each, index) in addressData"
+                          :key="each.id"
+                          :class="addressStatus == index ? 'active' : 'each'"
+                          @click="addressSection(index)"
+                        >
                           <span>{{ each.name }}</span>
                         </div>
                       </div>
                     </div>
                     <!--创建时间-->
-                    <div class="selection"
-                         v-if="isCreat === true">
+                    <div class="selection" v-if="isCreat === true">
                       <div class="selec_tit">
                         <span class="selec_tit_type">创建时间</span>
                       </div>
                       <div class="selec_content">
-                        <div v-for="(each, index) in createTimeData"
-                             :key="each.id"
-                             :class="createTimeSelec == index ? 'active' : 'each'"
-                             @click="createTimeSection(index)">
+                        <div
+                          v-for="(each, index) in createTimeData"
+                          :key="each.id"
+                          :class="createTimeSelec == index ? 'active' : 'each'"
+                          @click="createTimeSection(index)"
+                        >
                           <span>{{ each.name }}</span>
                         </div>
                       </div>
                     </div>
                     <!--更新时间-->
-                    <div class="selection"
-                         v-if="isUpdata === true">
+                    <div class="selection" v-if="isUpdata === true">
                       <div class="selec_tit">
                         <span class="selec_tit_type">更新时间</span>
                       </div>
                       <div class="selec_content">
-                        <div v-for="(each, index) in updateTimeData"
-                             :key="each.id"
-                             :class="updateTimeSelec == index ? 'active' : 'each'"
-                             @click="updateTimeSection(index)">
+                        <div
+                          v-for="(each, index) in updateTimeData"
+                          :key="each.id"
+                          :class="updateTimeSelec == index ? 'active' : 'each'"
+                          @click="updateTimeSection(index)"
+                        >
                           <span>{{ each.name }}</span>
                         </div>
                       </div>
                     </div>
                     <!--客户类型-->
-                    <div class="selection"
-                         v-if="isType === true">
+                    <div class="selection" v-if="isType === true">
                       <div class="selec_tit">
                         <span class="selec_tit_type">客户类型</span>
                       </div>
                       <div class="selec_content">
-                        <div v-for="(each, index) in typeData"
-                             :key="each.id"
-                             :class="typeStatus == index ? 'active' : 'each'"
-                             @click="typeSection(index)">
+                        <div
+                          v-for="(each, index) in typeData"
+                          :key="each.id"
+                          :class="typeStatus == index ? 'active' : 'each'"
+                          @click="typeSection(index)"
+                        >
                           <span>{{ each.name }}</span>
                         </div>
                       </div>
                     </div>
                     <!--公海退回时间-->
-                    <div class="selection"
-                         v-if="isReturn === true">
+                    <div class="selection" v-if="isReturn === true">
                       <div class="selec_tit">
                         <span class="selec_tit_type">公海退回时间</span>
                       </div>
                       <div class="selec_content">
-                        <div v-for="(each, index) in returnData"
-                             :key="each.id"
-                             :class="returnTimeSelec == index ? 'active' : 'each'"
-                             @click="returnTimeSection(index)">
+                        <div
+                          v-for="(each, index) in returnData"
+                          :key="each.id"
+                          :class="returnTimeSelec == index ? 'active' : 'each'"
+                          @click="returnTimeSection(index)"
+                        >
                           <span>{{ each.name }}</span>
                         </div>
                       </div>
                     </div>
                     <!--分配时间-->
-                    <div class="selection"
-                         v-if="isBranch === true">
+                    <div class="selection" v-if="isBranch === true">
                       <div class="selec_tit">
                         <span class="selec_tit_type">分配时间</span>
                       </div>
                       <div class="selec_content">
-                        <div v-for="(each, index) in distributeData"
-                             :key="each.id"
-                             :class="
+                        <div
+                          v-for="(each, index) in distributeData"
+                          :key="each.id"
+                          :class="
                             distributeTimeSelec == index ? 'active' : 'each'
                           "
-                             @click="distributeTimeSection(index)">
+                          @click="distributeTimeSection(index)"
+                        >
                           <span>{{ each.name }}</span>
                         </div>
                       </div>
@@ -203,33 +226,41 @@
                     <!--按钮-->
                     <div style="margin-bottom: 0.5rem"></div>
                     <div class="selecBox selecBox_fixed">
-                      <div style="width: 20%;text-align: center"
-                           @click="changeScreen">
-                        <img src="../../common/images/setColor.png"
-                             alt=""
-                             style="width: 0.2rem;height: 0.2rem" />
+                      <div
+                        style="width: 20%;text-align: center"
+                        @click="changeScreen"
+                      >
+                        <img
+                          src="../../common/images/setColor.png"
+                          alt=""
+                          style="width: 0.2rem;height: 0.2rem"
+                        />
                       </div>
-                      <div style="width: 40%;"
-                           :class="[cancelShow == 2 ? 'selecActive' : 'confirm']"
-                           @click="changeSet()">
+                      <div
+                        style="width: 40%;"
+                        :class="[cancelShow == 2 ? 'selecActive' : 'confirm']"
+                        @click="changeSet()"
+                      >
                         重置
                       </div>
-                      <div style="width: 40%;"
-                           :class="[cancelShow == 1 ? 'selecActive' : 'confirm']"
-                           @click="changeConfirm()">
+                      <div
+                        style="width: 40%;"
+                        :class="[cancelShow == 1 ? 'selecActive' : 'confirm']"
+                        @click="changeConfirm()"
+                      >
                         确认
                       </div>
                     </div>
                   </van-dropdown-item>
-                  <van-dropdown-item v-model="value2"
-                                     :options="option"
-                                     @change="toggleFieldDesc"
-                                     @open="handleOrtherItem"
-                                     :close-on-click-overlay="true">
-                    <div class="all_custom_set"
-                         @click="handleSet">
-                      <img src="../../common/images/setColor.png"
-                           alt="" />
+                  <van-dropdown-item
+                    v-model="value2"
+                    :options="option"
+                    @change="toggleFieldDesc"
+                    @open="handleOrtherItem"
+                    :close-on-click-overlay="true"
+                  >
+                    <div class="all_custom_set" @click="handleSet">
+                      <img src="../../common/images/setColor.png" alt="" />
                       <span>默认排序设置</span>
                     </div>
                   </van-dropdown-item>
@@ -240,18 +271,21 @@
           <div class="space"></div>
         </div>
         <div class="all_custom_list">
-          <van-pull-refresh v-model="isLoading"
-                            @refresh="onRefresh">
-            <van-list v-model="loading"
-                      :immediate-check="false"
-                      :finished="finished"
-                      finished-text="没有更多数据"
-                      @load="onLoad"
-                      style="margin-top: 1.15rem">
-              <div class="custom_contents"
-                   v-for="(item, index) in inCustomList"
-                   :key="index"
-                   @click="changeDetail(item.customerId, item.lastFollowUpTime)">
+          <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+            <van-list
+              v-model="loading"
+              :immediate-check="false"
+              :finished="finished"
+              finished-text="没有更多数据"
+              @load="onLoad"
+              style="margin-top: 1.15rem"
+            >
+              <div
+                class="custom_contents"
+                v-for="(item, index) in inCustomList"
+                :key="index"
+                @click="changeDetail(item.customerId, item.lastFollowUpTime)"
+              >
                 <div class="custom_content_top clearfix">
                   <p class="custom_content_address fl">
                     {{ item.customerFullName }}
@@ -282,37 +316,38 @@
       </div>
     </main>
     <!--时间自定义-->
-    <TimePopup :msg="{ title, isCustom, isPopShow, timePopSelected }"
-               @child-cancel="handleCancel"
-               @child-confirm="handleConfirm"
-               @child-start-time="showDatePicker"
-               @child-end-time="showDatePickers"></TimePopup>
+    <TimePopup
+      :msg="{ title, isCustom, isPopShow, timePopSelected }"
+      @child-cancel="handleCancel"
+      @child-confirm="handleConfirm"
+      @child-start-time="showDatePicker"
+      @child-end-time="showDatePickers"
+    ></TimePopup>
     <!--按钮-->
-    <van-popup v-model="searchBtn"
-               position="right"
-               class="search_popup">
+    <van-popup v-model="searchBtn" position="right" class="search_popup">
       <div class="search-history">
         <div class="search-history-bgc">
           <div class="search-history-top">
-            <input class="search-history-input"
-                   :focus="true"
-                   @keydown.enter="searchEnter"
-                   ref="searchInput"
-                   v-model="keywordInput"
-                   placeholder="客户名称搜索" />
-            <span class="search-cancel"
-                  @click="hanleCancel">取消</span>
+            <input
+              class="search-history-input"
+              :focus="true"
+              @keydown.enter="searchEnter"
+              ref="searchInput"
+              v-model="keywordInput"
+              placeholder="客户名称搜索"
+            />
+            <span class="search-cancel" @click="hanleCancel">取消</span>
           </div>
         </div>
       </div>
     </van-popup>
     <!--省市县三级联动-->
-    <van-popup v-model="showArea"
-               position="bottom"
-               :style="{ height: '35%' }">
-      <van-area :area-list="areaList"
-                @confirm="onConfirm"
-                @cancel="showArea = false" />
+    <van-popup v-model="showArea" position="bottom" :style="{ height: '35%' }">
+      <van-area
+        :area-list="areaList"
+        @confirm="onConfirm"
+        @cancel="showArea = false"
+      />
     </van-popup>
   </div>
 </template>
@@ -321,18 +356,18 @@ import {
   findTemplateList,
   getAllCustomData,
   getScreenList,
-  sortDefaultList
-} from "../../services/AllCustom";
-import TimePopup from "../../components/TimePopup";
-import area from "../../common/js/area";
-import { Toast } from "vant";
+  sortDefaultList,
+} from '../../services/AllCustom'
+import TimePopup from '../../components/TimePopup'
+import area from '../../common/js/area'
+import { Toast } from 'vant'
 export default {
   components: {
-    TimePopup
+    TimePopup,
   },
-  data () {
+  data() {
     return {
-      title: "客户总数",
+      title: '客户总数',
       isCreat: true,
       isUpdata: true,
       isType: true,
@@ -351,13 +386,13 @@ export default {
       PublishValue: false,
       // 下拉菜单默认值
       value1: 0,
-      timeName: "",
+      timeName: '',
       timeValue: 0,
-      fieldDesc: "",
-      fieldDescValue: "",
+      fieldDesc: '',
+      fieldDescValue: '',
       // 搜索
       searchBtn: false,
-      keywordInput: "",
+      keywordInput: '',
       // 筛选初始化数据
       RadioSelec: null,
       ContactSelec: null,
@@ -375,7 +410,7 @@ export default {
       startTime: new Date(), // 开始时间
       endTime: new Date(), // 结束时间
       isPopShow: false, // 弹出层隐藏与显示
-      timePopSelected: "", // 当前弹框选项 (定义出来：1.创建时间 2.更新时间，3.。。。。其他)
+      timePopSelected: '', // 当前弹框选项 (定义出来：1.创建时间 2.更新时间，3.。。。。其他)
       isPop: false, // 弹出层隐藏与显示
       showTime: false,
       minDate: new Date(2009, 12, 1),
@@ -383,235 +418,235 @@ export default {
       // 确定筛选条件初始值
       formId: 1,
       userId: 1,
-      lastFollowTimeStart: "",
-      lastFollowTimeEnd: "",
-      notContactTimeType: "",
-      filingType: "",
-      createUserType: "",
-      createUserId: "",
-      personInChargeType: "",
-      personInChargeId: "",
-      deprecatedUserType: "",
-      deprecatedUserId: "",
-      areaId: "",
-      customerType: "",
-      createTimeStart: "",
-      createTimeEnd: "",
-      updateTimeStart: "",
-      updateTimeEnd: "",
-      allocateTimeStart: "",
-      allocateTimeEnd: "",
-      sendBackPondStart: "",
-      sendBackPondEnd: "",
-      isAsc: "",
-      orderByColumn: "",
-      fieldName: "",
+      lastFollowTimeStart: '',
+      lastFollowTimeEnd: '',
+      notContactTimeType: '',
+      filingType: '',
+      createUserType: '',
+      createUserId: '',
+      personInChargeType: '',
+      personInChargeId: '',
+      deprecatedUserType: '',
+      deprecatedUserId: '',
+      areaId: '',
+      customerType: '',
+      createTimeStart: '',
+      createTimeEnd: '',
+      updateTimeStart: '',
+      updateTimeEnd: '',
+      allocateTimeStart: '',
+      allocateTimeEnd: '',
+      sendBackPondStart: '',
+      sendBackPondEnd: '',
+      isAsc: '',
+      orderByColumn: '',
+      fieldName: '',
       // 自定义时间
       isCustom: false,
       inputData: {
-        start_Time: "",
-        end_Time: ""
+        start_Time: '',
+        end_Time: '',
       },
       cancelShow: 1,
       // 省市县三级联动
-      area: "",
-      value: "",
-      valueArea: "",
-      areaCode: "",
+      area: '',
+      value: '',
+      valueArea: '',
+      areaCode: '',
       showArea: false,
       areaList: area, // 数据格式见 Area 组件文档
       // 全部客户菜单切换
       MenuData: [],
       templateId: 1,
-      templateName: "绿洲",
+      templateName: '绿洲',
       // 全部option
       option1: [
-        { text: "全部", value: 0 },
-        { text: "今日新增", value: 1 },
-        { text: "本周新增", value: 2 },
-        { text: "7天未跟进", value: 3 },
-        { text: "即将退回公海池", value: 4 },
-        { text: "我负责的", value: 5 },
-        { text: "我协同的", value: 6 },
-        { text: "下属负责的", value: 7 },
-        { text: "下属协同的", value: 8 }
+        { text: '全部', value: 0 },
+        { text: '今日新增', value: 1 },
+        { text: '本周新增', value: 2 },
+        { text: '7天未跟进', value: 3 },
+        { text: '即将退回公海池', value: 4 },
+        { text: '我负责的', value: 5 },
+        { text: '我协同的', value: 6 },
+        { text: '下属负责的', value: 7 },
+        { text: '下属协同的', value: 8 },
       ],
       // 时间option
       sortList: [],
       value2: 0,
       value3: 0,
       option: [],
-      text: "",
+      text: '',
       optionItem: {
-        text: "客户官网降序",
+        text: '客户官网降序',
         value: 0,
-        isAsc: "",
-        orderByColumn: ""
+        isAsc: '',
+        orderByColumn: '',
       },
       // 最后跟进时间
       sectionData: [
         {
-          name: "今日",
-          id: "1"
+          name: '今日',
+          id: '1',
         },
         {
-          name: "本周",
-          id: "2"
+          name: '本周',
+          id: '2',
         },
         {
-          name: "本月",
-          id: "3"
+          name: '本月',
+          id: '3',
         },
         {
-          name: "三个月",
-          id: "4"
+          name: '三个月',
+          id: '4',
         },
         {
-          name: "自定义时间",
-          id: "5"
-        }
+          name: '自定义时间',
+          id: '5',
+        },
       ],
       // 未联系时间
       noContactData: [
         {
-          name: "一周到两周",
-          id: "1"
+          name: '一周到两周',
+          id: '1',
         },
         {
-          name: "两周到一月",
-          id: "2"
+          name: '两周到一月',
+          id: '2',
         },
         {
-          name: "一月到两月",
-          id: "3"
+          name: '一月到两月',
+          id: '3',
         },
         {
-          name: "两月以上",
-          id: "4"
-        }
+          name: '两月以上',
+          id: '4',
+        },
       ],
       fileData: [
         {
-          name: "未归档",
-          id: "1"
+          name: '未归档',
+          id: '1',
         },
         {
-          name: "已归档",
-          id: "2"
-        }
+          name: '已归档',
+          id: '2',
+        },
       ],
       createrData: [
         {
-          name: "我的",
-          id: "1"
+          name: '我的',
+          id: '1',
         },
         {
-          name: "下属的",
-          id: "2"
+          name: '下属的',
+          id: '2',
         },
         {
-          name: "选择员工",
-          id: "3"
-        }
+          name: '选择员工',
+          id: '3',
+        },
       ],
       chargeData: [
         {
-          name: "我的",
-          id: "1"
+          name: '我的',
+          id: '1',
         },
         {
-          name: "下属的",
-          id: "2"
+          name: '下属的',
+          id: '2',
         },
         {
-          name: "选择员工",
-          id: "3"
-        }
+          name: '选择员工',
+          id: '3',
+        },
       ],
       addressData: [
         {
-          name: "选择省市区",
-          id: "1"
-        }
+          name: '选择省市区',
+          id: '1',
+        },
       ],
       typeData: [
         {
-          name: "局内客户",
-          id: "1"
+          name: '局内客户',
+          id: '1',
         },
         {
-          name: "外省客户",
-          id: "2"
+          name: '外省客户',
+          id: '2',
         },
         {
-          name: "行业客户",
-          id: "3"
+          name: '行业客户',
+          id: '3',
         },
         {
-          name: "纯社会客户",
-          id: "4"
-        }
+          name: '纯社会客户',
+          id: '4',
+        },
       ],
       createTimeData: [
         {
-          name: "自定义时间",
-          id: "1"
-        }
+          name: '自定义时间',
+          id: '1',
+        },
       ],
       updateTimeData: [
         {
-          name: "自定义时间",
-          id: "1"
-        }
+          name: '自定义时间',
+          id: '1',
+        },
       ],
       distributeData: [
         {
-          name: "自定义时间",
-          id: "1"
-        }
+          name: '自定义时间',
+          id: '1',
+        },
       ],
       returnData: [
         {
-          name: "自定义时间",
-          id: "1"
-        }
-      ]
-    };
+          name: '自定义时间',
+          id: '1',
+        },
+      ],
+    }
   },
-  created () {
-    this.findTemplate();
-    this.getCustomInfo();
+  created() {
+    this.findTemplate()
+    this.getCustomInfo()
     // 分配时间筛选数据
-    this.sortDefault();
+    this.sortDefault()
   },
   methods: {
-    changeDetail (customerId, lastFollowUpTime) {
-      this.$store.commit("set_customerId", customerId);
-      this.$store.commit("set_followTime", lastFollowUpTime);
+    changeDetail(customerId, lastFollowUpTime) {
+      this.$store.commit('set_customerId', customerId)
+      this.$store.commit('set_followTime', lastFollowUpTime)
       this.$router.push({
-        path: "/customerDetails",
-        query: { id: customerId, time: lastFollowUpTime }
-      });
+        path: '/customerDetails',
+        query: { id: customerId, time: lastFollowUpTime },
+      })
     },
-    meunTab (title, name) {
-      this.templateId = title;
-      this.templateName = name;
-      console.log(title, name, this.templateId, this.templateName, "222");
-      this.getCustomInfo();
+    meunTab(title, name) {
+      this.templateId = title
+      this.templateName = name
+      console.log(title, name, this.templateId, this.templateName, '222')
+      this.getCustomInfo()
     },
     // tab菜单模板
-    findTemplate () {
+    findTemplate() {
       let Data = {
-        formId: 1
-      };
-      findTemplateList(Data).then(res => {
+        formId: 1,
+      }
+      findTemplateList(Data).then((res) => {
         if (res.code == 200) {
-          this.MenuData = res.rows;
+          this.MenuData = res.rows
         }
-      });
+      })
     },
     // 初始化列表数据
-    getCustomInfo () {
+    getCustomInfo() {
       let Datas = {
         templateId: this.templateId,
         lastFollowTimeType: this.lastFollowTimeType,
@@ -637,60 +672,60 @@ export default {
         sendBackPondEnd: this.sendBackPondEnd,
         isAsc: this.isAsc,
         orderByColumn: this.orderByColumn,
-        pageNum: this.pageNum
+        pageNum: this.pageNum,
         // pageSize:10,
-      };
-      getAllCustomData(Datas).then(res => {
-        if (res.code == "200") {
+      }
+      getAllCustomData(Datas).then((res) => {
+        if (res.code == '200') {
           // if(this.templateId){
           if (res.rows.length > 0) {
-            this.inCustomList = res.rows;
-            console.log(this.inCustomList, "我是全部客户数据");
+            this.inCustomList = res.rows
+            console.log(this.inCustomList, '我是全部客户数据')
             // this.inCustomList = this.inCustomList.concat(res.rows);
             // this.pageNum++
-            this.loading = false;
+            this.loading = false
             if (res.rows.length !== 15) {
-              this.loading = false;
-              this.finished = true;
+              this.loading = false
+              this.finished = true
             }
           } else {
-            this.inCustomList = res.rows;
-            this.loading = false;
-            this.finished = true;
+            this.inCustomList = res.rows
+            this.loading = false
+            this.finished = true
           }
           // }
         }
-      });
+      })
       let Data = {
         formId: 1,
-        templateId: 1
+        templateId: 1,
         // userId: 1
-      };
-      getScreenList(Data).then(res => {
+      }
+      getScreenList(Data).then((res) => {
         if (res.code == 200) {
-          this.screenData = res.rows;
-          this.isCreat = this.screenData[6].checked;
-          this.isUpdata = this.screenData[7].checked;
-          this.isType = this.screenData[8].checked;
-          this.isReturn = this.screenData[9].checked;
-          this.isBranch = this.screenData[10].checked;
+          this.screenData = res.rows
+          this.isCreat = this.screenData[6].checked
+          this.isUpdata = this.screenData[7].checked
+          this.isType = this.screenData[8].checked
+          this.isReturn = this.screenData[9].checked
+          this.isBranch = this.screenData[10].checked
         }
-      });
+      })
     },
     // 下拉刷新方法
-    onRefresh () {
+    onRefresh() {
       setTimeout(() => {
-        Toast("刷新成功");
-        this.isLoading = false;
-        this.pageNum = 0;
-        this.inCustomList = [];
-        this.getCustomInfo();
-      }, 1000);
+        Toast('刷新成功')
+        this.isLoading = false
+        this.pageNum = 0
+        this.inCustomList = []
+        this.getCustomInfo()
+      }, 1000)
     },
     // 上拉加载方法
-    onLoad () {
-      this.pageNum++;
-      this.getCustomInfo();
+    onLoad() {
+      this.pageNum++
+      this.getCustomInfo()
       // setTimeout(() => {
       //     Toast('加载中')
       //     this.pageNum++;
@@ -699,317 +734,311 @@ export default {
       // }, 500)
     },
     // 分配时间筛选数据
-    sortDefault () {
+    sortDefault() {
       let Data = {
         templateId: this.templateId,
         formId: 1,
-        userId: 1
-      };
-      sortDefaultList(Data).then(res => {
+        userId: 1,
+      }
+      sortDefaultList(Data).then((res) => {
         if (res.code == 200) {
-          let list = res.rows;
+          let list = res.rows
           for (var index = 0; index < list.length; index++) {
-            const element = list[index];
-            const option = JSON.parse(JSON.stringify(this.option));
+            const element = list[index]
+            const option = JSON.parse(JSON.stringify(this.option))
 
-            this.fieldDesc = element.fieldDesc;
-            this.orderDesc = element.orderDesc;
-            this.optionItem.text = this.fieldDesc + this.orderDesc;
-            this.optionItem.value = this.value3++;
-            this.optionItem.isAsc = element.orderType;
-            this.optionItem.orderByColumn = element.fieldName;
-            option.push(this.optionItem);
-            this.option = option;
+            this.fieldDesc = element.fieldDesc
+            this.orderDesc = element.orderDesc
+            this.optionItem.text = this.fieldDesc + this.orderDesc
+            this.optionItem.value = this.value3++
+            this.optionItem.isAsc = element.orderType
+            this.optionItem.orderByColumn = element.fieldName
+            option.push(this.optionItem)
+            this.option = option
           }
         }
-      });
+      })
     },
-    toggleFieldDesc (value) {
-      this.isAsc = this.option[value].isAsc;
-      this.orderByColumn = this.option[value].orderByColumn;
+    toggleFieldDesc(value) {
+      this.isAsc = this.option[value].isAsc
+      this.orderByColumn = this.option[value].orderByColumn
 
-      console.log(value, this.isAsc, this.orderByColumn, "---####");
-      this.getCustomInfo();
+      console.log(value, this.isAsc, this.orderByColumn, '---####')
+      this.getCustomInfo()
     },
     // 新建
-    changeBuild () {
+    changeBuild() {
       this.$router.push({
-        path: "/build",
-        query: { templateId: this.templateId, templateName: this.templateName }
-      });
+        path: '/build',
+        query: { templateId: this.templateId, templateName: this.templateName },
+      })
     },
     // 筛选
-    customState (value) {
-      console.log(value);
+    customState(value) {
+      console.log(value)
     },
     // 打开菜单栏触发事件
-    handleOrtherItem () {
-      this.PublishValue = true;
+    handleOrtherItem() {
+      this.PublishValue = true
     },
-    handleOrtherItems () {
-      this.PublishValue = true;
-      console.log(this.$refs.item, "我是打开下拉菜单");
+    handleOrtherItems() {
+      this.PublishValue = true
     },
     // 自定义弹框--按钮
-    handleCancel (data) {
-      console.log(data, "123");
-      this.isCustom = false;
-      this.PublishValue = true;
-      this.$refs.item.toggle(true);
+    handleCancel(data) {
+      this.isCustom = false
+      this.PublishValue = true
+      this.$refs.item.toggle(true)
     },
-    handleConfirm (data) {
-      console.log(data.start_Time, this.inputData.end_Time, "====");
+    handleConfirm(data) {
+      console.log(data.start_Time, this.inputData.end_Time, '====')
 
-      if (data.start_Time == "" || data.end_Time == "") {
-        this.isCustom = true;
+      if (data.start_Time == '' || data.end_Time == '') {
+        this.isCustom = true
         this.$toast({
-          message: "请选择有效日期",
-          position: "center"
-        });
+          message: '请选择有效日期',
+          position: 'center',
+        })
       } else {
-        let start_Time = data.start_Time;
-        let start = new Date(start_Time).getTime();
-        let end_Time = data.end_Time;
-        let end = new Date(end_Time).getTime();
+        let start_Time = data.start_Time
+        let start = new Date(start_Time).getTime()
+        let end_Time = data.end_Time
+        let end = new Date(end_Time).getTime()
         if (start > end) {
           this.$toast({
-            message: "开始时间不能大于结束时间",
-            position: "center"
-          });
+            message: '开始时间不能大于结束时间',
+            position: 'center',
+          })
         } else {
-          this.isCustom = false;
-          console.log(this.timePopSelected, "-----");
-          if (this.timePopSelected == "1") {
-            this.sectionData[4].name = data.start_Time + "\n" + data.end_Time;
-            this.lastFollowTimeStart = data.start_Time;
-            this.lastFollowTimeEnd = data.end_Time;
+          this.isCustom = false
+          if (this.timePopSelected == '1') {
+            this.sectionData[4].name = data.start_Time + '\n' + data.end_Time
+            this.lastFollowTimeStart = data.start_Time
+            this.lastFollowTimeEnd = data.end_Time
           }
-          if (this.timePopSelected == "2") {
-            this.createTimeData[0].name =
-              data.start_Time + "\n" + data.end_Time;
-            this.createTimeStart = data.start_Time;
-            this.createTimeEnd = data.end_Time;
+          if (this.timePopSelected == '2') {
+            this.createTimeData[0].name = data.start_Time + '\n' + data.end_Time
+            this.createTimeStart = data.start_Time
+            this.createTimeEnd = data.end_Time
           }
-          if (this.timePopSelected == "3") {
-            this.updateTimeData[0].name =
-              data.start_Time + "\n" + data.end_Time;
-            this.updateTimeStart = data.start_Time;
-            this.updateTimeEnd = data.end_Time;
+          if (this.timePopSelected == '3') {
+            this.updateTimeData[0].name = data.start_Time + '\n' + data.end_Time
+            this.updateTimeStart = data.start_Time
+            this.updateTimeEnd = data.end_Time
           }
-          if (this.timePopSelected == "4") {
-            this.distributeData[0].name =
-              data.start_Time + "\n" + data.end_Time;
-            this.allocateTimeStart = data.start_Time;
-            this.allocateTimeEnd = data.end_Time;
+          if (this.timePopSelected == '4') {
+            this.distributeData[0].name = data.start_Time + '\n' + data.end_Time
+            this.allocateTimeStart = data.start_Time
+            this.allocateTimeEnd = data.end_Time
           }
-          if (this.timePopSelected == "5") {
-            this.returnData[0].name = data.start_Time + "\n" + data.end_Time;
-            this.sendBackPondStart = data.start_Time;
-            this.sendBackPondEnd = data.end_Time;
+          if (this.timePopSelected == '5') {
+            this.returnData[0].name = data.start_Time + '\n' + data.end_Time
+            this.sendBackPondStart = data.start_Time
+            this.sendBackPondEnd = data.end_Time
           }
         }
       }
     },
     // 自定义--开始结束时间--弹框控制
-    showDatePicker () {
+    showDatePicker() {
       //弹出层并显示时间选择器
-      this.isPopShow = true;
+      this.isPopShow = true
       // this.timePopSelected = '1';
-      this.showTime = true;
+      this.showTime = true
     },
-    showDatePickers () {
+    showDatePickers() {
       //弹出层并显示时间选择器
-      this.isPop = true;
-      this.showTime = true;
+      this.isPop = true
+      this.showTime = true
     },
     // 最后跟进时间
-    changeSection (ind) {
-      this.RadioSelec = ind;
+    changeSection(ind) {
+      this.RadioSelec = ind
       if (ind >= 0 && ind <= 3) {
-        this.lastFollowTimeType = ind + 1;
+        this.lastFollowTimeType = ind + 1
       }
-      if (ind == "4") {
-        this.isCustom = true;
-        this.timePopSelected = "1";
-        this.lastFollowTimeType = "";
+      if (ind == '4') {
+        this.isCustom = true
+        this.timePopSelected = '1'
+        this.lastFollowTimeType = ''
       }
     },
     // 未联系时间
-    contactSection (ind) {
-      this.ContactSelec = ind;
-      this.notContactTimeType = ind + 1;
+    contactSection(ind) {
+      this.ContactSelec = ind
+      this.notContactTimeType = ind + 1
     },
     // 归档状态
-    fileSection (ind) {
-      this.fileStatus = ind;
-      this.filingType = ind;
+    fileSection(ind) {
+      this.fileStatus = ind
+      this.filingType = ind
     },
     // 创建人
-    createrSection (ind) {
-      this.createrStatus = ind;
+    createrSection(ind) {
+      this.createrStatus = ind
       if (ind >= 0 && ind <= 1) {
-        this.createUserType = ind + 1;
+        this.createUserType = ind + 1
       }
     },
     // 负责人
-    chargeSection (ind) {
-      this.chargeStatus = ind;
+    chargeSection(ind) {
+      this.chargeStatus = ind
       if (ind >= 0 && ind <= 1) {
-        this.personInChargeType = ind + 1;
+        this.personInChargeType = ind + 1
       }
     },
     // 弃用
-    giveSection (ind) {
-      this.giveStatus = ind;
+    giveSection(ind) {
+      this.giveStatus = ind
       if (ind >= 0 && ind <= 1) {
-        this.deprecatedUserType = ind + 1;
+        this.deprecatedUserType = ind + 1
       }
     },
     // 客户地址
-    addressSection (ind) {
-      this.addressStatus = ind;
-      this.showArea = true;
+    addressSection(ind) {
+      this.addressStatus = ind
+      this.showArea = true
     },
     // 省级县三级联动
-    onConfirm (values) {
-      this.valueArea = values.map(item => item.name).join(",");
-      this.areaCode = values.map(item => item.code).join(",");
-      this.areaId = this.areaCode.substr(14, 6);
-      this.showArea = false;
-      this.addressData[0].name = this.valueArea;
-      console.log(values, this.areaCode, this.areaId, "0011223344");
+    onConfirm(values) {
+      this.valueArea = values.map((item) => item.name).join(',')
+      this.areaCode = values.map((item) => item.code).join(',')
+      this.areaId = this.areaCode.substr(14, 6)
+      this.showArea = false
+      this.addressData[0].name = this.valueArea
+      console.log(values, this.areaCode, this.areaId, '0011223344')
     },
     // 客户类型
-    typeSection (ind) {
-      this.typeStatus = ind;
-      this.customerType = ind + 1;
+    typeSection(ind) {
+      this.typeStatus = ind
+      this.customerType = ind + 1
     },
     // 创建时间
-    createTimeSection (ind) {
-      this.createTimeSelec = ind;
-      this.isCustom = true;
-      this.timePopSelected = "2";
-      this.inputData.start_Time = "";
-      this.inputData.end_Time = "";
+    createTimeSection(ind) {
+      this.createTimeSelec = ind
+      this.isCustom = true
+      this.timePopSelected = '2'
+      this.inputData.start_Time = ''
+      this.inputData.end_Time = ''
     },
     // 更新时间
-    updateTimeSection (ind) {
-      this.updateTimeSelec = ind;
-      this.isCustom = true;
-      this.timePopSelected = "3";
-      this.inputData.start_Time = "";
-      this.inputData.end_Time = "";
+    updateTimeSection(ind) {
+      this.updateTimeSelec = ind
+      this.isCustom = true
+      this.timePopSelected = '3'
+      this.inputData.start_Time = ''
+      this.inputData.end_Time = ''
     },
     // 分配时间
-    distributeTimeSection (ind) {
-      this.distributeTimeSelec = ind;
-      this.isCustom = true;
-      this.timePopSelected = "4";
-      this.inputData.start_Time = "";
-      this.inputData.end_Time = "";
+    distributeTimeSection(ind) {
+      this.distributeTimeSelec = ind
+      this.isCustom = true
+      this.timePopSelected = '4'
+      this.inputData.start_Time = ''
+      this.inputData.end_Time = ''
     },
     // 公海退回时间
-    returnTimeSection (ind) {
-      this.returnTimeSelec = ind;
-      this.isCustom = true;
-      this.timePopSelected = "5";
-      this.inputData.start_Time = "";
-      this.inputData.end_Time = "";
+    returnTimeSection(ind) {
+      this.returnTimeSelec = ind
+      this.isCustom = true
+      this.timePopSelected = '5'
+      this.inputData.start_Time = ''
+      this.inputData.end_Time = ''
     },
     // 设置筛选项
-    changeScreen () {
-      this.$router.push({ path: "/limitScreen" });
+    changeScreen() {
+      this.$router.push({ path: '/limitScreen' })
     },
     // 筛选重置
-    changeSet () {
-      if (this.RadioSelec == "4") {
-        this.sectionData[4].name = "自定义时间";
-        this.RadioSelec = null;
+    changeSet() {
+      if (this.RadioSelec == '4') {
+        this.sectionData[4].name = '自定义时间'
+        this.RadioSelec = null
       }
       if (this.RadioSelec >= 0 && this.RadioSelec <= 3) {
-        this.RadioSelec = null;
-        this.inputData.start_Time = "";
-        this.inputData.end_Time = "";
+        this.RadioSelec = null
+        this.inputData.start_Time = ''
+        this.inputData.end_Time = ''
       }
       if (this.ContactSelec >= 0 && this.ContactSelec <= 3) {
-        this.ContactSelec = null;
+        this.ContactSelec = null
       }
       if (this.fileStatus >= 0 && this.fileStatus <= 1) {
-        this.fileStatus = null;
+        this.fileStatus = null
       }
       if (this.createrStatus >= 0 && this.createrStatus <= 2) {
-        this.createrStatus = null;
+        this.createrStatus = null
       }
       if (this.chargeStatus >= 0 && this.chargeStatus <= 2) {
-        this.chargeStatus = null;
+        this.chargeStatus = null
       }
       if (this.giveStatus >= 0 && this.giveStatus <= 2) {
-        this.giveStatus = null;
+        this.giveStatus = null
       }
-      if (this.addressStatus == "0") {
-        this.addressStatus = null;
-        this.addressData[0].name = "选择省市区";
+      if (this.addressStatus == '0') {
+        this.addressStatus = null
+        this.addressData[0].name = '选择省市区'
       }
       if (this.typeStatus >= 0 && this.giveStatus <= 3) {
-        this.typeStatus = null;
+        this.typeStatus = null
       }
-      if (this.createTimeSelec == "0") {
-        this.createTimeSelec = null;
-        this.createTimeData[0].name = "自定义时间";
-        this.inputData.start_Time = "";
-        this.inputData.end_Time = "";
+      if (this.createTimeSelec == '0') {
+        this.createTimeSelec = null
+        this.createTimeData[0].name = '自定义时间'
+        this.inputData.start_Time = ''
+        this.inputData.end_Time = ''
       }
-      if (this.updateTimeSelec == "0") {
-        this.updateTimeSelec = null;
-        this.updateTimeData[0].name = "自定义时间";
-        this.inputData.start_Time = "";
-        this.inputData.end_Time = "";
+      if (this.updateTimeSelec == '0') {
+        this.updateTimeSelec = null
+        this.updateTimeData[0].name = '自定义时间'
+        this.inputData.start_Time = ''
+        this.inputData.end_Time = ''
       }
-      if (this.distributeTimeSelec == "0") {
-        this.distributeTimeSelec = null;
-        this.distributeData[0].name = "自定义时间";
-        this.inputData.start_Time = "";
-        this.inputData.end_Time = "";
+      if (this.distributeTimeSelec == '0') {
+        this.distributeTimeSelec = null
+        this.distributeData[0].name = '自定义时间'
+        this.inputData.start_Time = ''
+        this.inputData.end_Time = ''
       }
-      if (this.returnTimeSelec == "0") {
-        this.returnTimeSelec = null;
-        this.returnData[0].name = "自定义时间";
-        this.inputData.start_Time = "";
-        this.inputData.end_Time = "";
+      if (this.returnTimeSelec == '0') {
+        this.returnTimeSelec = null
+        this.returnData[0].name = '自定义时间'
+        this.inputData.start_Time = ''
+        this.inputData.end_Time = ''
       }
     },
     // 筛选确认
-    changeConfirm () {
-      this.PublishValue = false;
-      this.$nextTick(function () {
-        this.$refs.item.toggle(false);
-      });
+    changeConfirm() {
+      this.PublishValue = false
+      this.$nextTick(function() {
+        this.$refs.item.toggle(false)
+      })
       // this.$refs.item.close();
       // console.log(this.$refs.item.toggle(),'0099');
-      this.getCustomInfo();
+      this.getCustomInfo()
     },
     // 搜索
-    handleSearch () {
-      this.searchBtn = true;
+    handleSearch() {
+      this.searchBtn = true
     },
-    hanleCancel () {
-      this.searchBtn = false;
+    hanleCancel() {
+      this.searchBtn = false
     },
-    searchEnter () {
-      this.formData.keyword = this.keywordInput;
+    searchEnter() {
+      this.formData.keyword = this.keywordInput
       // this.init()
-      this.searchBtn = false;
+      this.searchBtn = false
       // }, 500);
     },
     // 默认排序
-    handleSet () {
-      this.$router.push({ path: "/defaultSort" });
+    handleSet() {
+      this.$router.push({ path: '/defaultSort' })
     },
-    handleBlur () {
-      document.body.scrollTop = document.documentElement.scrollTop = 0;
-    }
-  }
-};
+    handleBlur() {
+      document.body.scrollTop = document.documentElement.scrollTop = 0
+    },
+  },
+}
 </script>
 <style lang="scss" scoped>
 .wrap {
@@ -1058,7 +1087,7 @@ export default {
       float: right;
     }
     .clearfix::after {
-      content: " ";
+      content: ' ';
       display: block;
       height: 0;
       line-height: 0;
@@ -1168,7 +1197,7 @@ export default {
             color: rgba(0, 106, 255, 1);
             background: rgba(242, 247, 255, 1);
             border: 0.01rem solid rgba(0, 106, 255, 1);
-            background: url("../../common/images/Select.png") no-repeat bottom
+            background: url('../../common/images/Select.png') no-repeat bottom
               right;
             background-size: 0.18rem 0.18rem;
             margin-bottom: 0.11rem;

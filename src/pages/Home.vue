@@ -556,50 +556,49 @@
   </div>
 </template>
 <script>
-import MyFooter from "@/components/MyFooter.vue";
-import Dashboard from "@/components/Dashboard.vue";
-import BarEchart from "@/components/BarEchart.vue";
+import MyFooter from '@/components/MyFooter.vue'
+import Dashboard from '@/components/Dashboard.vue'
+import BarEchart from '@/components/BarEchart.vue'
 
 export default {
   data() {
     return {
       flag: false,
-      toastFlag: true
-    };
+      toastFlag: true,
+    }
   },
   created() {
-    console.log(this.$router);
+    console.log(this.$router)
     const localStorageSet = (name, data, expire = 24) => {
-      const time = new Date().getTime() + expire * 60 * 60 * 1000;
-      const obj = { data, time };
-      localStorage.setItem(name, JSON.stringify(obj));
-    };
-    console.log(localStorage.getItem(name), "name");
+      const time = new Date().getTime() + expire * 60 * 60 * 1000
+      const obj = { data, time }
+      localStorage.setItem(name, JSON.stringify(obj))
+    }
   },
   methods: {
     changeAdd: function() {
-      this.flag = !this.flag;
+      this.flag = !this.flag
     },
     toToast() {
       this.$toast({
-        message: "确定关闭",
-        position: "center"
-      });
-      this.toastFlag = !this.toastFlag;
-      this.$refs.bH.style.marginTop = 1.03 + "rem";
+        message: '确定关闭',
+        position: 'center',
+      })
+      this.toastFlag = !this.toastFlag
+      this.$refs.bH.style.marginTop = 1.03 + 'rem'
     },
     pkDetails() {
       // this.$router.push({ path: "/" });
-    }
+    },
   },
   mounted() {},
   computed: {},
   components: {
     MyFooter,
     Dashboard,
-    BarEchart
-  }
-};
+    BarEchart,
+  },
+}
 </script>
 <style lang="scss" scoped>
 .home {
@@ -619,7 +618,7 @@ export default {
       width: 100%;
       height: 3rem;
       box-sizing: border-box;
-      background: url("../common/images/BG.png") no-repeat center center;
+      background: url('../common/images/BG.png') no-repeat center center;
       background-size: 100%;
     }
     .header_title {

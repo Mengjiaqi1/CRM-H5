@@ -10,8 +10,6 @@ module.exports = {
         config.resolve.symlinks(true); //热更新
     },
     configureWebpack: config => {
-        console.log(config, "config");
-        console.log(process.env.NODE_ENV);
         if (process.env.NODE_ENV === "production") {
             // 为生产环境修改配置...
             config.mode = "production";
@@ -85,7 +83,7 @@ module.exports = {
         proxy: {
             "/api": {
                 // 目标 API 地址
-                target: "http://192.168.100.10:8088",
+                target: "http://192.168.100.7:8088",
                 // 如果要代理 websockets
                 ws: false,
                 changeOrigin: true, // 允许websockets跨域

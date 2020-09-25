@@ -6,10 +6,10 @@ import "@/common/js/flexible.js";
 import "@/common/style/index.scss";
 import "@/common/fonts/iconfont.js";
 import Axios from "axios";
-import echarts from "echarts";
+
 import Vconsole from "vconsole";
 let vConsole = new Vconsole();
-import moment from "moment";
+
 
 import {
     NavBar,
@@ -88,8 +88,7 @@ Vue.config.isToken = true;
 // axios的一些配置
 Axios.defaults.headers["Content-Type"] = "application/x-www-form-urlencoded";
 Vue.prototype.$http = Axios;
-Vue.prototype.$echarts = echarts;
-Vue.prototype.$moment = moment;
+
 
 Vue.component("myHeader", () => {
     return import ("@/components/my-header");

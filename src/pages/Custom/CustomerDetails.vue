@@ -2,25 +2,30 @@
   <div class="wrap">
     <main>
       <div class="header">
-        <van-action-sheet v-model="show"
-                          :actions="actions"
-                          @select="onSelect"
-                          title="标题" />
+        <van-action-sheet
+          v-model="show"
+          :actions="actions"
+          @select="onSelect"
+          title="标题"
+        />
         <div class="header_tit">
           <div class="h_left">
-            <img src="../../common/images/d_right.png"
-                 class="goBack"
-                 @click="changeReturn"
-                 alt="" />
-            <img src="../../common/images/d_close.png"
-                 class="close"
-                 @click="changeClose"
-                 alt="" />
+            <img
+              src="../../common/images/d_right.png"
+              class="goBack"
+              @click="changeReturn"
+              alt=""
+            />
+            <img
+              src="../../common/images/d_close.png"
+              class="close"
+              @click="changeClose"
+              alt=""
+            />
           </div>
           <div class="h_center"></div>
           <div class="h_right">
-            <span class="operation"
-                  @click="show = true">操作</span>
+            <span class="operation" @click="show = true">操作</span>
           </div>
         </div>
         <div class="header_content">
@@ -29,7 +34,7 @@
             <div class="personnel_wrap">
               <span class="personnel">负责人 ：</span>
               <div class=" leading">
-                <span class="name">{{ textTree ? textTree : "-" }}</span>
+                <span class="name">{{ textTree ? textTree : '-' }}</span>
                 <span v-if="textList.length < 4 ? false : true">
                   等{{ textList.length }}人
                 </span>
@@ -41,18 +46,18 @@
             </div>
           </div>
           <div class="h_c_right">
-            <img src="../../common/images/Notfiled.png"
-                 alt="" />
+            <img src="../../common/images/Notfiled.png" alt="" />
           </div>
         </div>
         <div class="header_team">
-          <div class="header_t_left"
-               @click="goTeam">
+          <div class="header_t_left" @click="goTeam">
             <div class="header_t_center">
               <div class="head">
-                <img :class="head == '' ? 'ImgHide' : ''"
-                     :src="head + '_100x100.jpg'"
-                     alt="" />
+                <img
+                  :class="head == '' ? 'ImgHide' : ''"
+                  :src="head + '_100x100.jpg'"
+                  alt=""
+                />
                 <p :class="head == '' ? 'ImgShow' : 'ImgHide'">
                   {{
                     textOnly && textOnly.length >= 3
@@ -63,16 +68,15 @@
               </div>
               <p class="text">
                 {{ textOnly }}
-                <span class="wait"
-                      v-if="textList.length">等{{ textList.length }}人
+                <span class="wait" v-if="textList.length"
+                  >等{{ textList.length }}人
                 </span>
               </p>
             </div>
           </div>
           <div class="header_t_right">
             <div class="header_t_center">
-              <img src="../../common/images/2.jpg"
-                   alt="" />
+              <img src="../../common/images/2.jpg" alt="" />
               <span class="text">派大星</span>
             </div>
           </div>
@@ -81,7 +85,7 @@
       <div class="scroll">
         <div class="scroll_list">
           <div class="scroll_li">
-            <span class="num">{{ count != "" ? count : "-" }}</span>
+            <span class="num">{{ count != '' ? count : '-' }}</span>
             <span class="scroll_text">跟进次数</span>
           </div>
           <div class="line"></div>
@@ -118,40 +122,52 @@
               <div class="Basic_infor">
                 <div class="none"></div>
                 <div class="form">
-                  <van-field v-model="customerNo"
-                             label="编号"
-                             readonly />
-                  <van-field v-model="text"
-                             label="负责人"
-                             type="text"
-                             readonly />
-                  <van-field v-model="Fullname"
-                             type="text"
-                             label="客户全称"
-                             autosize
-                             readonly />
-                  <van-field v-model="type"
-                             type="text"
-                             label="客户类型"
-                             readonly />
-                  <van-field v-model="abbreviation"
-                             type="text"
-                             label="客户简称"
-                             readonly />
-                  <van-field v-model="address"
-                             type="textarea"
-                             label="客户地址"
-                             readonly
-                             rows="1"
-                             autosize />
-                  <van-field v-model="GW"
-                             type="text"
-                             label="客户官网"
-                             readonly />
-                  <van-field v-model="synopsis"
-                             type="text"
-                             label="客户简介"
-                             readonly />
+                  <van-field v-model="customerNo" label="编号" readonly />
+                  <van-field
+                    v-model="text"
+                    label="负责人"
+                    type="text"
+                    readonly
+                  />
+                  <van-field
+                    v-model="Fullname"
+                    type="text"
+                    label="客户全称"
+                    autosize
+                    readonly
+                  />
+                  <van-field
+                    v-model="type"
+                    type="text"
+                    label="客户类型"
+                    readonly
+                  />
+                  <van-field
+                    v-model="abbreviation"
+                    type="text"
+                    label="客户简称"
+                    readonly
+                  />
+                  <van-field
+                    v-model="address"
+                    type="textarea"
+                    label="客户地址"
+                    readonly
+                    rows="1"
+                    autosize
+                  />
+                  <van-field
+                    v-model="GW"
+                    type="text"
+                    label="客户官网"
+                    readonly
+                  />
+                  <van-field
+                    v-model="synopsis"
+                    type="text"
+                    label="客户简介"
+                    readonly
+                  />
                 </div>
                 <div class="none"></div>
                 <div class="files">
@@ -159,15 +175,15 @@
                     <div class="Pictures">相关图片</div>
                   </div>
                   <div class="files_imgList">
-                    <div class="files_img"
-                         v-for="each in imageList"
-                         :key="each.fileId">
-                      <img :src="each.urlThumbnail"
-                           alt="" />
+                    <div
+                      class="files_img"
+                      v-for="each in imageList"
+                      :key="each.fileId"
+                    >
+                      <img :src="each.urlThumbnail" alt="" />
                     </div>
                     <div class="files_img">
-                      <img src="../../common/images/2.jpg"
-                           alt="" />
+                      <img src="../../common/images/2.jpg" alt="" />
                     </div>
                   </div>
                   <!-- <iframe :src="url" class="chenkExecl"></iframe> -->
@@ -175,42 +191,58 @@
                 </div>
                 <div class="form">
                   <div class="enclosure_wrap">
-                    <div class="enclosure"
-                         v-for="(val, index) in accessoryList"
-                         :key="index">
-                      <span class="enclosure_tit">附件</span><span class="enclosure_content"
-                            @click="handleLoopUp(val.url)"
-                            ref="preview">{{ val.fileOldName }}</span>
+                    <div
+                      class="enclosure"
+                      v-for="(val, index) in accessoryList"
+                      :key="index"
+                    >
+                      <span class="enclosure_tit">附件</span
+                      ><span
+                        class="enclosure_content"
+                        @click="handleLoopUp(val.url)"
+                        ref="preview"
+                        >{{ val.fileOldName }}</span
+                      >
                     </div>
                   </div>
 
-                  <van-field maxlength="20"
-                             v-model="remarks"
-                             label="备注"
-                             type="text"
-                             readonly />
-                  <van-field v-model="Abandonment"
-                             type="text"
-                             label="弃用"
-                             autosize
-                             readonly />
+                  <van-field
+                    maxlength="20"
+                    v-model="remarks"
+                    label="备注"
+                    type="text"
+                    readonly
+                  />
+                  <van-field
+                    v-model="Abandonment"
+                    type="text"
+                    label="弃用"
+                    autosize
+                    readonly
+                  />
                 </div>
               </div>
             </van-tab>
             <van-tab title="跟进记录">
               <div class="Follow_record ">
-                <div class="con_follow_li"
-                     v-for="each in FollowrecordData"
-                     :key="each.recordsId">
+                <div
+                  class="con_follow_li"
+                  v-for="each in FollowrecordData"
+                  :key="each.recordsId"
+                >
                   <div class="none"></div>
                   <div class="con_follow_li_tit">
                     <div class="head">
-                      <img :class="each.createUserProfile == '' ? 'ImgHide' : ''"
-                           :src="each.createUserProfile"
-                           alt="" />
-                      <div :class="
+                      <img
+                        :class="each.createUserProfile == '' ? 'ImgHide' : ''"
+                        :src="each.createUserProfile"
+                        alt=""
+                      />
+                      <div
+                        :class="
                           each.createUserProfile == '' ? 'ImgShow' : 'ImgHide'
-                        ">
+                        "
+                      >
                         {{
                           each.createUserName.length >= 3
                             ? each.createUserName.substring(
@@ -229,11 +261,11 @@
                           }}</span>
                           <span class="type">{{
                             each.followWorkType == 1
-                              ? "当面拜访"
+                              ? '当面拜访'
                               : each.followWorkType == 2
-                              ? "电话拜访"
+                              ? '电话拜访'
                               : each.followWorkType == 3
-                              ? "网络拜访"
+                              ? '网络拜访'
                               : null
                           }}</span>
                         </div>
@@ -244,23 +276,27 @@
                           {{ each.followContent }}
                         </p>
                         <p class="msg_down_text AIter">
-                          <span class="alter_name">{{ each.contactsName }}：</span>
-                          <span class="followWorkId">{{
+                          <span class="alter_name"
+                            >{{ each.contactsName }}：</span
+                          >
+                          <span class="followWorkId"
+                            >{{
                               each.followWorkId == 1
-                                ? "销售机会"
+                                ? '销售机会'
                                 : each.followWorkId == 2
-                                ? "合同订单"
+                                ? '合同订单'
                                 : each.followWorkId == 3
-                                ? "报价单"
+                                ? '报价单'
                                 : null
                             }}<i class="followWorkNo">
-                              ({{ each.followWorkNo }})</i></span>
+                              ({{ each.followWorkNo }})</i
+                            ></span
+                          >
                         </p>
                       </div>
                     </div>
                     <div class="goTo">
-                      <img src="../../common/images/rights.png"
-                           alt="" />
+                      <img src="../../common/images/rights.png" alt="" />
                     </div>
                   </div>
                   <div class="con_follow_li_time">
@@ -270,14 +306,12 @@
                       </p>
                       <ul class="comments">
                         <li class="comment_li">
-                          <img src="../../common/images/comment.png"
-                               alt="" />
+                          <img src="../../common/images/comment.png" alt="" />
                           <span>{{ each.commentNum }}</span>
                         </li>
                         <li class="line"></li>
                         <li class="comment_li">
-                          <img src="../../common/images/zan.png"
-                               alt="" />
+                          <img src="../../common/images/zan.png" alt="" />
                           <span>{{ each.likeNum }}</span>
                         </li>
                       </ul>
@@ -292,36 +326,50 @@
               <div class="Billing_infor">
                 <div class="tit">发票信息</div>
                 <div class="form">
-                  <van-field maxlength="50"
-                             v-model="Invoice_type"
-                             label="发票类型"
-                             readonly />
-                  <van-field maxlength="20"
-                             v-model="Invoice_title"
-                             label="发票抬头"
-                             type="text"
-                             readonly />
-                  <van-field v-model="taxpayer"
-                             type="text"
-                             label="纳税人识别号"
-                             autosize
-                             readonly />
-                  <van-field v-model="tel"
-                             type="text"
-                             label="注册电话"
-                             readonly />
-                  <van-field v-model="Invoice_address"
-                             type="text"
-                             label="开票地址"
-                             readonly />
-                  <van-field v-model="GW"
-                             type="text"
-                             label="客户官网"
-                             readonly />
-                  <van-field v-model="Bank"
-                             type="text"
-                             label="开户行"
-                             readonly />
+                  <van-field
+                    maxlength="50"
+                    v-model="Invoice_type"
+                    label="发票类型"
+                    readonly
+                  />
+                  <van-field
+                    maxlength="20"
+                    v-model="Invoice_title"
+                    label="发票抬头"
+                    type="text"
+                    readonly
+                  />
+                  <van-field
+                    v-model="taxpayer"
+                    type="text"
+                    label="纳税人识别号"
+                    autosize
+                    readonly
+                  />
+                  <van-field
+                    v-model="tel"
+                    type="text"
+                    label="注册电话"
+                    readonly
+                  />
+                  <van-field
+                    v-model="Invoice_address"
+                    type="text"
+                    label="开票地址"
+                    readonly
+                  />
+                  <van-field
+                    v-model="GW"
+                    type="text"
+                    label="客户官网"
+                    readonly
+                  />
+                  <van-field
+                    v-model="Bank"
+                    type="text"
+                    label="开户行"
+                    readonly
+                  />
                 </div>
               </div>
             </van-tab>
@@ -329,8 +377,7 @@
               <div class="superior">
                 <div class="tit">
                   <span class="customer">上级客户</span>
-                  <router-link tag="span"
-                               to="/associated">
+                  <router-link tag="span" to="/associated">
                     <van-icon name="add" />
                   </router-link>
                 </div>
@@ -344,13 +391,16 @@
                     </div>
                     <div class="center">
                       <p class="c_li">
-                        <span class="left">联系电话:</span><span class="right">12345678</span>
+                        <span class="left">联系电话:</span
+                        ><span class="right">12345678</span>
                       </p>
                       <p class="c_li">
-                        <span class="left">负责人:</span><span class="right">12345678</span>
+                        <span class="left">负责人:</span
+                        ><span class="right">12345678</span>
                       </p>
                       <p class="c_li">
-                        <span class="left">最后跟进时间:</span><span class="right">12345678</span>
+                        <span class="left">最后跟进时间:</span
+                        ><span class="right">12345678</span>
                       </p>
                     </div>
                   </div>
@@ -359,8 +409,7 @@
               <div class="superior">
                 <div class="tit">
                   <span class="customer">下级客户</span>
-                  <router-link tag="span"
-                               to="/associated">
+                  <router-link tag="span" to="/associated">
                     <van-icon name="add" />
                   </router-link>
                 </div>
@@ -374,13 +423,16 @@
                     </div>
                     <div class="center">
                       <p class="c_li">
-                        <span class="left">联系电话:</span><span class="right">12345678</span>
+                        <span class="left">联系电话:</span
+                        ><span class="right">12345678</span>
                       </p>
                       <p class="c_li">
-                        <span class="left">负责人:</span><span class="right">12345678</span>
+                        <span class="left">负责人:</span
+                        ><span class="right">12345678</span>
                       </p>
                       <p class="c_li">
-                        <span class="left">最后跟进时间:</span><span class="right">12345678</span>
+                        <span class="left">最后跟进时间:</span
+                        ><span class="right">12345678</span>
                       </p>
                     </div>
                   </div>
@@ -394,13 +446,16 @@
                     </div>
                     <div class="center">
                       <p class="c_li">
-                        <span class="left">联系电话:</span><span class="right">12345678</span>
+                        <span class="left">联系电话:</span
+                        ><span class="right">12345678</span>
                       </p>
                       <p class="c_li">
-                        <span class="left">负责人:</span><span class="right">12345678</span>
+                        <span class="left">负责人:</span
+                        ><span class="right">12345678</span>
                       </p>
                       <p class="c_li">
-                        <span class="left">最后跟进时间:</span><span class="right">12345678</span>
+                        <span class="left">最后跟进时间:</span
+                        ><span class="right">12345678</span>
                       </p>
                     </div>
                   </div>
@@ -410,24 +465,29 @@
             <van-tab title="文件柜">
               <div class="File_cabinet">
                 <div class="tit">
-                  <span class="total">共计文件</span><span class="num">{{ total }}</span>
+                  <span class="total">共计文件</span
+                  ><span class="num">{{ total }}</span>
                 </div>
                 <div class="file_wrap">
                   <div class="file_nav">
                     <div class="filenav">
-                      <van-tabs type="card"
-                                @click="onClickName"
-                                v-model="activeType">
-                        <van-tab title="客户"
-                                 name="1">
+                      <van-tabs
+                        type="card"
+                        @click="onClickName"
+                        v-model="activeType"
+                      >
+                        <van-tab title="客户" name="1">
                           <div class="file_content">
-                            <van-swipe-cell v-for="(each, index) in fileList"
-                                            :key="each.cabinetId">
+                            <van-swipe-cell
+                              v-for="(each, index) in fileList"
+                              :key="each.cabinetId"
+                            >
                               <div class="file_content_li">
-                                <div class="left"
-                                     @click="changeImg(each.url)">
-                                  <img src="../../common/images/excel.png"
-                                       alt="" />
+                                <div class="left" @click="changeImg(each.url)">
+                                  <img
+                                    src="../../common/images/excel.png"
+                                    alt=""
+                                  />
                                   <van-uploader v-model="uploader" />
                                 </div>
                                 <div class="center">
@@ -446,34 +506,44 @@
                                     {{ (each.fileSize / 1024).toFixed(1) }}KB
                                   </div>
                                 </div>
-                                <div class="right"
-                                     @click="handlecheck(each.url, each.cabinetId)">
-                                  <img :src="uploadType(each.url) ? check : xiazai"
-                                       alt="" />
+                                <div
+                                  class="right"
+                                  @click="handlecheck(each.url, each.cabinetId)"
+                                >
+                                  <img
+                                    :src="uploadType(each.url) ? check : xiazai"
+                                    alt=""
+                                  />
                                 </div>
                               </div>
                               <template #right>
-                                <van-button type="danger"
-                                            class="delete-button-none" />
-                                <van-button square
-                                            text="删除"
-                                            type="danger"
-                                            class="delete-button"
-                                            @click="handlerDel(each.cabinetId, index)" />
+                                <van-button
+                                  type="danger"
+                                  class="delete-button-none"
+                                />
+                                <van-button
+                                  square
+                                  text="删除"
+                                  type="danger"
+                                  class="delete-button"
+                                  @click="handlerDel(each.cabinetId, index)"
+                                />
                               </template>
                             </van-swipe-cell>
                           </div>
                         </van-tab>
-                        <van-tab title="合同"
-                                 name="2">
+                        <van-tab title="合同" name="2">
                           <div class="file_content">
-                            <van-swipe-cell v-for="(each, index) in fileList"
-                                            :key="each.cabinetId">
+                            <van-swipe-cell
+                              v-for="(each, index) in fileList"
+                              :key="each.cabinetId"
+                            >
                               <div class="file_content_li">
-                                <div class="left"
-                                     @click="changeImg(each.url)">
-                                  <img src="../../common/images/excel.png"
-                                       alt="" />
+                                <div class="left" @click="changeImg(each.url)">
+                                  <img
+                                    src="../../common/images/excel.png"
+                                    alt=""
+                                  />
                                   <van-uploader v-model="uploader" />
                                 </div>
                                 <div class="center">
@@ -492,34 +562,44 @@
                                     {{ (each.fileSize / 1024).toFixed(1) }}KB
                                   </div>
                                 </div>
-                                <div class="right"
-                                     @click="handlecheck(each.url, each.cabinetId)">
-                                  <img src="../../common/images/check.png"
-                                       alt="" />
+                                <div
+                                  class="right"
+                                  @click="handlecheck(each.url, each.cabinetId)"
+                                >
+                                  <img
+                                    src="../../common/images/check.png"
+                                    alt=""
+                                  />
                                 </div>
                               </div>
                               <template #right>
-                                <van-button type="danger"
-                                            class="delete-button-none" />
-                                <van-button square
-                                            text="删除"
-                                            type="danger"
-                                            class="delete-button"
-                                            @click="handlerDel(each.cabinetId, index)" />
+                                <van-button
+                                  type="danger"
+                                  class="delete-button-none"
+                                />
+                                <van-button
+                                  square
+                                  text="删除"
+                                  type="danger"
+                                  class="delete-button"
+                                  @click="handlerDel(each.cabinetId, index)"
+                                />
                               </template>
                             </van-swipe-cell>
                           </div>
                         </van-tab>
-                        <van-tab title="机会"
-                                 name="3">
+                        <van-tab title="机会" name="3">
                           <div class="file_content">
-                            <van-swipe-cell v-for="(each, index) in fileList"
-                                            :key="each.cabinetId">
+                            <van-swipe-cell
+                              v-for="(each, index) in fileList"
+                              :key="each.cabinetId"
+                            >
                               <div class="file_content_li">
-                                <div class="left"
-                                     @click="changeImg(each.url)">
-                                  <img src="../../common/images/excel.png"
-                                       alt="" />
+                                <div class="left" @click="changeImg(each.url)">
+                                  <img
+                                    src="../../common/images/excel.png"
+                                    alt=""
+                                  />
                                   <van-uploader v-model="uploader" />
                                 </div>
                                 <div class="center">
@@ -538,31 +618,40 @@
                                     {{ (each.fileSize / 1024).toFixed(1) }}KB
                                   </div>
                                 </div>
-                                <div class="right"
-                                     @click="handlecheck(each.url, each.cabinetId)">
-                                  <img src="../../common/images/check.png"
-                                       alt="" />
+                                <div
+                                  class="right"
+                                  @click="handlecheck(each.url, each.cabinetId)"
+                                >
+                                  <img
+                                    src="../../common/images/check.png"
+                                    alt=""
+                                  />
                                 </div>
                               </div>
                               <template #right>
-                                <van-button type="danger"
-                                            class="delete-button-none" />
-                                <van-button square
-                                            text="删除"
-                                            type="danger"
-                                            class="delete-button"
-                                            @click="handlerDel(each.cabinetId, index)" />
+                                <van-button
+                                  type="danger"
+                                  class="delete-button-none"
+                                />
+                                <van-button
+                                  square
+                                  text="删除"
+                                  type="danger"
+                                  class="delete-button"
+                                  @click="handlerDel(each.cabinetId, index)"
+                                />
                               </template>
                             </van-swipe-cell>
                           </div>
                         </van-tab>
                       </van-tabs>
                       <div class="file_upload">
-                        <van-uploader class="uploadImg"
-                                      :after-read="onRead"
-                                      ref="upload">
-                          <img src="../../common/images/upload.png"
-                               alt="" />
+                        <van-uploader
+                          class="uploadImg"
+                          :after-read="onRead"
+                          ref="upload"
+                        >
+                          <img src="../../common/images/upload.png" alt="" />
                         </van-uploader>
                       </div>
                     </div>
@@ -575,15 +664,10 @@
       </div>
     </main>
 
-    <van-overlay :show="showImg"
-                 @click="showImg = false">
-      <div class="wrapper"
-           @click="showImg = false"
-           @click.stop>
+    <van-overlay :show="showImg" @click="showImg = false">
+      <div class="wrapper" @click="showImg = false" @click.stop>
         <div class="block">
-          <img :src="imgUrl"
-               alt=""
-               id="img" />
+          <img :src="imgUrl" alt="" id="img" />
         </div>
       </div>
     </van-overlay>
@@ -597,233 +681,233 @@ import {
   findByCustomerNo,
   findRecordsCount,
   remove,
-  add
-} from "../../services/CustomerDetails";
+  add,
+} from '../../services/CustomerDetails'
 
-import { findChargeList } from "../../services/organization";
-import CustomerNav from "@/components/CustomerNav";
-import upLoaderImg from "../../common/js/upLoaderImg";
+import { findChargeList } from '../../services/organization'
+import CustomerNav from '@/components/CustomerNav'
+import upLoaderImg from '../../common/js/upLoaderImg'
 
 export default {
-  data () {
+  data() {
     return {
       // 头部信息
       textOnly: null, //一个负责人
       textTree: null, // 三个负责人
       textList: [], // 负责人list
       textLen: null, // 负责人数
-      head: "", //头像
+      head: '', //头像
       followTime: null, // 跟进时间
       reg: /\.(png|jpg|gif|jpeg|webp)$/,
-      check: require("../../common/images/check.png"),
-      xiazai: require("../../common/images/xiazai.png"),
+      check: require('../../common/images/check.png'),
+      xiazai: require('../../common/images/xiazai.png'),
       show: false,
       showImg: false,
       total: 0, // 文件总数
-      actions: [{ name: "选项一" }, { name: "选项二" }, { name: "选项三" }],
-      customerNo: "", // 编号
-      businessNo: "", //业务编号
-      text: "", // 负责人
-      Fullname: "", // 客户全称
-      type: "", // 客户类型
-      address: "", // 客户地址
-      GW: "", // 客户官网
-      abbreviation: "", // 客户简称
-      enclosure: "", // 附件
-      synopsis: "", // 简介
-      remarks: "", //备注
-      Abandonment: "", // 弃用
-      imageList: "", // 图片列表
-      accessoryList: "", // 附件信息
-      Urlshumbnail: "", // 图片
-      Invoice_type: "", // 发票类型
-      Invoice_title: "", // 发票抬头
-      taxpayer: "", // 纳税人识别号
-      Invoice_address: "", // 发票地址
-      tel: "", //注册电话
-      Bank: "", //开户行
-      customerId: "",
+      actions: [{ name: '选项一' }, { name: '选项二' }, { name: '选项三' }],
+      customerNo: '', // 编号
+      businessNo: '', //业务编号
+      text: '', // 负责人
+      Fullname: '', // 客户全称
+      type: '', // 客户类型
+      address: '', // 客户地址
+      GW: '', // 客户官网
+      abbreviation: '', // 客户简称
+      enclosure: '', // 附件
+      synopsis: '', // 简介
+      remarks: '', //备注
+      Abandonment: '', // 弃用
+      imageList: '', // 图片列表
+      accessoryList: '', // 附件信息
+      Urlshumbnail: '', // 图片
+      Invoice_type: '', // 发票类型
+      Invoice_title: '', // 发票抬头
+      taxpayer: '', // 纳税人识别号
+      Invoice_address: '', // 发票地址
+      tel: '', //注册电话
+      Bank: '', //开户行
+      customerId: '',
       Fileshow: false,
       index: 0,
-      FollowrecordData: "", // 跟进记录数据
-      url: "",
+      FollowrecordData: '', // 跟进记录数据
+      url: '',
       fileList: [],
-      activeType: "1", // 文件柜类型1客户2合同3机会
-      count: "",
+      activeType: '1', // 文件柜类型1客户2合同3机会
+      count: '',
       uploader: [], // 点击图片放大
-      imgUrl: "",
-      upload: ""
-    };
+      imgUrl: '',
+      upload: '',
+    }
   },
   watch: {},
-  created () {
-    this.customerId = this.$store.state.customerId;
-    this.followTime = this.$store.state.followTime;
-    this.tel = "王大陆";
-    this.getfindBase();
-    this.getfindRecordBaseList();
-    this.getfindRecordsCount();
+  created() {
+    this.customerId = this.$store.state.customerId
+    this.followTime = this.$store.state.followTime
+    this.tel = '王大陆'
+    this.getfindBase()
+    this.getfindRecordBaseList()
+    this.getfindRecordsCount()
   },
   methods: {
-    changeReturn () {
-      this.$router.push({ path: "/allcustom" });
+    changeReturn() {
+      this.$router.push({ path: '/allcustom' })
     },
-    goTeam () {
-      this.$router.push({ path: "/team", query: { id: this.customerNo } });
+    goTeam() {
+      this.$router.push({ path: '/team', query: { id: this.customerNo } })
     },
     // 查询负责人信息
-    getfindChargeList () {
-      findChargeList(this.customerNo, "1").then(res => {
+    getfindChargeList() {
+      findChargeList(this.customerNo, '1').then((res) => {
         if (res.code == 200) {
-          this.textList = res.data.principalList;
-          this.textOnly = this.textList[0].userName;
-          this.head = this.textList[0].userProfile;
+          this.textList = res.data.principalList
+          this.textOnly = this.textList[0].userName
+          this.head = this.textList[0].userProfile
           this.textTree = `${this.textList[0].userName}、
           ${this.textList[1].userName}、
-          ${this.textList[2].userName}`;
+          ${this.textList[2].userName}`
         }
-      });
+      })
     },
     //正则判断上传文件类型
-    uploadType (url) {
+    uploadType(url) {
       return /(png|jpg|gif|jpeg|webp)$/.test(
-        url.substring(url.lastIndexOf(".") + 1, url.length)
-      );
+        url.substring(url.lastIndexOf('.') + 1, url.length)
+      )
     },
     // 文件柜
-    changeImg (url) {
-      this.uploader.push({ url: url });
+    changeImg(url) {
+      this.uploader.push({ url: url })
     },
     // 文件柜查看文件
-    handlecheck (url) {
+    handlecheck(url) {
       if (this.uploadType(url)) {
-        this.showImg = true;
-        this.imgUrl = url;
+        this.showImg = true
+        this.imgUrl = url
       } else {
-        this.showImg = false;
-        this.$router.push({ path: "/xls", query: { url } });
+        this.showImg = false
+        this.$router.push({ path: '/xls', query: { url } })
       }
     },
     // 文件柜上传文件
-    async onRead (file) {
-      await upLoaderImg(file.file).then(res => {
-        this.fileId = res.result.fileId;
-      });
-      await this.getAdd();
+    async onRead(file) {
+      await upLoaderImg(file.file).then((res) => {
+        this.fileId = res.result.fileId
+      })
+      await this.getAdd()
     },
     // 文件柜添加文件
-    getAdd () {
+    getAdd() {
       add(this.customerNo, this.activeType, this.customerNo, this.fileId).then(
-        res => {
+        (res) => {
           if (res.code == 200) {
-            console.log(res);
+            console.log(res)
+            this.getfindByCustomerNo()
           }
         }
-      );
+      )
     },
     // 文件柜删除文件
-    handlerDel (id, ind) {
-      this.fileList.splice(ind, 1);
-      remove(id).then(res => {
+    handlerDel(id, ind) {
+      this.fileList.splice(ind, 1)
+      remove(id).then((res) => {
         if (res.code == 200) {
-          console.log(res);
+          console.log(res)
           this.$toast({
-            message: "删除成功",
-            position: "center"
-          });
+            message: '删除成功',
+            position: 'center',
+          })
         }
-      });
+      })
     },
-    onClickName (name) {
-      this.activeType = name;
-      this.getfindByCustomerNo();
+    onClickName(name) {
+      this.activeType = name
+      this.getfindByCustomerNo()
     },
 
-    handleOk (convertedData) {
-      console.log(convertedData);
-      console.log(this.$refs.preview);
+    handleOk(convertedData) {
+      console.log(convertedData)
     },
     //跟进次数
-    getfindRecordsCount () {
-      findRecordsCount(this.customerId).then(res => {
+    getfindRecordsCount() {
+      findRecordsCount(this.customerId).then((res) => {
         if (res.code == 200) {
-          this.count = res.data;
+          this.count = res.data
         }
-      });
+      })
     },
     // 基本信息查看附件
-    handleLoopUp (url) {
-      this.$router.push({ path: "xls", query: { url: url } });
+    handleLoopUp(url) {
+      this.$router.push({ path: 'xls', query: { url: url } })
     },
-    onChange (index) {
-      this.index = index;
+    onChange(index) {
+      this.index = index
     },
-    onSelect (item) {
+    onSelect(item) {
       // 默认情况下点击选项时不会自动收起
       // 可以通过 close-on-click-action 属性开启自动收起
-      this.show = false;
-      this.$Toast(item.name);
+      this.show = false
+      this.$Toast(item.name)
     },
-    changeClose () {
-      location.replace("/");
+    changeClose() {
+      location.replace('/')
     },
 
     // 基本信息
-    getfindBase () {
-      findBase(this.customerId).then(res => {
+    getfindBase() {
+      findBase(this.customerId).then((res) => {
         if (res.code == 200) {
-          let success = res.data;
-          this.customerNo = success.customerNo;
-          this.$store.commit("set_customerNo", success.customerNo);
-          this.businessNo = success.businessNo;
-          this.text = success.personInCharge;
+          let success = res.data
+          this.customerNo = success.customerNo
+          this.$store.commit('set_customerNo', success.customerNo)
+          this.businessNo = success.businessNo
+          this.text = success.personInCharge
           this.type =
             success.customerTypeId == 1
-              ? "局内客户"
+              ? '局内客户'
               : success.customerTypeId == 2
-                ? "外省客户"
-                : success.customerTypeId == 3
-                  ? "行业客户"
-                  : success.customerTypeId == 4
-                    ? "纯社会客户"
-                    : null;
-          this.address = success.customerAddress;
-          this.Fullname = success.customerFullName;
-          this.enclosure = success.customerOfficialWebsite;
-          this.remarks = success.remark;
-          this.imageList = success.imageList;
-          this.accessoryList = success.accessoryList;
-          this.Abandonment = "qingxuanze";
-          this.accessoryList.map(each => {
-            this.enclosure = each.fileOldName;
+              ? '外省客户'
+              : success.customerTypeId == 3
+              ? '行业客户'
+              : success.customerTypeId == 4
+              ? '纯社会客户'
+              : null
+          this.address = success.customerAddress
+          this.Fullname = success.customerFullName
+          this.enclosure = success.customerOfficialWebsite
+          this.remarks = success.remark
+          this.imageList = success.imageList
+          this.accessoryList = success.accessoryList
+          this.Abandonment = 'qingxuanze'
+          this.accessoryList.map((each) => {
+            this.enclosure = each.fileOldName
             // this.url = each.url;
-          });
-          this.getfindByCustomerNo();
-          this.getfindChargeList();
+          })
+          this.getfindByCustomerNo()
+          this.getfindChargeList()
         }
-      });
+      })
     },
     // 跟进记录
-    getfindRecordBaseList () {
-      findRecordBaseList(this.customerId, 0).then(res => {
+    getfindRecordBaseList() {
+      findRecordBaseList(this.customerId, 0).then((res) => {
         if (res.code == 200) {
-          this.FollowrecordData = res.rows;
+          this.FollowrecordData = res.rows
         }
-      });
+      })
     },
     // 文件柜
-    getfindByCustomerNo () {
-      findByCustomerNo(this.customerNo, this.activeType, 0, 10).then(res => {
+    getfindByCustomerNo() {
+      findByCustomerNo(this.customerNo, this.activeType, 0, 10).then((res) => {
         if (res.code == 200) {
-          this.fileList = res.rows;
-          this.total = res.rows.length;
+          this.fileList = res.rows
+          this.total = res.rows.length
         }
-      });
-    }
+      })
+    },
   },
 
-  components: { CustomerNav }
-};
+  components: { CustomerNav },
+}
 </script>
 <style scoped lang="scss">
 * {
@@ -872,7 +956,7 @@ export default {
     width: 100%;
     height: 2rem;
     box-sizing: border-box;
-    background: url("../../common/images/BG.png") no-repeat center center;
+    background: url('../../common/images/BG.png') no-repeat center center;
     background-size: 100%;
     position: relative;
     /deep/.van-popup--bottom.van-popup--round {

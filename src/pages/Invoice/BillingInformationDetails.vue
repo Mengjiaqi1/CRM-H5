@@ -115,7 +115,7 @@
                                   :key="each.cabinetId">
                     <div class="file_content_li">
                       <div class="left"
-                           @click="changeImg('http://baidu.png')">
+                           @click="changeImg(each.url)">
                         <img src="../../common/images/excel.png"
                              alt="" />
                         <van-uploader v-model="uploader" />
@@ -198,6 +198,7 @@ export default {
       show: false,
       showImg: false,
       imgUrl: "",
+      fileId: "", // 上传文件的id
       uploader: [], // 点击图片放大
       userID: "", //用户id
       number: "" // 编号
@@ -218,9 +219,14 @@ export default {
     },
     // 上传文件
     getAdd () {
-      add(this.customerNo, "", this.customerNo, this.fileId).then(res => {
+      add(this.customerNo, "5", this.customerNo, this.fileId).then(res => {
         if (res.code == 200) {
           console.log(res);
+          this.$toast({
+            message: "上传成功",
+            position: "center"
+          });
+          this.getfindByContactsNo();
         }
       });
     },
@@ -229,7 +235,6 @@ export default {
       this.fileList.splice(ind, 1);
       remove(id).then(res => {
         if (res.code == 200) {
-          console.log(res);
           this.$toast({
             message: "删除成功",
             position: "center"
@@ -249,6 +254,7 @@ export default {
     },
     // 文件柜查看文件
     handlecheck (url) {
+      console.log(url, "url");
       if (this.uploadType(url)) {
         this.showImg = true;
         this.imgUrl = url;
