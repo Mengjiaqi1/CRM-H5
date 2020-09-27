@@ -3,8 +3,7 @@
     <myHeader>
       <div class="h_center"></div>
       <div class="h_right">
-        <img src="../../common/images/build.png"
-             alt="" />
+        <img src="../../common/images/build.png" alt="" />
       </div>
     </myHeader>
     <main>
@@ -14,10 +13,12 @@
           <span class="company">{{ accountName }}</span>
         </p>
         <p class="text">
-          <span class="account">银行账户:</span><span class="content">{{ account }}</span>
+          <span class="account">银行账户:</span
+          ><span class="content">{{ account }}</span>
         </p>
         <p class="text">
-          <span class="account">编号:</span><span class="content">{{ customerNo }}</span>
+          <span class="account">编号:</span
+          ><span class="content">{{ customerNo }}</span>
         </p>
       </div>
       <div class="nav">
@@ -26,71 +27,70 @@
             <div class="Basic_infor">
               <div class="none"></div>
               <div class="form">
-                <van-field v-model="customerNo"
-                           label="编号"
-                           readonly />
-                <div class="relevance_wrap"
-                     v-if="relationBeiyou">
+                <van-field v-model="customerNo" label="编号" readonly />
+                <div class="relevance_wrap" v-if="relationBeiyou">
                   <div class="relevance">
                     <p class="customer">关联北邮客户</p>
                     <p class="company">
-                      <span>{{ relationBeiyou ? relationBeiyou : "-" }}</span>
+                      <span>{{ relationBeiyou ? relationBeiyou : '-' }}</span>
                     </p>
                   </div>
                 </div>
-                <div class="relevance_wrap"
-                     v-if="relationCanyin">
+                <div class="relevance_wrap" v-if="relationCanyin">
                   <div class="relevance">
                     <p class="customer">关联餐饮客户</p>
                     <p class="company">
-                      <span>{{ relationCanyin ? relationCanyin : "-" }}</span>
+                      <span>{{ relationCanyin ? relationCanyin : '-' }}</span>
                     </p>
                   </div>
                 </div>
-                <div class="relevance_wrap"
-                     v-if="relationLvzhou">
+                <div class="relevance_wrap" v-if="relationLvzhou">
                   <div class="relevance">
                     <p class="customer">关联绿洲客户</p>
                     <p class="company">
-                      <span>{{ relationLvzhou ? relationLvzhou : "-" }}</span>
+                      <span>{{ relationLvzhou ? relationLvzhou : '-' }}</span>
                     </p>
                   </div>
                 </div>
-                <div class="relevance_wrap"
-                     v-if="relationQicai">
+                <div class="relevance_wrap" v-if="relationQicai">
                   <div class="relevance">
                     <p class="customer">关联器材客户</p>
                     <p class="company">
-                      <span>{{ relationQicai ? relationQicai : "-" }}</span>
+                      <span>{{ relationQicai ? relationQicai : '-' }}</span>
                     </p>
                   </div>
                 </div>
-                <div class="relevance_wrap"
-                     v-if="relationYouzhong">
+                <div class="relevance_wrap" v-if="relationYouzhong">
                   <div class="relevance">
                     <p class="customer">关联邮中客户</p>
                     <p class="company">
                       <span>{{
-                        relationYouzhong ? relationYouzhong : "-"
+                        relationYouzhong ? relationYouzhong : '-'
                       }}</span>
                     </p>
                   </div>
                 </div>
-                <van-field v-model="Bank"
-                           type="text"
-                           label="开户行"
-                           autosize
-                           readonly
-                           required />
-                <van-field v-model="account"
-                           type="text"
-                           label="银行账户"
-                           readonly
-                           required />
-                <van-field v-model="taxpayer"
-                           type="text"
-                           label="纳税人"
-                           readonly />
+                <van-field
+                  v-model="Bank"
+                  type="text"
+                  label="开户行"
+                  autosize
+                  readonly
+                  required
+                />
+                <van-field
+                  v-model="account"
+                  type="text"
+                  label="银行账户"
+                  readonly
+                  required
+                />
+                <van-field
+                  v-model="taxpayer"
+                  type="text"
+                  label="纳税人"
+                  readonly
+                />
               </div>
             </div>
           </van-tab>
@@ -98,26 +98,24 @@
             <div class="File_cabinet">
               <div class="titwrap">
                 <div class="tit">
-                  <span class="total">共计文件</span><span class="num">{{ total }}</span>
+                  <span class="total">共计文件</span
+                  ><span class="num">{{ total }}</span>
                 </div>
                 <div class="file_upload">
-                  <van-uploader class="uploadImg"
-                                :after-read="onRead">
-                    <img src="../../common/images/upload.png"
-                         alt="" />
+                  <van-uploader class="uploadImg" :after-read="onRead">
+                    <img src="../../common/images/upload.png" alt="" />
                   </van-uploader>
                 </div>
               </div>
               <div class="file_wrap">
-                <div class="file_content"
-                     ref="fileContent">
-                  <van-swipe-cell v-for="(each, index) in fileList"
-                                  :key="each.cabinetId">
+                <div class="file_content" ref="fileContent">
+                  <van-swipe-cell
+                    v-for="(each, index) in fileList"
+                    :key="each.cabinetId"
+                  >
                     <div class="file_content_li">
-                      <div class="left"
-                           @click="changeImg(each.url)">
-                        <img src="../../common/images/excel.png"
-                             alt="" />
+                      <div class="left" @click="changeImg(each.url)">
+                        <img src="../../common/images/excel.png" alt="" />
                         <van-uploader v-model="uploader" />
                       </div>
                       <div class="center">
@@ -132,20 +130,25 @@
                           {{ (each.fileSize / 1024).toFixed(1) }}KB
                         </div>
                       </div>
-                      <div class="right"
-                           @click="handlecheck(each.url, each.cabinetId)">
-                        <img :src="uploadType(each.url) ? check : xiazai"
-                             alt="" />
+                      <div
+                        class="right"
+                        @click="handlecheck(each.url, each.cabinetId)"
+                      >
+                        <img
+                          :src="uploadType(each.url) ? check : xiazai"
+                          alt=""
+                        />
                       </div>
                     </div>
                     <template #right>
-                      <van-button type="danger"
-                                  class="delete-button-none" />
-                      <van-button square
-                                  text="删除"
-                                  type="danger"
-                                  class="delete-button"
-                                  @click="handlerDel(each.cabinetId, index)" />
+                      <van-button type="danger" class="delete-button-none" />
+                      <van-button
+                        square
+                        text="删除"
+                        type="danger"
+                        class="delete-button"
+                        @click="handlerDel(each.cabinetId, index)"
+                      />
                     </template>
                   </van-swipe-cell>
                 </div>
@@ -155,144 +158,139 @@
         </van-tabs>
       </div>
     </main>
-    <van-overlay :show="showImg"
-                 @click="showImg = false">
-      <div class="wrapper"
-           @click="showImg = false"
-           @click.stop>
+    <van-overlay :show="showImg" @click="showImg = false">
+      <div class="wrapper" @click="showImg = false" @click.stop>
         <div class="block">
-          <img :src="imgUrl"
-               alt=""
-               id="img" />
+          <img :src="imgUrl" alt="" id="img" />
         </div>
       </div>
     </van-overlay>
   </div>
 </template>
 <script>
-import upLoaderImg from "../../common/js/upLoaderImg";
-import { remove, add } from "../../services/CustomerDetails";
-import { findByContactsNo } from "../../services//BillingDetails";
-import { get } from "../../services/http.js";
+import upLoaderImg from '../../common/js/upLoaderImg'
+import { remove, add } from '../../services/CustomerDetails'
+import { findByContactsNo } from '../../services//BillingDetails'
+import { get } from '../../services/http.js'
 export default {
-  data () {
+  data() {
     return {
       reg: /\.(png|jpg|gif|jpeg|webp)$/,
       total: 0,
-      check: require("../../common/images/check.png"),
-      xiazai: require("../../common/images/xiazai.png"),
-      customerNo: "", // 编号
-      customer: "", //关联客户
-      Bank: "", // 开户行
-      account: "", // 银行账户
-      taxpayer: "", // 纳税人
-      accountName: "", // 公司名称
-      relationBeiyou: "", //关联北邮客户
-      relationCanyin: "", //关联餐饮客户
-      relationLvzhou: "", //关联绿洲客户
-      relationQicai: "", //关联器材客户
-      relationYouzhong: "", //关联邮中客户
+      check: require('../../common/images/check.png'),
+      xiazai: require('../../common/images/xiazai.png'),
+      customerNo: '', // 编号
+      customer: '', //关联客户
+      Bank: '', // 开户行
+      account: '', // 银行账户
+      taxpayer: '', // 纳税人
+      accountName: '', // 公司名称
+      relationBeiyou: '', //关联北邮客户
+      relationCanyin: '', //关联餐饮客户
+      relationLvzhou: '', //关联绿洲客户
+      relationQicai: '', //关联器材客户
+      relationYouzhong: '', //关联邮中客户
       Fileshow: false,
       fileList: [],
       images: [],
       show: false,
       showImg: false,
-      imgUrl: "",
-      fileId: "", // 上传文件的id
+      imgUrl: '',
+      fileId: '', // 上传文件的id
       uploader: [], // 点击图片放大
-      userID: "", //用户id
-      number: "" // 编号
-    };
+      userID: '', //用户id
+      number: '', // 编号
+    }
   },
-  created () {
-    this.userID = this.$route.query.id;
-    this.number = this.$route.query.number;
-    this.getBasicInfor();
+  created() {
+    this.userID = this.$route.query.id
+    this.number = this.$route.query.number
+    this.getBasicInfor()
   },
   methods: {
     // 上传文件获取文件id
-    async onRead (file) {
-      await upLoaderImg(file.file).then(res => {
-        this.fileId = res.result.fileId;
-      });
-      await this.getAdd();
+    async onRead(file) {
+      await upLoaderImg(file.file).then((res) => {
+        this.fileId = res.result.fileId
+      })
+      await this.getAdd()
     },
     // 上传文件
-    getAdd () {
-      add(this.customerNo, "5", this.customerNo, this.fileId).then(res => {
+    getAdd() {
+      add(this.customerNo, '5', this.customerNo, this.fileId).then((res) => {
         if (res.code == 200) {
-          console.log(res);
+          console.log(res)
           this.$toast({
-            message: "上传成功",
-            position: "center"
-          });
-          this.getfindByContactsNo();
+            message: '上传成功',
+            position: 'center',
+          })
+          this.getfindByContactsNo()
         }
-      });
+      })
     },
     //删除文件
-    handlerDel (id, ind) {
-      this.fileList.splice(ind, 1);
-      remove(id).then(res => {
+    handlerDel(id, ind) {
+      this.fileList.splice(ind, 1)
+      remove(id).then((res) => {
         if (res.code == 200) {
           this.$toast({
-            message: "删除成功",
-            position: "center"
-          });
+            message: '删除成功',
+            position: 'center',
+          })
         }
-      });
+      })
     },
     //正则判断上传文件类型
-    uploadType (url) {
+    uploadType(url) {
       return /(png|jpg|gif|jpeg|webp)$/.test(
-        url.substring(url.lastIndexOf(".") + 1, url.length)
-      );
+        url.substring(url.lastIndexOf('.') + 1, url.length)
+      )
     },
     // 文件柜
-    changeImg (url) {
-      this.uploader.push({ url: url });
+    changeImg(url) {
+      this.uploader.push({ url: url })
     },
     // 文件柜查看文件
-    handlecheck (url) {
-      console.log(url, "url");
+    handlecheck(url) {
+      console.log(url, 'url')
       if (this.uploadType(url)) {
-        this.showImg = true;
-        this.imgUrl = url;
+        this.showImg = true
+        this.imgUrl = url
       } else {
-        this.showImg = false;
-        this.$router.push({ path: "/xls", query: { url } });
+        this.showImg = false
+        this.$router.push({ path: '/xls', query: { url } })
       }
     },
     // 文件柜
-    getfindByContactsNo () {
-      findByContactsNo(this.number).then(res => {
+    getfindByContactsNo() {
+      findByContactsNo(this.number).then((res) => {
         if (res.code == 200) {
-          this.fileList = res.rows;
-          this.total = res.rows.length;
+          this.fileList = res.rows
+          this.total = res.rows.length
         }
-      });
+      })
     },
 
     //基本信息
-    getBasicInfor () {
-      get(`/system/billingInformation/${this.userID}`).then(res => {
+    getBasicInfor() {
+      get(`/system/billingInformation/${this.userID}`).then((res) => {
         if (res.code == 200) {
-          console.log(res);
-          this.customerNo = res.data.number;
-          this.Bank = res.data.bankDeposit;
-          this.account = res.data.bankAccount;
-          this.taxpayer = res.data.taxpayerNumber;
-          this.accountName = res.data.accountName;
-          this.relationBeiyou = res.data.relationBeiyou;
-          this.relationCanyin = res.data.relationCanyin;
-          this.relationQicai = res.data.relationQicai;
-          this.relationYouzhong = res.data.relationYouzhong;
-          this.getfindByContactsNo();
+          console.log(res)
+          this.customerNo = res.data.number
+          this.Bank = res.data.bankDeposit
+          this.account = res.data.bankAccount
+          this.taxpayer = res.data.taxpayerNumber
+          this.accountName = res.data.accountName
+          this.relationBeiyou = res.data.relationBeiyou
+          this.relationCanyin = res.data.relationCanyin
+          this.relationQicai = res.data.relationQicai
+          this.relationYouzhong = res.data.relationYouzhong
+          this.getfindByContactsNo()
         }
-      });
-    }
-  }
-};
+      })
+    },
+  },
+}
 </script>
 <style lang="scss" scoped>
 .wrap {
@@ -399,7 +397,7 @@ export default {
         left: 0.13rem;
         color: #ee0a24;
         font-size: 0.14rem;
-        content: "*";
+        content: '*';
       }
       /deep/.van-tabs__wrap--scrollable {
         padding-left: 0.12rem;
@@ -468,8 +466,8 @@ export default {
             padding: 0 0.16rem;
             span {
               display: inline-block;
-              margin-left: 0.1rem;
-              height: 0.2rem;
+              // margin-left: 0.1rem;
+              // height: 0.2rem;
               font-size: 0.14rem;
               font-family: PingFangSC-Regular, PingFang SC;
               font-weight: 400;
@@ -481,7 +479,7 @@ export default {
           }
           /deep/ .van-field__label.van-cell__title {
             width: 0.84rem;
-            margin-left: 0.12rem;
+            margin-left: 0.09rem;
             display: flex;
             align-items: center;
           }

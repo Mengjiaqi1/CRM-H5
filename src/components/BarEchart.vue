@@ -185,6 +185,9 @@ export default {
           },
         ],
       })
+      window.addEventListener('resize', () => {
+        myChart.resize()
+      })
     },
   },
 }

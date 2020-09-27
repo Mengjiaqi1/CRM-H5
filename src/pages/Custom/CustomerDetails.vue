@@ -1318,10 +1318,11 @@ export default {
         /deep/.van-cell {
           min-height: 0.44rem;
           display: flex;
+          // align-items: center;
           span {
             display: inline-block;
-            margin-top: 0.12rem;
             height: 0.2rem;
+            margin-top: 0.12rem;
             font-size: 0.14rem;
             font-family: PingFangSC-Regular, PingFang SC;
             font-weight: 400;

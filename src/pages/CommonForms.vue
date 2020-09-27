@@ -15,7 +15,11 @@
             @click="changeQueryData(index, el.name, el.icon, el.id)"
           >
             <div class="my_forms_top">
-              <img src="../common/images/forms_customer.png" alt="" />
+              <img
+                src="../common/images/forms_customer.png"
+                class="icon"
+                alt=""
+              />
               <img
                 src="../common/images/forms_reduce.png"
                 alt=""
@@ -23,6 +27,10 @@
               />
             </div>
             <span class="my_forms_text">{{ el.name }}</span>
+          </div>
+          <div class="my_forms_listEven">
+            <div class="my_forms_top"></div>
+            <span class="my_forms_text"></span>
           </div>
         </div>
         <div class="none"></div>
@@ -43,7 +51,11 @@
                     @click="changeForms(el.name, el.icon, el.id)"
                   >
                     <div class="my_forms_top">
-                      <img src="../common/images/forms_all.png" alt="" />
+                      <img
+                        src="../common/images/forms_all.png"
+                        class="icon"
+                        alt=""
+                      />
                       <span class="my_forms_img">
                         <img
                           :src="el.checked ? forms_reduce : forms_add"
@@ -227,6 +239,7 @@ export default {
       }
       .my_forms_listEven {
         width: 25%;
+        height: 0.71rem;
         margin-top: 0.23rem;
         display: flex;
         flex-direction: column;
@@ -235,11 +248,13 @@ export default {
           width: 0.4rem;
           height: 0.4rem;
           margin-top: 0.1rem;
-          // border: 0.01rem dashed #ccc;
           position: relative;
-          img {
+          .icon {
             width: 0.4rem;
             height: 0.4rem;
+            border-radius: 0.04rem;
+            // background: #f2f9ff;
+            // border: 0.01rem dashed #028fff;
           }
           .addImg {
             width: 0.15rem;
@@ -303,7 +318,6 @@ export default {
           }
           .my_forms_content_list {
             width: 100%;
-            // height: 2.1rem;
             padding-bottom: 0.2rem;
             display: flex;
             flex-wrap: wrap;

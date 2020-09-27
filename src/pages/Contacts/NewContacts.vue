@@ -8,10 +8,6 @@
       <div class="content">
         <div class="tit">
           <p class="number">编号：BY.20200429002</p>
-          <p class="company" @click="isCategory = true">
-            <span class="beiyou">{{ company == '' ? '北邮' : company }}</span
-            ><span class="triangle"></span>
-          </p>
         </div>
         <div class="form">
           <van-form @submit="onSubmit" validate-first>
@@ -25,6 +21,7 @@
               right-icon="arrow"
               :rules="[{ required: true, message: '此项为必填项' }]"
             />
+            <div class="none"></div>
             <van-field
               v-model="Fullname"
               label="姓名"
@@ -44,31 +41,72 @@
               @click="AdditionalCalls"
               ref="call"
             />
-
-            <van-field
-              v-model="work"
-              type="text"
-              label="工作"
-              autosize
-              required
-              placeholder="请输入"
-              input-align="right"
-              :rules="[{ required: true, message: '请填写工作' }]"
-              right-icon="clear"
-            />
-            <van-field
-              v-model="work"
-              type="text"
-              label="工作"
-              autosize
-              required
-              placeholder="请输入"
-              input-align="right"
-              :rules="[{ required: true, message: '请填写工作' }]"
-              right-icon="clear"
-            />
+            <div class="telList">
+              <div class="telLi">
+                <div class="tel_left">
+                  <p class="tel">1222222222222</p>
+                  <div class="tel_type">
+                    家庭
+                    <div class="triangle"></div>
+                  </div>
+                </div>
+                <div class="tel_right">
+                  <img :src="forms_reduce" alt="" />
+                </div>
+              </div>
+              <div class="telLi">
+                <div class="tel_left">
+                  <input
+                    class="tel"
+                    v-model="tel2"
+                    type="text"
+                    placeholder="请输入电话号码"
+                  />
+                  <div class="tel_type">
+                    家庭
+                    <div class="triangle"></div>
+                  </div>
+                </div>
+                <div class="tel_right">
+                  <img :src="forms_reduce" alt="" />
+                </div>
+              </div>
+              <div class="telLi">
+                <div class="tel_left">
+                  <input
+                    class="tel"
+                    v-model="tel2"
+                    type="text"
+                    placeholder="请输入电话号码"
+                  />
+                  <div class="tel_type">
+                    家庭
+                    <div class="triangle"></div>
+                  </div>
+                </div>
+                <div class="tel_right">
+                  <img :src="forms_reduce" alt="" />
+                </div>
+              </div>
+              <div class="telLi">
+                <div class="tel_left">
+                  <input
+                    class="tel"
+                    v-model="tel2"
+                    type="text"
+                    placeholder="请输入电话号码"
+                  />
+                  <div class="tel_type">
+                    家庭
+                    <div class="triangle"></div>
+                  </div>
+                </div>
+                <div class="tel_right">
+                  <img :src="forms_reduce" alt="" />
+                </div>
+              </div>
+            </div>
             <div class="none"></div>
-
             <van-field
               v-model="department"
               type="text"
@@ -215,6 +253,8 @@ import moment from 'moment'
 export default {
   data() {
     return {
+      forms_reduce: require('../../common/images/home_reducer.png'),
+      forms_add: require('../../common/images/home_add.png'),
       customer: '', //关联客户
       Fullname: '', // 姓名
       Telephone: '', // 联系电话
@@ -227,6 +267,7 @@ export default {
       Gender: '', // 性别
       hobby: '', // 爱好
       remarks: '', //备注
+      tel2: '136', // 电话号码
       // add类别
       isCategory: false,
       timeCategory: 0,
@@ -344,16 +385,6 @@ export default {
           font-weight: 400;
           color: #ffffff;
         }
-        .triangle {
-          width: 0;
-          height: 0;
-          border-top: 0.05rem solid transparent;
-          border-left: 0.05rem solid #fff;
-          border-bottom: 0.05rem solid transparent;
-          display: inline-block;
-          margin-left: 0.1rem;
-          vertical-align: middle;
-        }
       }
     }
     .form {
@@ -363,11 +394,66 @@ export default {
         height: 0.12rem;
         background: #f8f9fa;
       }
+      .telList {
+        width: 100%;
+        background: #fff;
+        padding: 0 0.12rem;
+        margin-bottom: 0.12rem;
+        box-sizing: border-box;
+        .telLi {
+          width: 100%;
+          height: 0.64rem;
+          margin-top: 0.12rem;
+          background: #f8f9fa;
+          padding-left: 0.14rem;
+          padding-right: 0.12rem;
+          display: flex;
+          justify-items: space-between;
+          align-items: center;
+          box-sizing: border-box;
+          .tel_left {
+            flex: 8;
+            text-align: left;
+            .tel {
+              display: block;
+            }
+            .tel_type {
+              // display: flex;
+              display: inline-flex;
+              align-items: center;
+              margin-top: 0.05rem;
+              background: #f2f7ff;
+              border-radius: 0.02rem;
+              border: 0.01rem solid #006aff;
+              font-size: 0.12rem;
+              font-family: PingFangSC-Regular, PingFang SC;
+              font-weight: 400;
+              color: #006aff;
+              padding: 0.01rem 0.02rem;
+            }
+            .triangle {
+              width: 0;
+              height: 0;
+              border-right: 0.05rem solid transparent;
+              border-left: 0.05rem solid transparent;
+              border-top: 0.05rem solid #006aff;
+              display: inline-block;
+              margin-left: 0.05rem;
+              vertical-align: middle;
+            }
+          }
+          .tel_right {
+            // flex: 2;
+            // text-align: right;
+          }
+        }
+      }
       /deep/.van-icon-clear {
         color: red;
       }
       /deep/.van-icon-add {
         color: #006aff;
+        padding-right: 0.1rem;
       }
       /deep/textarea.van-field__control {
         padding-left: 0.22rem;
@@ -380,6 +466,7 @@ export default {
       }
       /deep/.van-cell--required::before {
         position: absolute;
+        vertical-align: middle;
         left: 0.13rem;
         color: #ee0a24;
         font-size: 0.14rem;
@@ -415,8 +502,6 @@ export default {
         padding: 0 0.16rem;
         span {
           display: inline-block;
-          margin-left: 0.1rem;
-          height: 0.2rem;
           font-size: 0.14rem;
           font-weight: 400;
           color: #666666;
@@ -432,7 +517,7 @@ export default {
       }
       /deep/ .van-field__label.van-cell__title {
         width: 0.84rem;
-        margin-left: 0.12rem;
+        margin-left: 0.09rem;
         display: flex;
         align-items: center;
       }
@@ -474,7 +559,5 @@ export default {
       color: #006aff;
     }
   }
-
-  /*性别样式*/
 }
 </style>
