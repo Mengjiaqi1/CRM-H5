@@ -89,13 +89,19 @@
                     maxlength="60个字符"
                     type="textarea"
                     show-word-limit
-                    right-icon="location-o"
                     placeholder="请输入详细地址"
                     :rules="[{ required: true, message: '请输入地址' }]"
             >
-              <van-icon class="iconfont" class-prefix="icon" slot="right-icon" name="location-o" @click="handlelocation">地图</van-icon>
+<!--              right-icon="icon-test"-->
+<!--              <van-icon class="iconfont" class-prefix="icon" slot="right-icon" name="icon-test" @click="handlelocation"></van-icon>-->
+
             </van-field>
-            <div class="space"></div>
+            <div class="space" style="position: relative">
+              <svg class="icon" style="position: absolute;top:-0.6rem;right:0.3rem;width: 0.20rem;height: 0.20rem;"
+                   aria-hidden="true">
+                <use xlink:href="#icon-icon-test"></use>
+              </svg>
+            </div>
             <van-field
                     v-model="telephone"
                     label="电话"
@@ -192,6 +198,7 @@
 <script>
     import area from "../../common/js/area";
     import * as dd from "dingtalk-jsapi";
+    import "@/assets/iconfont/iconfont.scss";
     import upLoaderImg from "../../common/js/upLoaderImg";
     import {
         findTemplateList,
@@ -385,27 +392,11 @@
                         withReGeocode : true,
                         useCache:false, //默认是true，如果需要频繁获取地理位置，请设置false
                         onSuccess : function(result) {
-                            {
-                                // longitude : Number,
-                                // latitude : Number,
-                                // accuracy : Number,
-                                // address : String,
-                                // province : String,
-                                // city : String,
-                                // district : String,
-                                // road : String,
-                                // netType : String,
-                                // operatorType : String,
-                                // errorMessage : String,
-                                // errorCode : Number,
-                                // isWifiEnabled : Boolean,
-                                // isGpsEnabled : Boolean,
-                                // isFromMock : Boolean,
-                                // provider : wifi|lbs|gps,
-                                // isMobileEnabled : Boolean
-                            }
+                            console.log(result);
                         },
-                        onFail : function(err) {}
+                        onFail : function(err) {
+                            console.log(err)
+                        }
                     });
                 });
             }

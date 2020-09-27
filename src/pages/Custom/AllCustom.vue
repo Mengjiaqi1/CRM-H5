@@ -1297,10 +1297,10 @@ export default {
             }
           }
         }
-        .custom_contents > .space:last-child {
-          height: 0rem;
-          background-color: #ffffff;
-        }
+        /*.custom_contents .space:last-child{*/
+        /*  height: 0rem;*/
+        /*  background-color: #FFFFFF;*/
+        /*}*/
       }
     }
   }
