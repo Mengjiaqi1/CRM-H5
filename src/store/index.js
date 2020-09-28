@@ -10,7 +10,8 @@ export default new Vuex.Store({
         customerId: "",
         customerNo: "", // 客户编号
         userIdList: [], // 组织构架多选框用户的userId
-        followTime: null // 跟进时间
+        followTime: null, // 跟进时间
+        radio: "" // 关联客户单选
     },
     mutations: {
         set_token(state, token) {
@@ -31,6 +32,10 @@ export default new Vuex.Store({
         set_followTime(state, time) {
             state.followTime = time;
             localStorage.setItem("followTime", time);
+        },
+        set_radio(state, radio) {
+            state.radio = radio;
+            localStorage.setItem("radio", radio);
         }
     },
     actions: {

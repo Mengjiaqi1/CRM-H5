@@ -14,7 +14,7 @@ import {
     getCookie,
     delCookie
 } from "../untils/auth";
-axios.defaults.timeout = 1000; // 设置请求网络超时
+axios.defaults.timeout = 2000; // 设置请求网络超时
 axios.defaults.baseURL = "/api";
 axios.defaults.headers.post["Content-Type"] = "application/json; charset=UTF-8";
 axios.interceptors.request.use(config => {

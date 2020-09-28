@@ -1,7 +1,13 @@
-import { post, get } from "./http.js";
+import {
+    post,
+    get
+} from "./http.js";
 
+//登陆
 export function getLogin(code) {
-    return post("/app/login", { code });
+    return post("/app/login", {
+        code
+    });
 }
 
 export function getToken() {

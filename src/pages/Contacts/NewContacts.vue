@@ -350,109 +350,111 @@
   </div>
 </template>
 <script>
-import area from '../../common/js/area'
-import moment from 'moment'
+import area from "../../common/js/area";
+import moment from "moment";
 export default {
   data() {
     return {
-      forms_reduce: require('../../common/images/home_reducer.png'),
-      forms_add: require('../../common/images/home_add.png'),
-      customer: '', //关联客户
-      Fullname: '', // 姓名
-      Telephone: '', // 联系电话
-      work: '', // 工作
-      department: '', // 部门
-      post: '', // 职务
-      Postcode: '', // 邮编
-      mailbox: '', // 邮箱
-      birthday: '', // 生日
-      Gender: '', // 性别
-      hobby: '', // 爱好
-      remarks: '', //备注
-      tel2: '136', // 电话号码
+      forms_reduce: require("../../common/images/home_reducer.png"),
+      forms_add: require("../../common/images/home_add.png"),
+      customer: "", //关联客户
+      Fullname: "", // 姓名
+      Telephone: "", // 联系电话
+      work: "", // 工作
+      department: "", // 部门
+      post: "", // 职务
+      Postcode: "", // 邮编
+      mailbox: "", // 邮箱
+      birthday: "", // 生日
+      Gender: "", // 性别
+      hobby: "", // 爱好
+      remarks: "", //备注
+      tel2: "136", // 电话号码
       // 联系电话类型:
       count: 0, // 添加联系电话的个数
       isCategory: false,
       timeCategory: 0,
       titleName: this.$route.query.templateName,
-      templateIds: '1',
-      type: '',
-      telType: '家庭',
-      MenuData: ['工作', '手机', '家庭'],
+      templateIds: "1",
+      type: "",
+      telType: "家庭",
+      MenuData: ["工作", "手机", "家庭"],
       // 省市县三级联动
-      address: '', //地址
-      value: '',
-      valueArea: '',
+      address: "", //地址
+      value: "",
+      valueArea: "",
       showArea: false,
       areaList: area, // 数据格式见 Area 组件文档
       // 性别
       typeCustom: null,
       isGender: false,
-      GenderList: ['男', '女'],
+      GenderList: ["男", "女"],
       // 生日
       flag: false,
       minDate: new Date(1960, 0, 1),
       maxDate: new Date(2025, 10, 1),
-      currentDate: new Date(),
-    }
+      currentDate: new Date()
+    };
   },
-  created() {},
+  created() {
+    this.customer = this.$route.query.name ? this.$route.query.name : null;
+  },
   methods: {
     // 删除联系电话
     changeDel(e) {
-      console.log(e, 'err')
-      console.log(1)
+      console.log(e, "err");
+      console.log(1);
     },
     // 关联客户
     changecustomer() {
-      this.$router.push({ path: '/associated' })
+      this.$router.push({ path: "/associated" });
     },
     // 追加联系人电话
     AdditionalCalls() {},
     // 生日选择器
     ConfirmBrith(value) {
-      this.flag = false
-      this.birthday = moment(value).format('YYYY-MM-DD')
+      this.flag = false;
+      this.birthday = moment(value).format("YYYY-MM-DD");
     },
     CancelBrith() {
-      this.flag = false
+      this.flag = false;
     },
     // 性别选项
     changeConfirm(value, index) {
-      console.log(value)
-      this.Gender = value
-      this.isGender = false
+      console.log(value);
+      this.Gender = value;
+      this.isGender = false;
     },
     // 取消性别选择
     onCancel() {
-      this.isGender = false
+      this.isGender = false;
     },
     // 新建
     onCancelNew() {
-      this.isCategory = false
+      this.isCategory = false;
     },
     ConfirmNew(value, index) {
-      this.telType = value
-      this.isCategory = false
+      this.telType = value;
+      this.isCategory = false;
     },
     onConfirm(values) {
-      this.telType = values
-      console.log(values, 'v')
-      this.valueArea = values.map((item) => item.name).join('/')
-      console.log(this.value, 'value')
-      this.showArea = false
+      this.telType = values;
+      console.log(values, "v");
+      this.valueArea = values.map(item => item.name).join("/");
+      console.log(this.value, "value");
+      this.showArea = false;
     },
     onSubmit(values) {
-      console.log('submit', values)
+      console.log("submit", values);
     },
     onFail() {
       this.$toast({
-        message: '表单验证不通过',
-        position: 'center',
-      })
-    },
-  },
-}
+        message: "表单验证不通过",
+        position: "center"
+      });
+    }
+  }
+};
 </script>
 <style lang="scss" scoped>
 .wrap {
@@ -579,7 +581,7 @@ export default {
         left: 0.13rem;
         color: #ee0a24;
         font-size: 0.14rem;
-        content: '*';
+        content: "*";
       }
       /deep/.van-tabs__wrap--scrollable {
         padding-left: 0.12rem;

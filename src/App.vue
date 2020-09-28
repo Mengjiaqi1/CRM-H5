@@ -10,20 +10,16 @@ import router from './router'
 import { setCookie, getCookie } from './untils/auth'
 export default {
   data() {
-    return {
-      ddCode: null,
-      inp: '',
-    }
+    return {}
   },
   mounted() {},
   async created() {
     if (dd.env.platform != 'notInDingTalk') {
       await this.getDDCode()
     } else {
-      // this.getjsapi()
       setCookie(
         'tokenKey',
-        'eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6IjQzMmI1OTJmLTUzNjctNDQ0ZC1iZGM1LWIxZDliNDFlMTNkYSJ9.ThzaiTszHRIAFn8mvGxPbVMB3MFAdymRPck5pQOK4soXYoMWGOVImZttCyf-timBTnkFAzd5u3Sg32lNQlO3Bg'
+        'eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6IjRlZDRlMDU5LTk3ZWUtNGFhYy05NDU1LWY4MWJhOTdkYTVjZSJ9.M57K9J53bs11HFhqynzoW7QGej_wlhffUdoVAAKyODDrlo9F8VBGcyDiJDchRH8phYyIyO1sS9CXWTcx8okxyA'
       )
       this.getDDCode()
     }
@@ -36,12 +32,13 @@ export default {
             corpId: 'ding4549e680a3f82a1c35c2f4657eb6378f', // 企业id
             onSuccess: function(info) {
               const tempCode = info.code
+              console.log(tempCode, 'code')
               if (
                 getCookie('tokenKey') == null ||
                 getCookie('tokenKey') == undefined
               ) {
                 getLogin(tempCode).then((res) => {
-                  console.log(res, 'res')
+                  console.log(res, 'loginres')
                   if (res.code == 200 && res.token) {
                     setCookie('tokenKey', res.token)
                     router.push('/home')
@@ -51,7 +48,7 @@ export default {
               resolve()
             },
             onFail: function(err) {
-              console.log(err, 'err')
+              console.log(err, 'OnFailerr')
               this.toast({
                 message: '获取code失败，请退出重试',
               })
@@ -59,7 +56,7 @@ export default {
             },
           })
           dd.error((err) => {
-            console.log(err, 'err')
+            console.log(err, 'dingerr')
           })
         })
       })
