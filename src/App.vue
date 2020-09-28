@@ -15,12 +15,9 @@ export default {
       inp: '',
     }
   },
-  mounted() {
-    // this.getjsapi()
-  },
+  mounted() {},
   async created() {
     if (dd.env.platform != 'notInDingTalk') {
-      // await this.getjsapi()
       await this.getDDCode()
     } else {
       // this.getjsapi()
@@ -32,37 +29,6 @@ export default {
     }
   },
   methods: {
-    // getjsapi() {
-    //   jsapi().then((res) => {
-    //     dd.config({
-    //       //实现验证
-    //       agentId: res.agentId,
-    //       corpId: res.corpId,
-    //       timeStamp: res.timeStamp,
-    //       nonceStr: res.nonceStr,
-    //       signature: res.signature,
-    //       type: 0,
-    //       jsApiList: [
-    //         'runtime.info',
-    //         'biz.contact.choose',
-    //         'device.notification.confirm',
-    //         'device.notification.alert',
-    //         'device.notification.prompt',
-    //         'biz.ding.post',
-    //         'biz.util.openLink',
-    //         'biz.telephone.call',
-    //         'biz.telephone.showCallMenu',
-    //         'biz.telephone.checkBizCall',
-    //         'biz.telephone.quickCallList',
-    //         'biz.conference.videoConfCall',
-    //         'biz.ding.create', //2.0
-    //       ],
-    //     })
-    //     dd.error((err) => {
-    //       console.log(err, 'err')
-    //     })
-    //   })
-    // },
     getDDCode() {
       return new Promise((resolve, reject) => {
         dd.ready(function() {
@@ -85,7 +51,7 @@ export default {
               resolve()
             },
             onFail: function(err) {
-              //   console.log(err);
+              console.log(err, 'err')
               this.toast({
                 message: '获取code失败，请退出重试',
               })
