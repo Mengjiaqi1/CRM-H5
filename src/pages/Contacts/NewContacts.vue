@@ -41,10 +41,112 @@
               @click="AdditionalCalls"
               ref="call"
             />
-            <div class="telList">
+            <div class="telList" @click="changeDel">
               <div class="telLi">
                 <div class="tel_left">
                   <p class="tel">1222222222222</p>
+                  <div class="tel_type" @click="isCategory = true">
+                    {{ telType }}
+                    <div class="triangle"></div>
+                  </div>
+                </div>
+                <div class="tel_right">
+                  <img :src="forms_reduce" alt="" />
+                </div>
+              </div>
+              <div class="telLi">
+                <div class="tel_left">
+                  <input
+                    class="tel"
+                    v-model="tel2"
+                    type="text"
+                    placeholder="请输入电话号码"
+                  />
+                  <div class="tel_type">
+                    家庭
+                    <div class="triangle"></div>
+                  </div>
+                </div>
+                <div class="tel_right">
+                  <img :src="forms_reduce" alt="" />
+                </div>
+              </div>
+              <div class="telLi">
+                <div class="tel_left">
+                  <input
+                    class="tel"
+                    v-model="tel2"
+                    type="text"
+                    placeholder="请输入电话号码"
+                  />
+                  <div class="tel_type">
+                    家庭
+                    <div class="triangle"></div>
+                  </div>
+                </div>
+                <div class="tel_right">
+                  <img :src="forms_reduce" alt="" />
+                </div>
+              </div>
+              <div class="telLi">
+                <div class="tel_left">
+                  <input
+                    class="tel"
+                    v-model="tel2"
+                    type="text"
+                    placeholder="请输入电话号码"
+                  />
+                  <div class="tel_type">
+                    家庭
+                    <div class="triangle"></div>
+                  </div>
+                </div>
+                <div class="tel_right">
+                  <img :src="forms_reduce" alt="" />
+                </div>
+              </div>
+              <div class="telLi">
+                <div class="tel_left">
+                  <input
+                    class="tel"
+                    v-model="tel2"
+                    type="text"
+                    placeholder="请输入电话号码"
+                  />
+                  <div class="tel_type">
+                    家庭
+                    <div class="triangle"></div>
+                  </div>
+                </div>
+                <div class="tel_right">
+                  <img :src="forms_reduce" alt="" />
+                </div>
+              </div>
+              <div class="telLi">
+                <div class="tel_left">
+                  <input
+                    class="tel"
+                    v-model="tel2"
+                    type="text"
+                    placeholder="请输入电话号码"
+                  />
+                  <div class="tel_type">
+                    家庭
+                    <div class="triangle"></div>
+                  </div>
+                </div>
+                <div class="tel_right">
+                  <img :src="forms_reduce" alt="" />
+                </div>
+              </div>
+              <div class="telLi">
+                <div class="tel_left">
+                  <input
+                    class="tel"
+                    v-model="tel2"
+                    type="text"
+                    placeholder="请输入电话号码"
+                  />
                   <div class="tel_type">
                     家庭
                     <div class="triangle"></div>
@@ -203,7 +305,7 @@
         </div>
       </div>
     </main>
-    <!-- 新建公司信息 -->
+    <!-- 联系电话类型 -->
     <van-popup
       v-model="isCategory"
       position="bottom"
@@ -268,14 +370,15 @@ export default {
       hobby: '', // 爱好
       remarks: '', //备注
       tel2: '136', // 电话号码
-      // add类别
+      // 联系电话类型:
+      count: 0, // 添加联系电话的个数
       isCategory: false,
       timeCategory: 0,
       titleName: this.$route.query.templateName,
       templateIds: '1',
       type: '',
-      company: '',
-      MenuData: ['北邮', '绿洲', '总公司'],
+      telType: '家庭',
+      MenuData: ['工作', '手机', '家庭'],
       // 省市县三级联动
       address: '', //地址
       value: '',
@@ -295,6 +398,11 @@ export default {
   },
   created() {},
   methods: {
+    // 删除联系电话
+    changeDel(e) {
+      console.log(e, 'err')
+      console.log(1)
+    },
     // 关联客户
     changecustomer() {
       this.$router.push({ path: '/associated' })
@@ -324,10 +432,11 @@ export default {
       this.isCategory = false
     },
     ConfirmNew(value, index) {
-      this.company = value
+      this.telType = value
       this.isCategory = false
     },
     onConfirm(values) {
+      this.telType = values
       console.log(values, 'v')
       this.valueArea = values.map((item) => item.name).join('/')
       console.log(this.value, 'value')
@@ -456,7 +565,7 @@ export default {
         padding-right: 0.1rem;
       }
       /deep/textarea.van-field__control {
-        padding-left: 0.22rem;
+        padding-left: 0.1rem;
       }
       /deep/.van-tab__text {
         font-size: 0.14rem;
