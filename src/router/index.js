@@ -28,9 +28,7 @@ import NewContacts from "../pages/Contacts/NewContacts.vue"; // 新建联系人
 import Invoice from "../pages/Invoice/Invoice"; //开票信息
 import addInvoice from "../pages/Invoice/addInvoice";
 import store from "../store";
-import {
-    getCookie
-} from "../untils/auth";
+import { getCookie } from "../untils/auth";
 import Team from "../pages/Custom/Team";
 import Associated from "../pages/Contacts/Associated.vue";
 import Xls from "../pages/Xls.vue";
@@ -303,7 +301,6 @@ router.beforeEach((to, from, next) => {
         next();
     } else {
         const tokenKey = getCookie("tokenKey");
-
         if (tokenKey === null || tokenKey === "") {
             next("/");
         } else {
