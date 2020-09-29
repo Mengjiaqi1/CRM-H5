@@ -49,57 +49,77 @@
   </div>
 </template>
 <script>
-import { findContactsByCustomerId } from "../services/CustomerDetails";
-import * as dd from "dingtalk-jsapi";
+import { findContactsByCustomerId } from '../services/CustomerDetails'
+import * as dd from 'dingtalk-jsapi'
+import { jsapi } from '../services/login'
 export default {
   data() {
     return {
       show: false,
-      Telephone: "",
+      Telephone: '',
       options: [],
-      phoneList: "",
+      phoneList: '',
       //   telactions: [],
-      OrdinaryTelephone: "" //普通电话
-    };
+      OrdinaryTelephone: '', //普通电话
+    }
   },
-  created() {},
+  created() {
+    this.getjsapi()
+  },
   methods: {
+    getjsapi() {
+      jsapi().then((res) => {
+        dd.config({
+          //实现验证
+          agentId: res.agentId,
+          corpId: res.corpId,
+          timeStamp: res.timeStamp,
+          nonceStr: res.nonceStr,
+          signature: res.signature,
+          type: 0,
+          jsApiList: ['runtime.info', 'biz.telephone.showCallMenu'],
+        })
+        dd.error((err) => {
+          console.log(err, 'err')
+        })
+      })
+    },
     handerStop(e) {
-      console.log(e);
+      console.log(e)
     },
     showPopup() {
-      this.show = true;
-      this.getfindContactsByCustomerId();
+      this.show = true
+      this.getfindContactsByCustomerId()
     },
     handleCall(tel) {
       dd.ready(function() {
         dd.biz.telephone.showCallMenu({
           phoneNumber: tel, // 期望拨打的电话号码
-          code: "+86", // 国家代号，中国是+86
+          code: '+86', // 国家代号，中国是+86
           showDingCall: true, // 是否显示钉钉电话
           onSuccess: function() {
-            console.log("success");
+            console.log('success')
           },
           onFail: function(err) {
-            console.log(err);
-          }
-        });
-      });
-      dd.error(err => {
-        console.log(err, "err");
-      });
-      this.Telephone = tel;
+            console.log(err)
+          },
+        })
+      })
+      dd.error((err) => {
+        console.log(err, 'err')
+      })
+      this.Telephone = tel
     },
     getfindContactsByCustomerId() {
-      findContactsByCustomerId(this.$store.state.customerId).then(res => {
+      findContactsByCustomerId(this.$store.state.customerId).then((res) => {
         if (res.code == 200) {
-          this.phoneList = res.rows;
+          this.phoneList = res.rows
         }
-      });
-    }
+      })
+    },
   },
-  components: {}
-};
+  components: {},
+}
 </script>
 <style lang="scss" scoped>
 .wrap {

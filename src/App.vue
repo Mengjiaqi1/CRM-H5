@@ -1,8 +1,6 @@
 <template>
   <div id="app">
     <router-view />
-
-    <!-- <input type="text" v-model="inp" ref="text" id="inp" /> -->
   </div>
 </template>
 <script>
@@ -18,17 +16,19 @@ export default {
     };
   },
   mounted () {
-    this.getjsapi();
+    // this.getjsapi()
   },
   async created () {
     if (dd.env.platform != "notInDingTalk") {
-      //   await this.getjsapi();
+      // await this.getjsapi()
       await this.getDDCode();
     } else {
+      // this.getjsapi()
       setCookie(
         "tokenKey",
-        "eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6IjFmMDEzOTZmLWY0ZmYtNDU4Yi1iOWQ0LThmMjUyYWI1OTFiOSJ9.Fj503XyeX7aG8UTo-UFwusj3INbdjlC7Ikmn2lmaWGU9IOkuGNtbFyoj2sqlnBJcAY7zWZPgvYAChWiteiWO4A"
+        "eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6IjQzMmI1OTJmLTUzNjctNDQ0ZC1iZGM1LWIxZDliNDFlMTNkYSJ9.ThzaiTszHRIAFn8mvGxPbVMB3MFAdymRPck5pQOK4soXYoMWGOVImZttCyf-timBTnkFAzd5u3Sg32lNQlO3Bg"
       );
+
       this.getDDCode();
     }
   },

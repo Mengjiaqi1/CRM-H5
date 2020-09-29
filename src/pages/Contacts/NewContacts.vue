@@ -8,133 +8,156 @@
       <div class="content">
         <div class="tit">
           <p class="number">编号：BY.20200429002</p>
-          <p class="company"
-             @click="isCategory = true">
-            <span class="beiyou">{{ company == "" ? "北邮" : company }}</span><span class="triangle"></span>
+          <p class="company" @click="isCategory = true">
+            <span class="beiyou">{{ company == '' ? '北邮' : company }}</span
+            ><span class="triangle"></span>
           </p>
         </div>
         <div class="form">
-          <van-form @submit="onSubmit"
-                    validate-first>
-            <van-field v-model="customer"
-                       @click="changecustomer"
-                       label="关联客户"
-                       required
-                       input-align="right"
-                       placeholder="请输入"
-                       right-icon="arrow"
-                       :rules="[{ required: true, message: '此项为必填项' }]" />
-            <van-field v-model="Fullname"
-                       label="姓名"
-                       required
-                       input-align="right"
-                       placeholder="请输入"
-                       :rules="[{ required: true, message: '请填写姓名' }]" />
-            <van-field v-model="Telephone"
-                       label="联系电话"
-                       type="text"
-                       required
-                       input-align="right"
-                       :rules="[{ required: true, message: '电话号码不能为空' }]"
-                       right-icon="add"
-                       @click="AdditionalCalls"
-                       ref="call" />
+          <van-form @submit="onSubmit" validate-first>
+            <van-field
+              v-model="customer"
+              @click="changecustomer"
+              label="关联客户"
+              required
+              input-align="right"
+              placeholder="请输入"
+              right-icon="arrow"
+              :rules="[{ required: true, message: '此项为必填项' }]"
+            />
+            <van-field
+              v-model="Fullname"
+              label="姓名"
+              required
+              input-align="right"
+              placeholder="请输入"
+              :rules="[{ required: true, message: '请填写姓名' }]"
+            />
+            <van-field
+              v-model="Telephone"
+              label="联系电话"
+              type="text"
+              required
+              input-align="right"
+              :rules="[{ required: true, message: '电话号码不能为空' }]"
+              right-icon="add"
+              @click="AdditionalCalls"
+              ref="call"
+            />
 
-            <van-field v-model="work"
-                       type="text"
-                       label="工作"
-                       autosize
-                       required
-                       placeholder="请输入"
-                       input-align="right"
-                       :rules="[{ required: true, message: '请填写工作' }]"
-                       right-icon="clear" />
-            <van-field v-model="work"
-                       type="text"
-                       label="工作"
-                       autosize
-                       required
-                       placeholder="请输入"
-                       input-align="right"
-                       :rules="[{ required: true, message: '请填写工作' }]"
-                       right-icon="clear" />
+            <van-field
+              v-model="work"
+              type="text"
+              label="工作"
+              autosize
+              required
+              placeholder="请输入"
+              input-align="right"
+              :rules="[{ required: true, message: '请填写工作' }]"
+              right-icon="clear"
+            />
+            <van-field
+              v-model="work"
+              type="text"
+              label="工作"
+              autosize
+              required
+              placeholder="请输入"
+              input-align="right"
+              :rules="[{ required: true, message: '请填写工作' }]"
+              right-icon="clear"
+            />
             <div class="none"></div>
 
-            <van-field v-model="department"
-                       type="text"
-                       label="部门"
-                       placeholder="请输入"
-                       input-align="right" />
-            <van-field v-model="Telephone"
-                       type="text"
-                       label="职务"
-                       placeholder="请输入"
-                       input-align="right" />
-            <van-field readonly
-                       @click="showArea = true"
-                       :value="valueArea"
-                       type="text"
-                       label="地址"
-                       placeholder="请选择"
-                       input-align="right"
-                       right-icon="arrow" />
-            <van-field v-model="address"
-                       rows="3"
-                       autosize
-                       maxlength="60个字符"
-                       type="textarea"
-                       show-word-limit
-                       placeholder="请输入详细地址" />
+            <van-field
+              v-model="department"
+              type="text"
+              label="部门"
+              placeholder="请输入"
+              input-align="right"
+            />
+            <van-field
+              v-model="Telephone"
+              type="text"
+              label="职务"
+              placeholder="请输入"
+              input-align="right"
+            />
+            <van-field
+              readonly
+              @click="showArea = true"
+              :value="valueArea"
+              type="text"
+              label="地址"
+              placeholder="请选择"
+              input-align="right"
+              right-icon="arrow"
+            />
+            <van-field
+              v-model="address"
+              rows="3"
+              autosize
+              maxlength="60个字符"
+              type="textarea"
+              show-word-limit
+              placeholder="请输入详细地址"
+            />
             <div class="none"></div>
-            <van-field v-model="Postcode"
-                       label="邮编"
-                       placeholder="请输入"
-                       input-align="right" />
-            <van-field v-model="mailbox"
-                       label="邮箱"
-                       type="text"
-                       placeholder="请输入"
-                       input-align="right" />
-            <van-field v-model="birthday"
-                       @click="flag = true"
-                       type="text"
-                       label="生日"
-                       placeholder="请选择"
-                       autosize
-                       readonly
-                       input-align="right"
-                       right-icon="arrow" />
-            <van-field v-model="Gender"
-                       type="text"
-                       label="性别"
-                       placeholder="请选择"
-                       autosize
-                       readonly
-                       input-align="right"
-                       right-icon="arrow"
-                       @click="isGender = true" />
-            <van-field v-model="hobby"
-                       type="text"
-                       label="爱好"
-                       placeholder="请输入"
-                       autosize
-                       input-align="right" />
-            <van-field type="text"
-                       label="备注"
-                       autosize
-                       readonly />
-            <van-field v-model="remarks"
-                       rows="3"
-                       autosize
-                       maxlength="2000个字符"
-                       type="textarea"
-                       show-word-limit
-                       placeholder="请输入备注信息" />
+            <van-field
+              v-model="Postcode"
+              label="邮编"
+              placeholder="请输入"
+              input-align="right"
+            />
+            <van-field
+              v-model="mailbox"
+              label="邮箱"
+              type="text"
+              placeholder="请输入"
+              input-align="right"
+            />
+            <van-field
+              v-model="birthday"
+              @click="flag = true"
+              type="text"
+              label="生日"
+              placeholder="请选择"
+              autosize
+              readonly
+              input-align="right"
+              right-icon="arrow"
+            />
+            <van-field
+              v-model="Gender"
+              type="text"
+              label="性别"
+              placeholder="请选择"
+              autosize
+              readonly
+              input-align="right"
+              right-icon="arrow"
+              @click="isGender = true"
+            />
+            <van-field
+              v-model="hobby"
+              type="text"
+              label="爱好"
+              placeholder="请输入"
+              autosize
+              input-align="right"
+            />
+            <van-field type="text" label="备注" autosize readonly />
+            <van-field
+              v-model="remarks"
+              rows="3"
+              autosize
+              maxlength="2000个字符"
+              type="textarea"
+              show-word-limit
+              placeholder="请输入备注信息"
+            />
             <div class="add_botton">
-              <van-button round
-                          block
-                          type="info"
-                          native-type="submit">
+              <van-button round block type="info" native-type="submit">
                 提交
               </van-button>
             </div>
@@ -143,140 +166,143 @@
       </div>
     </main>
     <!-- 新建公司信息 -->
-    <van-popup v-model="isCategory"
-               position="bottom"
-               :style="{ height: '35%' }">
-      <van-picker show-toolbar
-                  :columns="MenuData"
-                  @confirm="ConfirmNew"
-                  @cancel="onCancelNew" />
+    <van-popup
+      v-model="isCategory"
+      position="bottom"
+      :style="{ height: '35%' }"
+    >
+      <van-picker
+        show-toolbar
+        :columns="MenuData"
+        @confirm="ConfirmNew"
+        @cancel="onCancelNew"
+      />
     </van-popup>
     <!--省市县三级联动-->
-    <van-popup v-model="showArea"
-               position="bottom"
-               :style="{ height: '35%' }">
-      <van-area :area-list="areaList"
-                @confirm="onConfirm"
-                @cancel="showArea = false" />
+    <van-popup v-model="showArea" position="bottom" :style="{ height: '35%' }">
+      <van-area
+        :area-list="areaList"
+        @confirm="onConfirm"
+        @cancel="showArea = false"
+      />
     </van-popup>
     <!-- 性别 -->
-    <van-popup v-model="isGender"
-               position="bottom"
-               :style="{ height: '35%' }">
-      <van-picker show-toolbar
-                  :columns="GenderList"
-                  @confirm="changeConfirm"
-                  @cancel="onCancel" />
+    <van-popup v-model="isGender" position="bottom" :style="{ height: '35%' }">
+      <van-picker
+        show-toolbar
+        :columns="GenderList"
+        @confirm="changeConfirm"
+        @cancel="onCancel"
+      />
     </van-popup>
     <!-- 生日 -->
-    <van-popup v-model="flag"
-               position="bottom"
-               :style="{ height: '35%' }">
-      <van-datetime-picker v-model="currentDate"
-                           type="date"
-                           title="选择年月日"
-                           :min-date="minDate"
-                           :max-date="maxDate"
-                           @confirm="ConfirmBrith"
-                           @cancel="CancelBrith" />
+    <van-popup v-model="flag" position="bottom" :style="{ height: '35%' }">
+      <van-datetime-picker
+        v-model="currentDate"
+        type="date"
+        title="选择年月日"
+        :min-date="minDate"
+        :max-date="maxDate"
+        @confirm="ConfirmBrith"
+        @cancel="CancelBrith"
+      />
     </van-popup>
   </div>
 </template>
 <script>
-import area from "../../common/js/area";
+import area from '../../common/js/area'
+import moment from 'moment'
 export default {
-  data () {
+  data() {
     return {
-      customer: "", //关联客户
-      Fullname: "", // 姓名
-      Telephone: "", // 联系电话
-      work: "", // 工作
-      department: "", // 部门
-      post: "", // 职务
-      Postcode: "", // 邮编
-      mailbox: "", // 邮箱
-      birthday: "", // 生日
-      Gender: "", // 性别
-      hobby: "", // 爱好
-      remarks: "", //备注
+      customer: '', //关联客户
+      Fullname: '', // 姓名
+      Telephone: '', // 联系电话
+      work: '', // 工作
+      department: '', // 部门
+      post: '', // 职务
+      Postcode: '', // 邮编
+      mailbox: '', // 邮箱
+      birthday: '', // 生日
+      Gender: '', // 性别
+      hobby: '', // 爱好
+      remarks: '', //备注
       // add类别
       isCategory: false,
       timeCategory: 0,
       titleName: this.$route.query.templateName,
-      templateIds: "1",
-      type: "",
-      company: "",
-      MenuData: ["北邮", "绿洲", "总公司"],
+      templateIds: '1',
+      type: '',
+      company: '',
+      MenuData: ['北邮', '绿洲', '总公司'],
       // 省市县三级联动
-      address: "", //地址
-      value: "",
-      valueArea: "",
+      address: '', //地址
+      value: '',
+      valueArea: '',
       showArea: false,
       areaList: area, // 数据格式见 Area 组件文档
       // 性别
       typeCustom: null,
       isGender: false,
-      GenderList: ["男", "女"],
+      GenderList: ['男', '女'],
       // 生日
       flag: false,
       minDate: new Date(1960, 0, 1),
       maxDate: new Date(2025, 10, 1),
-      currentDate: new Date()
-    };
+      currentDate: new Date(),
+    }
   },
-  created () { },
+  created() {},
   methods: {
     // 关联客户
-    changecustomer () {
-      this.$router.push({ path: "/associated" });
+    changecustomer() {
+      this.$router.push({ path: '/associated' })
     },
     // 追加联系人电话
-    AdditionalCalls () {
-      console.log(this.$refs.call, "call");
-    },
+    AdditionalCalls() {},
     // 生日选择器
-    ConfirmBrith (value) {
-      this.flag = false;
-      this.birthday = this.$moment(value).format("YYYY-MM-DD");
+    ConfirmBrith(value) {
+      this.flag = false
+      this.birthday = moment(value).format('YYYY-MM-DD')
     },
-    CancelBrith () {
-      this.flag = false;
+    CancelBrith() {
+      this.flag = false
     },
     // 性别选项
-    changeConfirm (value, index) {
-      console.log(value);
-      this.Gender = value;
-      this.isGender = false;
+    changeConfirm(value, index) {
+      console.log(value)
+      this.Gender = value
+      this.isGender = false
     },
     // 取消性别选择
-    onCancel () {
-      this.isGender = false;
+    onCancel() {
+      this.isGender = false
     },
     // 新建
-    onCancelNew () {
-      this.isCategory = false;
+    onCancelNew() {
+      this.isCategory = false
     },
-    ConfirmNew (value, index) {
-      this.company = value;
-      this.isCategory = false;
+    ConfirmNew(value, index) {
+      this.company = value
+      this.isCategory = false
     },
-    onConfirm (values) {
-      console.log(values, "v");
-      this.valueArea = values.map(item => item.name).join("/");
-      console.log(this.value, "value");
-      this.showArea = false;
+    onConfirm(values) {
+      console.log(values, 'v')
+      this.valueArea = values.map((item) => item.name).join('/')
+      console.log(this.value, 'value')
+      this.showArea = false
     },
-    onSubmit (values) {
-      console.log("submit", values);
+    onSubmit(values) {
+      console.log('submit', values)
     },
-    onFail () {
+    onFail() {
       this.$toast({
-        message: "表单验证不通过",
-        position: "center"
-      });
-    }
-  }
-};
+        message: '表单验证不通过',
+        position: 'center',
+      })
+    },
+  },
+}
 </script>
 <style lang="scss" scoped>
 .wrap {
@@ -357,7 +383,7 @@ export default {
         left: 0.13rem;
         color: #ee0a24;
         font-size: 0.14rem;
-        content: "*";
+        content: '*';
       }
       /deep/.van-tabs__wrap--scrollable {
         padding-left: 0.12rem;

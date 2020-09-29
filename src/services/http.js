@@ -9,7 +9,11 @@
 import axios from "axios";
 import qs from "qs";
 import router from "../router";
-import { setCookie, getCookie, delCookie } from "../untils/auth";
+import {
+    setCookie,
+    getCookie,
+    delCookie
+} from "../untils/auth";
 axios.defaults.timeout = 1000; // 设置请求网络超时
 axios.defaults.baseURL = "/api";
 axios.defaults.headers.post["Content-Type"] = "application/json; charset=UTF-8";
@@ -21,7 +25,10 @@ axios.interceptors.request.use(config => {
             "Content-Type": "application/json;charset=UTF-8"
         };
     }
-    if (config.url.split("/").pop() == "login") {
+    if (
+        config.url.split("/").pop() == "login" ||
+        config.url.split("/").pop() == "getSignature"
+    ) {
         return config;
     } else {
         config.headers.Authorization = tokenKey;

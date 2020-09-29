@@ -8,42 +8,47 @@
       <div class="my_forms">
         <div class="my_forms_tit">我的表单</div>
         <div class="my_forms_list">
-          <div class="my_forms_listEven"
-               v-for="(el, index) in queryMenuData"
-               :key="index"
-               @click="changeQueryData(index, el.name, el.icon, el.id)">
+          <div
+            class="my_forms_listEven"
+            v-for="(el, index) in queryMenuData"
+            :key="index"
+            @click="changeQueryData(index, el.name, el.icon, el.id)"
+          >
             <div class="my_forms_top">
-              <img src="../common/images/forms_customer.png"
-                   alt="" />
-              <img src="../common/images/forms_reduce.png"
-                   alt=""
-                   class="addImg" />
+              <img src="../common/images/forms_customer.png" alt="" />
+              <img
+                src="../common/images/forms_reduce.png"
+                alt=""
+                class="addImg"
+              />
             </div>
             <span class="my_forms_text">{{ el.name }}</span>
           </div>
         </div>
         <div class="none"></div>
         <div class="my_forms_content">
-          <van-tabs v-model="active"
-                    animated>
-            <van-tab v-for="each in MenuData"
-                     :key="each.id"
-                     :title="each.name">
-              <div v-for="val in each.children"
-                   :key="val.id"
-                   class="Forms_customer">
+          <van-tabs v-model="active" animated>
+            <van-tab v-for="each in MenuData" :key="each.id" :title="each.name">
+              <div
+                v-for="val in each.children"
+                :key="val.id"
+                class="Forms_customer"
+              >
                 <div class="Forms_tit">{{ val.name }}</div>
-                <div class="my_forms_list my_forms_content_list">
-                  <div class="my_forms_listEven my_forms_listTop"
-                       v-for="el in val.children"
-                       :key="el.id"
-                       @click="changeForms(el.name, el.icon, el.id)">
+                <div class="my_forms_content_list">
+                  <div
+                    class="my_forms_listEven my_forms_listTop"
+                    v-for="el in val.children"
+                    :key="el.id"
+                    @click="changeForms(el.name, el.icon, el.id)"
+                  >
                     <div class="my_forms_top">
-                      <img src="../common/images/forms_all.png"
-                           alt="" />
+                      <img src="../common/images/forms_all.png" alt="" />
                       <span class="my_forms_img">
-                        <img :src="el.checked ? forms_reduce : forms_add"
-                             class="addImg" />
+                        <img
+                          :src="el.checked ? forms_reduce : forms_add"
+                          class="addImg"
+                        />
                       </span>
                     </div>
                     <span class="my_forms_text">{{ el.name }}</span>
@@ -58,126 +63,126 @@
   </div>
 </template>
 <script>
-import { getTreeselect, getcustomIndex, getCreate } from "../services/forms";
+import { getTreeselect, getcustomIndex, getCreate } from '../services/forms'
 export default {
-  data () {
+  data() {
     return {
       active: 0,
       typeFlag: false,
-      type: "", // 0 增 1减
+      type: '', // 0 增 1减
       userId: -1,
       MenuData: [], // 获取表单数据
       queryMenuData: [], // 查询表单数据
-      newData: "",
+      newData: '',
       delMenuData: [], // 删除表单
-      forms_add: require("../assets/forms_add.png"),
-      forms_reduce: require("../assets/forms_reduce.png"),
-      count: 1
-    };
+      forms_add: require('../assets/forms_add.png'),
+      forms_reduce: require('../assets/forms_reduce.png'),
+      count: 1,
+    }
   },
-  created () {
-    this.treeselect();
+  created() {
+    this.treeselect()
     if (this.typeFlag == false) {
-      this.changeForms();
+      this.changeForms()
     }
 
-    this.changeQueryData();
+    this.changeQueryData()
   },
-  mounted () { },
+  mounted() {},
   methods: {
     //我的表单 删除表单
-    changeQueryData (ind, name, icon, id) {
-      this.queryMenuData.map(each => {
+    changeQueryData(ind, name, icon, id) {
+      this.queryMenuData.map((each) => {
         if (each.menuId == id) {
-          this.queryMenuData.splice(ind, 1);
+          this.queryMenuData.splice(ind, 1)
         }
-      });
-      getCreate(0, name, icon, (this.type = "1"), id).then(res => {
-        if (res.code == "200") {
-          this.getcustomIndex();
-          this.treeselect();
+      })
+      getCreate(0, name, icon, (this.type = '1'), id).then((res) => {
+        if (res.code == '200') {
+          this.getcustomIndex()
+          this.treeselect()
         }
-      });
+      })
     },
     //查询我的表单
-    getcustomIndex () {
-      getcustomIndex().then(res => {
-        if (res && res.code == "200") {
-          this.queryMenuData = res && res.data;
+    getcustomIndex() {
+      getcustomIndex().then((res) => {
+        if (res && res.code == '200') {
+          this.queryMenuData = res && res.data
           for (var i = 0; i < this.queryMenuData.length; i++) {
-            this.count = this.queryMenuData.length;
+            this.count = this.queryMenuData.length
             if (this.queryMenuData.length > 7 && this.count > 7) {
-              this.count = 7;
+              this.count = 7
               this.$toast({
-                message: "最多添加8个表单",
-                position: "center"
-              });
+                message: '最多添加8个表单',
+                position: 'center',
+              })
             }
           }
         }
-      });
+      })
     },
 
     // 获取表单
-    treeselect () {
-      getTreeselect().then(res => {
-        if (res && res.code == "200") {
-          this.MenuData = res.data;
+    treeselect() {
+      getTreeselect().then((res) => {
+        if (res && res.code == '200') {
+          this.MenuData = res.data
         }
-      });
+      })
     },
 
     // 修改自定义表单 增加删除表单
-    changeForms (name, icon, id) {
+    changeForms(name, icon, id) {
       this.MenuData &&
-        this.MenuData.map(each => {
+        this.MenuData.map((each) => {
           if (each.children) {
             for (var i = 0; i < each.children.length; i++) {
-              var child = each.children[i];
+              var child = each.children[i]
               if (child.children) {
                 for (var t = 0; t < child.children.length; t++) {
-                  let type = child.children[t];
+                  let type = child.children[t]
                   if (type.id == id && type.checked == false) {
-                    this.type = 0;
+                    this.type = 0
                     for (var i = 0; i < this.queryMenuData.length; i++) {
-                      this.count = this.queryMenuData.length;
+                      this.count = this.queryMenuData.length
                       if (this.count < 0) {
-                        this.count = 0;
+                        this.count = 0
                       }
                       if (this.count > 7) {
                         this.$toast({
-                          message: "最多添加8个表单",
-                          position: "center"
-                        });
-                        this.count = 7;
-                        this.typeFlag = true;
+                          message: '最多添加8个表单',
+                          position: 'center',
+                        })
+                        this.count = 7
+                        this.typeFlag = true
                       }
                     }
                   }
                   if (type.id == id && type.checked == true) {
-                    this.type = 1;
-                    this.count -= 1;
+                    this.type = 1
+                    this.count -= 1
                     if (this.count < 0) {
-                      this.count = 0;
+                      this.count = 0
                     }
-                    this.typeFlag = false;
+                    this.typeFlag = false
                   }
                 }
               }
             }
           }
-        });
+        })
       if (this.typeFlag == false) {
-        getCreate(0, name, icon, this.type, id).then(res => {
-          if (res.code == "200") {
-            this.getcustomIndex();
-            this.treeselect();
+        getCreate(0, name, icon, this.type, id).then((res) => {
+          if (res.code == '200') {
+            this.getcustomIndex()
+            this.treeselect()
           }
-        });
+        })
       }
-    }
-  }
-};
+    },
+  },
+}
 </script>
 <style lang="scss" scoped>
 .wrap {
@@ -212,22 +217,20 @@ export default {
         line-height: 0.17rem;
         box-sizing: border-box;
       }
-    }
-    .my_forms_list {
-      width: 100%;
-      padding-bottom: 0.2rem;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      box-sizing: border-box;
+      .my_forms_list {
+        width: 100%;
+        height: 2.1rem;
+        padding-bottom: 0.2rem;
+        display: flex;
+        flex-wrap: wrap;
+        box-sizing: border-box;
+      }
       .my_forms_listEven {
         width: 25%;
-
         margin-top: 0.23rem;
         display: flex;
         flex-direction: column;
         align-items: center;
-
         .my_forms_top {
           width: 0.4rem;
           height: 0.4rem;
@@ -276,37 +279,48 @@ export default {
           margin-top: 0.07rem;
         }
       }
-    }
-    .Forms_customer {
-      padding: 0 0.12rem;
-      box-sizing: border-box;
-      .Forms_tit {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        margin: 0.13rem 0 0.14rem 0;
-        font-size: 0.12rem;
-        font-family: PingFangSC-Regular, PingFang SC;
-        font-weight: 400;
-        color: rgba(153, 153, 153, 1);
-        line-height: 0.17rem;
-      }
-      .my_forms_content_list {
-        background: rgba(251, 251, 251, 1);
-        border-radius: 4px;
-        padding: 0 0 0.1rem 0;
-        .my_forms_listTop {
-          margin-top: 0.1rem;
+      .my_forms_content {
+        min-height: 3rem;
+        /deep/.van-tab--active {
+          color: #006aff;
         }
-      }
-    }
-    .my_forms_content {
-      min-height: 3rem;
-      /deep/.van-tab--active {
-        color: #006aff;
-      }
-      /deep/.van-tabs__line {
-        background-color: #006aff;
+        /deep/.van-tabs__line {
+          background-color: #006aff;
+        }
+        .Forms_customer {
+          padding: 0 0.12rem;
+          box-sizing: border-box;
+          .Forms_tit {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            margin: 0.13rem 0 0.14rem 0;
+            font-size: 0.12rem;
+            font-family: PingFangSC-Regular, PingFang SC;
+            font-weight: 400;
+            color: rgba(153, 153, 153, 1);
+            line-height: 0.17rem;
+          }
+          .my_forms_content_list {
+            width: 100%;
+            // height: 2.1rem;
+            padding-bottom: 0.2rem;
+            display: flex;
+            flex-wrap: wrap;
+            box-sizing: border-box;
+            background: rgba(251, 251, 251, 1);
+            border-radius: 4px;
+            padding: 0 0 0.1rem 0;
+            .my_forms_listTop {
+              width: 25%;
+              margin-top: 0.23rem;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              margin-top: 0.1rem;
+            }
+          }
+        }
       }
     }
   }
