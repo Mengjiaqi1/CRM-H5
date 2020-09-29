@@ -105,7 +105,19 @@
                 style="width: 0.64rem;height: 0.64rem;"
               />
             </van-uploader>
-            <div class="space"></div>
+            <div class="space">
+              <van-uploader :after-read="uploadFile" ref="upload">
+                <img src="../../common/images/files.png"
+                     style="width: 0.18rem;height: 0.13rem;position: absolute"
+                     alt=""/>
+              </van-uploader>
+            </div>
+            <van-field
+                    v-model="customerBrief"
+                    label="上传附件"
+                    style="position: relative"
+            >
+            </van-field>
             <van-field label="备注" />
             <van-field
               v-model="remark"
@@ -219,7 +231,9 @@ export default {
       remark: "",
       imageFileIds: [],
       imageFileIdss: "",
+      imageFileIdList:[],
       uploadImg: {},
+      result:'',
       // add类别
       isCategory: false,
       timeCategory: 0,
@@ -343,59 +357,78 @@ export default {
       this.isType = false;
     },
     // 图片上传
-    async afterRead(file) {
+     afterRead(file) {
       //文件读取完成后的回调函数
-      //this.uploadImg = await upLoaderImg(file.file)//使用上传的方法。file.file
+      // this.uploadImg = await upLoaderImg(file.file)//使用上传的方法。file.file
       // window.localStorage.setItem('token', 'eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6ImQ4YzNjNGQ1LTNiMDgtNDJjNS1iYTEyLTBlNjEwZmQ2Y2Y1NCJ9.YutjxQjQu_l1j2wvDRrCHjS-f8JD1rvDK3WSGc4Uh4k57CIzb85usazT5tVnLCN8V8vMqA8ooKMWJM6qlChZgQ')
     },
-    async onSubmit() {
-      //提交的数组
-      //每次点击都清除 循环重新赋值
-      this.arr = [];
-      //判断this.imageFileIds 是否为空数组
-      if (this.imageFileIds.length > 0) {
-        await this.imageFileIds.forEach(async item => {
-          let uploadImg = await upLoaderImg(item.file); //接口的返回结果
-          this.arr.push(uploadImg.result.fileId);
-          console.log(uploadImg.result.fileId, this.arr, "++++");
-        });
-      }
-      // let result = this.arr.join(',')
-      let Data = {
-        customerNo: this.customerNo,
-        templateId: this.templateIds,
-        createUserId: 3,
-        customerFullName: this.customerFullName,
-        customerTypeId: this.customerTypeId,
-        customerShortName: this.customerShortName,
-        provinceId: this.provinceId,
-        cityId: this.cityId,
-        areaId: this.areaId,
-        customerAddress: this.customerAddress,
-        customerBrief: this.customerBrief,
-        customerOfficialWebsite: this.customerOfficialWebsite,
-        remark: this.remark,
-        imageFileIdList: this.arr
-      };
-
-      await addList(Data).then(res => {
-        console.log(Data, 2, "===");
-        if (res.code == 200) {
-          // this.MenuData = res.rows;
-          // this.$toast({
-          //     message: "保存中",
-          //     position: "center"
-          // });
-          // this.$router.push({ path: "/allCustom" });
-        }
-      });
-    },
+      //async异步
+      async onSubmit() {
+         //提交的数组
+         console.log(this.imageFileIds)
+         //每次点击都清除 循环重新赋值
+         this.arr = [];
+         //判断this.imageFileIds 是否为空数组
+         if (this.imageFileIds.length > 0) {
+             //上传文件（独立异步操作）
+             // this.submitFile();
+             for (const item of this.imageFileIds) {
+                 let uploadImg =await upLoaderImg(item.file); //接口的返回结果
+                 this.arr.push(uploadImg.result.fileId);
+                 // this.result = this.arr.join(',')
+                 console.log(this.arr,uploadImg.result.fileId, "在走着2");
+             }
+         }
+         //这里先走的底下
+         console.log("先走着1");
+         let Data = {
+             customerNo: this.customerNo,
+             templateId: this.templateIds,
+             createUserId: 3,
+             customerFullName: this.customerFullName,
+             customerTypeId: this.customerTypeId,
+             customerShortName: this.customerShortName,
+             provinceId: this.provinceId,
+             cityId: this.cityId,
+             areaId: this.areaId,
+             customerAddress: this.customerAddress,
+             customerBrief: this.customerBrief,
+             customerOfficialWebsite: this.customerOfficialWebsite,
+             remark: this.remark,
+             imageFileIdList: this.arr,
+         };
+          await addList(Data).then(res => {
+             console.log(Data, "在走着4");
+             if (res.code == 200) {
+                 // this.MenuData = res.rows;
+                 // this.$toast({
+                 //     message: "保存中",
+                 //     position: "center"
+                 // });
+                 this.$router.push({path: "/allCustom"});
+             }
+         });
+     },
+    //单纯上传文件异步
+    // async submitFile(){
+    //     for (const item of this.imageFileIds) {
+    //         let uploadImg =await upLoaderImg(item.file); //接口的返回结果
+    //         this.arr.push(uploadImg.result.fileId);
+    //         // this.result = this.arr.join(',')
+    //         console.log(this.arr,uploadImg.result.fileId, "在走着2");
+    //     }
+    //     console.log(1.5, '在走着3')
+    // },
     onFail() {
       this.$toast({
         message: "表单验证不通过",
         position: "center"
       });
-    }
+    },
+    // 上传附件事件
+    uploadFile(){
+        console.log(123)
+    },
   }
 };
 </script>

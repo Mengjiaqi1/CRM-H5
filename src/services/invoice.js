@@ -7,7 +7,7 @@ export function getInvoiceData() {
 }
 // 新增-表单tab模板数据
 export function findTemplateList(Data) {
-    return post("/app/formTemplateInfo/findTemplateList", Data);
+    return get("/app/formTemplateInfo/findTemplateList", Data);
 }
 // 新增-开票编号
 export function getNumber() {

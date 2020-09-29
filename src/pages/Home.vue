@@ -61,7 +61,7 @@
         <div class="list_center">
           <div class="list">
             <li>
-              <router-link tag="li" to="/">
+              <router-link tag="li" to="/opportunity">
                 <img src="../common/images/chance.png" alt="" />
                 <span>全部机会</span>
               </router-link>

@@ -982,7 +982,7 @@ export default {
     changeConfirm () {
       this.PublishValue = false;
       this.$nextTick(function () {
-        this.$refs.item.toggle(false);
+        // this.$refs.item.toggle(false);
       });
       // this.$refs.item.close();
       // console.log(this.$refs.item.toggle(),'0099');

@@ -26,7 +26,9 @@ import ContactDetails from "../pages/Contacts/ContactDetails.vue"; //联系人�
 import Contact from "../pages/Contacts/Contact"; //联系人
 import NewContacts from "../pages/Contacts/NewContacts.vue"; // 新建联系人
 import Invoice from "../pages/Invoice/Invoice"; //开票信息
-import addInvoice from "../pages/Invoice/addInvoice";
+import addInvoice from "../pages/Invoice/addInvoice";//新建开票信息
+import Opportunity from "../pages/Opportunity/Opportunity";//机会
+import addOpportunity from "../pages/Opportunity/addOpportunity";//新建销售机会
 import store from "../store";
 import {
     getCookie
@@ -275,6 +277,24 @@ const routes = [
         component: addInvoice,
         meta: {
             title: "新建开票信息"
+        }
+    },
+    // 机会
+    {
+        path: "/opportunity",
+        name: "Opportunity",
+        component: Opportunity,
+        meta: {
+            title: "全部机会"
+        }
+    },
+    // 新建销售机会
+    {
+        path: "/addOpportunity",
+        name: "addOpportunity",
+        component: addOpportunity,
+        meta: {
+            title: "新建销售机会"
         }
     },
     {

@@ -56,7 +56,9 @@ export default {
             "biz.telephone.checkBizCall",
             "biz.telephone.quickCallList",
             "biz.conference.videoConfCall",
-            "biz.ding.create" //2.0
+            "device.geolocation.get",
+            "biz.map.locate",
+            "biz.ding.create" //2.0,
           ]
         });
         dd.error(err => {

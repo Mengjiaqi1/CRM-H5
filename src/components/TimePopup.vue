@@ -96,16 +96,16 @@
             this.isPopShow = false;
         },
         confirmPicker(value) {// 确定按钮，时间格式化并显示在页面上
-            var date = value;
-            var m = date.getMonth() + 1;
-            var d = date.getDate();
+            let date = value;
+            let m = date.getMonth() + 1;
+            let d = date.getDate();
             if (m >= 1 && m <= 9) {
                 m = "0" + m;
             }
             if (d >= 0 && d <= 9) {
                 d = "0" + d;
             }
-            var timer = date.getFullYear() + "-" + m + "-" + d
+            let timer = date.getFullYear() + "-" + m + "-" + d
             if(this.inputData){
                 this.inputData.start_Time = timer;
             }
@@ -115,16 +115,16 @@
             this.isPop = false;
         },
         confirmPickers(value) {// 确定按钮，时间格式化并显示在页面上
-            var dates = value;
-            var m = dates.getMonth() + 1;
-            var d = dates.getDate();
+            let dates = value;
+            let m = dates.getMonth() + 1;
+            let d = dates.getDate();
             if (m >= 1 && m <= 9) {
                 m = "0" + m;
             }
             if (d >= 0 && d <= 9) {
                 d = "0" + d;
             }
-            var timers = dates.getFullYear() + "-" + m + "-" + d
+            let timers = dates.getFullYear() + "-" + m + "-" + d
             if(this.inputData){
                 this.inputData.end_Time = timers;
             }

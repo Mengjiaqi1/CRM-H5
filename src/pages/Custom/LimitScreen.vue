@@ -128,8 +128,13 @@
                 //     userId:1,
                 // }
                 // 联系人参数（联系人无templateId 所以值为0）
+                // let  Data = {
+                //     formId:2,
+                //     templateId:0,
+                // }
+                // 全部机会参数 （全部机会无templateId 所以值为0）
                 let  Data = {
-                    formId:2,
+                    formId:5,
                     templateId:0,
                 }
                 getScreenList(Data).then(res => {
@@ -176,16 +181,22 @@
                         }
                     }
                 });
+                // 全部客户参数
                 // let Data = {
                 //     templateId:1,
                 //     userId:1,
                 //     sizerIds:this.sizerIds,
                 // }
+                // 联系人参数
+                // let Data = {
+                //     templateId:0,
+                //     sizerIds:this.sizerIds,
+                // }
+                // 全部机会参数
                 let Data = {
                     templateId:0,
                     sizerIds:this.sizerIds,
                 }
-
                 filedSizerList(Data).then(res => {
                     if (res.code == 200) {
                       // 根据后端定义的模板id 判断跳转位置

@@ -88,15 +88,21 @@
       },
       methods: {
         sortDefault() {
+          // 全部客户参数
           // let  Data = {
           //     formId:1,
           //     templateId:1,
           //     userId:1,
           // }
+          // 联系人参数
+          // let  Data = {
+          //     formId:2,
+          //     templateId:0,
+          // }
+          // 全部机会参数
           let  Data = {
-              formId:2,
+              formId:5,
               templateId:0,
-              // userId:1,
           }
           findSortFieldList(Data).then(res =>{
             if(res.code == 200){

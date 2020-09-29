@@ -47,7 +47,8 @@ import {
     Cell,
     CellGroup,
     Radio,
-    CheckboxGroup
+    CheckboxGroup,
+    Rate,
 } from "vant";
 
 Vue.use(NavBar);
@@ -85,6 +86,7 @@ Vue.use(Radio);
 Vue.use(RadioGroup);
 Vue.use(Checkbox);
 Vue.use(CheckboxGroup);
+Vue.use(Rate);
 
 Vue.config.productionTip = false;
 Vue.config.isToken = true;

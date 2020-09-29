@@ -92,12 +92,13 @@
                     placeholder="请输入详细地址"
                     :rules="[{ required: true, message: '请输入地址' }]"
             >
+              {{address}}
 <!--              right-icon="icon-test"-->
 <!--              <van-icon class="iconfont" class-prefix="icon" slot="right-icon" name="icon-test" @click="handlelocation"></van-icon>-->
 
             </van-field>
             <div class="space" style="position: relative">
-              <svg class="icon" style="position: absolute;top:-0.6rem;right:0.3rem;width: 0.20rem;height: 0.20rem;"
+              <svg class="icon" style="position: absolute;top:-0.8rem;right:0.3rem;width: 0.20rem;height: 0.20rem;" @click="handlelocation"
                    aria-hidden="true">
                 <use xlink:href="#icon-icon-test"></use>
               </svg>
@@ -265,7 +266,7 @@
                         name: "纯社会客户",
                         id: "4"
                     }
-                ]
+                ],
             };
         },
         created() {
@@ -383,19 +384,36 @@
                 });
             },
             handlelocation(){
-                console.log(123,'2222')
+                let _this = this;
+                // 地图定位
                 dd.ready(function() {
-                    // dd.ready参数为回调函数，在环境准备就绪时触发，jsapi的调用需要保证在该回调函数触发后调用，否则无效。
-                    dd.device.geolocation.get({
-                        targetAccuracy : 200,
-                        coordinate : 1,
-                        withReGeocode : true,
-                        useCache:false, //默认是true，如果需要频繁获取地理位置，请设置false
-                        onSuccess : function(result) {
+                    dd.biz.map.locate({
+                        // latitude: 39.903578, // 纬度，非必须
+                        // longitude: 116.473565, // 经度，非必须
+                        scope: 500, // 限制搜索POI的范围；设备位置为中心，scope为搜索半径
+                        onSuccess: function (result) {
+                            _this.address = result.title;
+                            _this.valueArea = result.province+result.city+result.adName
                             console.log(result);
+                            /* result 结构 */
+                            {
+                                // province: 'xxx', // POI所在省会，可能为空
+                                // provinceCode: 'xxx', // POI所在省会编码，可能为空
+                                // city: 'xxx', // POI所在城市，可能为空
+                                // cityCode: 'xxx', // POI所在城市编码，可能为空
+                                // adName: 'xxx', // POI所在区名称，可能为空
+                                // adCode: 'xxx', // POI所在区编码，可能为空
+                                // distance: 'xxx', // POI与设备位置的距离
+                                // postCode: 'xxx', // POI的邮编，可能为空
+                                // snippet: 'xxx', // POI的街道地址，可能为空
+                                // title: 'xxx', // POI的名称
+                                // latitude: 39.903578, // POI的纬度
+                                // longitude: 116.473565, // POI的经度
+
+                            }
+                            // console.log(result)
                         },
-                        onFail : function(err) {
-                            console.log(err)
+                        onFail: function (err) {
                         }
                     });
                 });
