@@ -30,9 +30,7 @@ import addInvoice from "../pages/Invoice/addInvoice";//新建开票信息
 import Opportunity from "../pages/Opportunity/Opportunity";//机会
 import addOpportunity from "../pages/Opportunity/addOpportunity";//新建销售机会
 import store from "../store";
-import {
-    getCookie
-} from "../untils/auth";
+import { getCookie } from "../untils/auth";
 import Team from "../pages/Custom/Team";
 import Associated from "../pages/Contacts/Associated.vue";
 import Xls from "../pages/Xls.vue";
@@ -323,7 +321,6 @@ router.beforeEach((to, from, next) => {
         next();
     } else {
         const tokenKey = getCookie("tokenKey");
-
         if (tokenKey === null || tokenKey === "") {
             next("/");
         } else {

@@ -97,125 +97,127 @@
   </div>
 </template>
 <script>
-import { getCustommenu, getCreatemneu, getquery } from "../services/custom";
-import draggable from "vuedraggable";
-import store from "../store";
+import { getCustommenu, getCreatemneu, getquery } from '../services/custom'
+import draggable from 'vuedraggable'
+import store from '../store'
 export default {
-  name: "wrap",
+  name: 'wrap',
   data() {
     return {
       chartFlag: false,
       typeCode: 0, // 0 添加卡片  1 删除卡片
       typeFlag: true,
-      forms_add: require("../common/images/home_add.png"),
-      forms_reduce: require("../common/images/home_reducer.png"),
-      custommenu: "", // 更多卡片数据
-      addCard: "", // 已添加卡片
+      forms_add: require('../common/images/home_add.png'),
+      forms_reduce: require('../common/images/home_reducer.png'),
+      custommenu: '', // 更多卡片数据
+      addCard: '', // 已添加卡片
       count: 1,
-      startIndex: "",
-      endIndex: ""
-    };
+      startIndex: '',
+      endIndex: '',
+    }
   },
   mounted() {
-    this.getqueryData();
-    this.removeAt();
-    this.getCustomData();
+    this.getqueryData()
+    this.removeAt()
+    this.getCustomData()
   },
 
   created() {
-    this.changeFlag();
+    this.changeFlag()
   },
 
   methods: {
     changeFlag() {
-      return store.state.Flag;
+      return store.state.Flag
     },
     changeChart() {
-      this.chartFlag = !this.chartFlag;
+      this.chartFlag = !this.chartFlag
     },
     // 查询已添加的卡片
     getqueryData() {
-      getquery().then(res => {
+      getquery().then((res) => {
         if (res.code == 200) {
-          this.addCard = res.data;
+          this.addCard = res.data
           for (var i = 0; i < this.addCard.length; i++) {
-            this.count = this.addCard.length;
+            this.count = this.addCard.length
             if (this.addCard.length <= 1 && this.count <= 1) {
               this.$toast({
-                message: "必须保留一条卡片",
-                position: "center"
-              });
+                message: '必须保留一条卡片',
+                position: 'center',
+              })
             }
           }
         }
-      });
+      })
     },
     // 删除 已添加卡片
     removeAdd(id, name) {
       if (this.count > 1) {
-        getCreatemneu(0, id, name, (this.typeCode = "1")).then(res => {
+        getCreatemneu(0, id, name, (this.typeCode = '1')).then((res) => {
           if (res.code == 200) {
-            this.count -= 1;
+            this.count -= 1
             if (this.count <= 1) {
               this.$toast({
-                message: "必须保留一条卡片",
-                position: "center"
-              });
+                message: '必须保留一条卡片',
+                position: 'center',
+              })
             }
-            this.getCustomData();
-            this.getqueryData();
+            this.getCustomData()
+            this.getqueryData()
           }
-        });
+        })
       }
     },
     // 删除 添加 更多卡片
     removeAt(id, name) {
       this.custommenu &&
-        this.custommenu.map(each => {
+        this.custommenu.map((each) => {
           if (each.menuId == id && each.checked == false) {
-            this.typeCode = 0;
-            this.count++;
+            this.typeCode = 0
+            this.count++
           }
           if (each.menuId == id && each.checked == true) {
-            this.typeCode = 1;
-            this.count -= 1;
+            this.typeCode = 1
+            this.count -= 1
           }
-        });
+        })
 
       if (this.count >= 1) {
-        getCreatemneu(0, id, name, this.typeCode).then(res => {
+        getCreatemneu(0, id, name, this.typeCode).then((res) => {
           if (res.code == 200) {
-            this.getCustomData();
-            this.getqueryData();
+            this.getCustomData()
+            this.getqueryData()
           }
-        });
+        })
       }
     },
     // 获取自定义更多卡片
     getCustomData() {
-      getCustommenu().then(res => {
+      getCustommenu().then((res) => {
         if (res.code == 200) {
-          this.custommenu = res.data;
+          this.custommenu = res.data
         }
-      });
+      })
     },
+    // 排序
     onStart(e) {
-      this.startIndex = e.oldIndex;
+      this.startIndex = e.oldIndex
     },
     onEnd(e) {
-      getCreatemneu("", "", "", "", this.startIndex, e.newIndex).then(res => {
+      getCreatemneu('', '', '', '', this.startIndex, e.newIndex).then((res) => {
         if (res.code == 200) {
-          this.getCustomData();
+          this.getCustomData()
+          this.getqueryData()
         }
-      });
-    }
+      })
+    },
   },
   computed: {},
   components: {
-    draggable
+    draggable,
   },
-  watch: {}
-};
+  watch: {},
+}
 </script>
 <style lang="scss" scoped>
 .wrap {
@@ -242,16 +244,16 @@ export default {
       box-sizing: border-box;
     }
     .chart_type {
-      box-sizing: border-box;
-      padding: 0 0.12rem;
       background: rgba(248, 249, 250, 1);
+      .add_card {
+        background: #fff;
+      }
       .chart_box {
         width: 100%;
         height: 1.28rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
-
         .chart_left {
           width: 48%;
           height: 1.04rem;
@@ -276,7 +278,7 @@ export default {
           color: rgba(0, 106, 255, 1);
           background: rgba(242, 247, 255, 1);
           border: 0.01rem solid rgba(0, 106, 255, 1);
-          background: url("../common/images/Select.png") no-repeat bottom right;
+          background: url('../common/images/Select.png') no-repeat bottom right;
           background-size: 0.18rem 0.18rem;
           box-sizing: border-box;
           img {
@@ -295,7 +297,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 0.15rem;
+  padding: 0 0.12rem;
 }
 .button {
   margin-top: 35px;

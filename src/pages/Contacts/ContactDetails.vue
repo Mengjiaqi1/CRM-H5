@@ -485,7 +485,7 @@ export default {
           span {
             display: inline-block;
             margin-left: 0.1rem;
-            height: 0.2rem;
+            // height: 0.2rem;
             font-size: 0.14rem;
             font-family: PingFangSC-Regular, PingFang SC;
             font-weight: 400;
@@ -497,7 +497,7 @@ export default {
         }
         /deep/ .van-field__label.van-cell__title {
           width: 0.84rem;
-          margin-left: 0.12rem;
+          margin-left: 0.09rem;
           display: flex;
           align-items: center;
         }

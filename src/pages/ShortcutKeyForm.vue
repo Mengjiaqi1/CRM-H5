@@ -35,7 +35,7 @@
                 class="Forms_customer"
               >
                 <div class="Forms_tit">{{ val.name }}</div>
-                <div class="my_forms_list my_forms_content_list">
+                <div class="my_forms_content_list">
                   <div
                     class="my_forms_listEven my_forms_listTop"
                     v-for="el in val.children"
@@ -83,14 +83,14 @@
 import {
   gettreeselectQuick,
   getQuickInfo,
-  getaddQuick
-} from "../services/forms";
+  getaddQuick,
+} from '../services/forms'
 
 export default {
   provide() {
     return {
-      reload: this.reload
-    };
+      reload: this.reload,
+    }
   },
   data() {
     return {
@@ -98,139 +98,139 @@ export default {
       isReoladAlive: true,
       active: 0,
       typeFlag: false,
-      type: "", // 0 增 1减
+      type: '', // 0 增 1减
       userId: -1,
       MenuData: [], // 获取表单数据
       queryMenuData: [], // 查询表单数据
-      newData: "",
+      newData: '',
       delMenuData: [], // 删除表单
-      forms_add: require("../assets/forms_add.png"),
-      forms_reduce: require("../assets/forms_reduce.png"),
+      forms_add: require('../assets/forms_add.png'),
+      forms_reduce: require('../assets/forms_reduce.png'),
       count: 1,
       data: [
         {
-          name: "1",
-          id: 1
+          name: '1',
+          id: 1,
         },
         {
           name: 2,
-          id: 2
-        }
-      ]
-    };
+          id: 2,
+        },
+      ],
+    }
   },
   created() {
-    this.treeselect();
+    this.treeselect()
     if (this.typeFlag == false) {
-      this.changeForms();
+      this.changeForms()
     }
-    this.changeQueryData();
-    this.reload();
+    this.changeQueryData()
+    this.reload()
   },
   mounted() {},
   methods: {
     //我的表单 删除表单
     changeQueryData(ind, name, icon, id) {
-      this.queryMenuData.map(each => {
+      this.queryMenuData.map((each) => {
         if (each.menuId == id) {
-          this.queryMenuData.splice(ind, 1);
+          this.queryMenuData.splice(ind, 1)
         }
-      });
+      })
 
-      getaddQuick(0, name, icon, (this.type = "1"), id).then(res => {
-        if (res.code == "200") {
-          this.getQuickInfoData();
-          this.treeselect();
+      getaddQuick(0, name, icon, (this.type = '1'), id).then((res) => {
+        if (res.code == '200') {
+          this.getQuickInfoData()
+          this.treeselect()
         }
-      });
+      })
     },
     //查询我的表单
     getQuickInfoData() {
-      getQuickInfo().then(res => {
-        if (res && res.code == "200") {
-          this.queryMenuData = res && res.data;
+      getQuickInfo().then((res) => {
+        if (res && res.code == '200') {
+          this.queryMenuData = res && res.data
           for (var i = 0; i < this.queryMenuData.length; i++) {
-            this.count = this.queryMenuData.length;
+            this.count = this.queryMenuData.length
             if (this.queryMenuData.length > 7 && this.count > 7) {
-              this.count = 7;
+              this.count = 7
               this.$toast({
-                message: "最多添加8个表单",
-                position: "center"
-              });
+                message: '最多添加8个表单',
+                position: 'center',
+              })
             }
           }
         }
-      });
+      })
     },
 
     // 获取表单
     treeselect() {
-      gettreeselectQuick().then(res => {
-        if (res && res.code == "200") {
-          this.MenuData = res.data;
+      gettreeselectQuick().then((res) => {
+        if (res && res.code == '200') {
+          this.MenuData = res.data
         }
-      });
+      })
     },
 
     // 修改自定义表单 增加删除表单
     changeForms(name, icon, id) {
       this.MenuData &&
-        this.MenuData.map(each => {
+        this.MenuData.map((each) => {
           if (each.children) {
             for (var i = 0; i < each.children.length; i++) {
-              var child = each.children[i];
+              var child = each.children[i]
               if (child.children) {
                 for (var t = 0; t < child.children.length; t++) {
-                  let type = child.children[t];
+                  let type = child.children[t]
                   if (type.id == id && type.checked == false) {
-                    this.type = 0;
+                    this.type = 0
                     for (var i = 0; i < this.queryMenuData.length; i++) {
-                      this.count = this.queryMenuData.length;
+                      this.count = this.queryMenuData.length
                       if (this.count < 0) {
-                        this.count = 0;
+                        this.count = 0
                       }
                       if (this.count > 7) {
                         this.$toast({
-                          message: "最多添加8个表单",
-                          position: "center"
-                        });
-                        this.count = 7;
-                        this.typeFlag = true;
+                          message: '最多添加8个表单',
+                          position: 'center',
+                        })
+                        this.count = 7
+                        this.typeFlag = true
                       }
                     }
                   }
                   if (type.id == id && type.checked == true) {
-                    this.type = 1;
-                    this.count -= 1;
+                    this.type = 1
+                    this.count -= 1
                     if (this.count < 0) {
-                      this.count = 0;
+                      this.count = 0
                     }
-                    this.typeFlag = false;
+                    this.typeFlag = false
                   }
                 }
               }
             }
           }
-        });
+        })
       if (this.typeFlag == false) {
-        getaddQuick(0, name, icon, this.type, id).then(res => {
-          if (res.code == "200") {
-            this.getQuickInfoData();
-            this.treeselect();
+        getaddQuick(0, name, icon, this.type, id).then((res) => {
+          if (res.code == '200') {
+            this.getQuickInfoData()
+            this.treeselect()
           }
-        });
+        })
       }
     },
 
     // 刷新数据页面闪动问题
     reload() {
-      this.isReoladAlive = false;
+      this.isReoladAlive = false
       this.$nextTick(() => {
-        this.isReoladAlive = true;
-      });
-    }
-  }
-};
+        this.isReoladAlive = true
+      })
+    },
+  },
+}
 </script>
 <style lang="scss" scoped>
 [v-cloak] {
@@ -255,7 +255,6 @@ export default {
     .my_forms {
       width: 100%;
       box-sizing: border-box;
-
       .my_forms_tit {
         width: 100%;
         height: 0.32rem;
@@ -270,29 +269,30 @@ export default {
         line-height: 0.17rem;
         box-sizing: border-box;
       }
-    }
-    .my_forms_list {
-      width: 100%;
+      .my_forms_list {
+        width: 100%;
+        height: 2.1rem;
+        padding-bottom: 0.2rem;
 
-      padding-bottom: 0.2rem;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      box-sizing: border-box;
+        display: flex;
+        flex-wrap: wrap;
+        box-sizing: border-box;
+      }
       .my_forms_listEven {
         width: 25%;
+        height: 0.71rem;
+
         margin-top: 0.23rem;
         display: flex;
         flex-direction: column;
         align-items: center;
-
         .my_forms_top {
           width: 0.4rem;
           height: 0.4rem;
           margin-top: 0.1rem;
           // border: 0.01rem dashed #ccc;
           position: relative;
-          img {
+          .icon {
             width: 0.4rem;
             height: 0.4rem;
           }
@@ -334,37 +334,48 @@ export default {
           margin-top: 0.07rem;
         }
       }
-    }
-    .Forms_customer {
-      padding: 0 0.12rem;
-      box-sizing: border-box;
-      .Forms_tit {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        margin: 0.13rem 0 0.14rem 0;
-        font-size: 0.12rem;
-        font-family: PingFangSC-Regular, PingFang SC;
-        font-weight: 400;
-        color: rgba(153, 153, 153, 1);
-        line-height: 0.17rem;
-      }
-      .my_forms_content_list {
-        background: rgba(251, 251, 251, 1);
-        border-radius: 4px;
-        padding: 0 0 0.1rem 0;
-        .my_forms_listTop {
-          margin-top: 0.1rem;
+      .my_forms_content {
+        min-height: 3rem;
+        /deep/.van-tab--active {
+          color: #006aff;
         }
-      }
-    }
-    .my_forms_content {
-      min-height: 3rem;
-      /deep/.van-tab--active {
-        color: #006aff;
-      }
-      /deep/.van-tabs__line {
-        background-color: #006aff;
+        /deep/.van-tabs__line {
+          background-color: #006aff;
+        }
+        .Forms_customer {
+          padding: 0 0.12rem;
+          box-sizing: border-box;
+          .Forms_tit {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            margin: 0.13rem 0 0.14rem 0;
+            font-size: 0.12rem;
+            font-family: PingFangSC-Regular, PingFang SC;
+            font-weight: 400;
+            color: rgba(153, 153, 153, 1);
+            line-height: 0.17rem;
+          }
+          .my_forms_content_list {
+            width: 100%;
+            // height: 2.1rem;
+            padding-bottom: 0.2rem;
+            display: flex;
+            flex-wrap: wrap;
+            box-sizing: border-box;
+            background: rgba(251, 251, 251, 1);
+            border-radius: 4px;
+            padding: 0 0 0.1rem 0;
+            .my_forms_listTop {
+              width: 25%;
+              margin-top: 0.23rem;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              margin-top: 0.1rem;
+            }
+          }
+        }
       }
     }
   }

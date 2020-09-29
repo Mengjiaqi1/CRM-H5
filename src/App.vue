@@ -4,106 +4,71 @@
   </div>
 </template>
 <script>
-import { getLogin, jsapi } from "./services/login";
-import * as dd from "dingtalk-jsapi";
-import router from "./router";
-import { setCookie, getCookie } from "./untils/auth";
+import { getLogin } from './services/login'
+import * as dd from 'dingtalk-jsapi'
+import router from './router'
+import { setCookie, getCookie } from './untils/auth'
 export default {
-  data () {
-    return {
-      ddCode: null,
-      inp: ""
-    };
+  data() {
+    return {}
   },
-  mounted () {
-    // this.getjsapi()
-  },
-  async created () {
-    if (dd.env.platform != "notInDingTalk") {
-      // await this.getjsapi()
-      await this.getDDCode();
+  mounted() {},
+  async created() {
+    if (dd.env.platform != 'notInDingTalk') {
+      await this.getDDCode()
     } else {
-      // this.getjsapi()
       setCookie(
-        "tokenKey",
-        "eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6IjQzMmI1OTJmLTUzNjctNDQ0ZC1iZGM1LWIxZDliNDFlMTNkYSJ9.ThzaiTszHRIAFn8mvGxPbVMB3MFAdymRPck5pQOK4soXYoMWGOVImZttCyf-timBTnkFAzd5u3Sg32lNQlO3Bg"
-      );
-
-      this.getDDCode();
+        'tokenKey',
+        'eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6IjkxMjhmNGUwLTA4NjYtNDZhMS1hNGRjLTIxMjQyNzU3MDk5NSJ9.D7ye2Jqs2NTtYnRKb5HG9zudXQNHr_vccm2jyCi8WcNvKYDnACPwiv5MUYaxszWQpEZVHsj3hwrkvWNEtJQ5BQ'
+      )
+      this.getDDCode()
     }
   },
   methods: {
-    getjsapi () {
-      jsapi().then(res => {
-        dd.config({
-          //实现验证
-          agentId: res.agentId,
-          corpId: res.corpId,
-          timeStamp: res.timeStamp,
-          nonceStr: res.nonceStr,
-          signature: res.signature,
-          type: 0,
-          jsApiList: [
-            "runtime.info",
-            "biz.contact.choose",
-            "device.notification.confirm",
-            "device.notification.alert",
-            "device.notification.prompt",
-            "biz.ding.post",
-            "biz.util.openLink",
-            "biz.telephone.call",
-            "biz.telephone.showCallMenu",
-            "biz.telephone.checkBizCall",
-            "biz.telephone.quickCallList",
-            "biz.conference.videoConfCall",
-            "device.geolocation.get",
-            "biz.map.locate",
-            "biz.ding.create" //2.0,
-          ]
-        });
-        dd.error(err => {
-          console.log(err, "err");
-        });
-      });
-    },
-    getDDCode () {
+    getDDCode() {
       return new Promise((resolve, reject) => {
-        dd.ready(function () {
+        dd.ready(function() {
           dd.runtime.permission.requestAuthCode({
-            corpId: "ding4549e680a3f82a1c35c2f4657eb6378f", // 企业id
-            onSuccess: function (info) {
-              const tempCode = info.code;
+            corpId: 'ding4549e680a3f82a1c35c2f4657eb6378f', // 企业id
+            onSuccess: function(info) {
+              const tempCode = info.code
+              console.log(tempCode, 'code')
               if (
-                getCookie("tokenKey") == null ||
-                getCookie("tokenKey") == undefined
+                getCookie('tokenKey') == null ||
+                getCookie('tokenKey') == undefined
               ) {
-                getLogin(tempCode).then(res => {
+                getLogin(tempCode).then((res) => {
+                  console.log(res, 'loginres')
                   if (res.code == 200 && res.token) {
-                    setCookie("tokenKey", res.token);
-                    router.push("/home");
+                    setCookie('tokenKey', res.token)
+                    router.push('/home')
                   }
-                });
+                })
               }
-              resolve();
+              resolve()
             },
-            onFail: function (err) {
-              //   console.log(err);
+            onFail: function(err) {
+              console.log(err, 'OnFailerr')
               this.toast({
-                message: "获取code失败，请退出重试"
-              });
-              reject(err);
-            }
-          });
-        });
-      });
-    }
-  }
-};
+                message: '获取code失败，请退出重试',
+              })
+              reject(err)
+            },
+          })
+          dd.error((err) => {
+            console.log(err, 'dingerr')
+          })
+        })
+      })
+    },
+  },
+}
 </script>
 
 <style lang="scss">
 html,
 body {
+  width: 100%;
   height: 100%;
   /deep/element.style {
     z-index: 0;
@@ -153,7 +118,7 @@ body {
 // 阿里字体图标设置
 .icon,
 .iconfont {
-  font-family: "iconfont" !important;
+  font-family: 'iconfont' !important;
   font-size: 1.16rem;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
