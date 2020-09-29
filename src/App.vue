@@ -19,7 +19,7 @@ export default {
     } else {
       setCookie(
         'tokenKey',
-        'eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6IjRlZDRlMDU5LTk3ZWUtNGFhYy05NDU1LWY4MWJhOTdkYTVjZSJ9.M57K9J53bs11HFhqynzoW7QGej_wlhffUdoVAAKyODDrlo9F8VBGcyDiJDchRH8phYyIyO1sS9CXWTcx8okxyA'
+        'eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6IjkxMjhmNGUwLTA4NjYtNDZhMS1hNGRjLTIxMjQyNzU3MDk5NSJ9.D7ye2Jqs2NTtYnRKb5HG9zudXQNHr_vccm2jyCi8WcNvKYDnACPwiv5MUYaxszWQpEZVHsj3hwrkvWNEtJQ5BQ'
       )
       this.getDDCode()
     }
@@ -68,6 +68,7 @@ export default {
 <style lang="scss">
 html,
 body {
+  width: 100%;
   height: 100%;
   /deep/element.style {
     z-index: 0;

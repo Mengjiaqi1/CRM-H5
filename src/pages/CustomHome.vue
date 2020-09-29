@@ -244,16 +244,16 @@ export default {
       box-sizing: border-box;
     }
     .chart_type {
-      box-sizing: border-box;
-      padding: 0 0.12rem;
       background: rgba(248, 249, 250, 1);
+      .add_card {
+        background: #fff;
+      }
       .chart_box {
         width: 100%;
         height: 1.28rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
-
         .chart_left {
           width: 48%;
           height: 1.04rem;
@@ -297,7 +297,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 0.15rem;
+  padding: 0 0.12rem;
 }
 .button {
   margin-top: 35px;

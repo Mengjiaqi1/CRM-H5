@@ -253,8 +253,6 @@ export default {
             width: 0.4rem;
             height: 0.4rem;
             border-radius: 0.04rem;
-            // background: #f2f9ff;
-            // border: 0.01rem dashed #028fff;
           }
           .addImg {
             width: 0.15rem;
