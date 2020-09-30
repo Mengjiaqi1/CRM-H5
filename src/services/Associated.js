@@ -15,3 +15,9 @@ export function FindAllCustomer(templateId, customerFullName) {
         customerFullName
     });
 }
+// 关联联系人列表
+export function findContactsName( customerFullName) {
+    return get("/app/customerContactsInfo/findContactsName", {
+        customerFullName
+    });
+}

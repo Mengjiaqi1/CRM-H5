@@ -68,8 +68,8 @@
   </div>
 </template>
 <script>
-    import DragGable from "../../components/DragGable.vue";
-    import { getScreenList, filedSizerList} from "../../services/AllCustom";
+    import DragGable from "./DragGable.vue";
+    import { getScreenList, filedSizerList} from "../services/AllCustom";
     import draggable from "vuedraggable";
     // import rawDisplayer from "rawDisplayer";
     const message = [
@@ -100,9 +100,9 @@
                 isDragging1: false,
                 delayedDragging: false,
                 typeCode: 0,
-                forms_add: require("../../assets/forms_add.png"),
-                forms_reduce: require("../../assets/forms_reduce.png"),
-                forbid:require("../../assets/forbid.png"),
+                forms_add: require("../assets/forms_add.png"),
+                forms_reduce: require("../assets/forms_reduce.png"),
+                forbid:require("../assets/forbid.png"),
                 screenData:[],//全部数据
                 addCard:[],// 未启用卡片
                 sizerIds:'',

@@ -26,7 +26,7 @@
         <span style="float: left">{{each.fieldDesc}}</span>
 <!--        <span style="float: left">{{this.userField.fieldDesc}}</span>{{each.fieldDesc}}{{this.userField.fieldDesc}}-->
         <span v-if="checkedIds==each.fieldId" style="float: right;">
-          <img src="../../common/images/checked.png" alt="" style="width: 0.28rem;height: 0.28rem">
+          <img src="../common/images/checked.png" alt="" style="width: 0.28rem;height: 0.28rem">
         </span>
       </div>
       </div>
@@ -45,14 +45,14 @@
       >
         <span style="float: left">{{each.name}}</span>
         <span v-if="checkedIds==each.id" style="float: right;">
-          <img src="../../common/images/checked.png" alt="" style="width: 0.28rem;height: 0.28rem">
+          <img src="../common/images/checked.png" alt="" style="width: 0.28rem;height: 0.28rem">
         </span>
       </div>
     </van-popup>
   </div>
 </template>
 <script>
-    import {getSortList, findSortFieldList} from "../../services/AllCustom";
+    import {getSortList, findSortFieldList} from "../services/AllCustom";
 
     export default {
       data() {

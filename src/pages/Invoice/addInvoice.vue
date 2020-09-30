@@ -206,6 +206,7 @@
         getNumber,
         addList
     } from "../../services/invoice";
+    import {jsapi} from "../../services/login";
     export default {
         components: {
             area
@@ -272,9 +273,31 @@
         created() {
             this.buildInfo();
             this.getCode();
-            console.log(this.$route.query, "123");
+            this.getjsapi()
         },
         methods: {
+            // 钉钉鉴权
+            getjsapi() {
+                jsapi().then((res) => {
+                    dd.config({
+                        //实现验证
+                        agentId: res.agentId,
+                        corpId: res.corpId,
+                        timeStamp: res.timeStamp,
+                        nonceStr: res.nonceStr,
+                        signature: res.signature,
+                        type: 0,
+                        jsApiList: [
+                            'runtime.info',
+                            'device.geolocation.get',
+                            'biz.map.locate',
+                        ],
+                    })
+                    dd.error((err) => {
+                        console.log(err, 'err')
+                    })
+                })
+            },
             buildInfo() {
                 // 模板数据
                 let Data = {
@@ -384,6 +407,7 @@
                 });
             },
             handlelocation(){
+                console.log(12349);
                 let _this = this;
                 // 地图定位
                 dd.ready(function() {

@@ -14,8 +14,8 @@ import CommonForms from "../pages/CommonForms";
 import CustomHome from "../pages/CustomHome";
 import AllCustom from "../pages/Custom/AllCustom"; //全部客户
 import Build from "../pages/Custom/Build"; //新建客户
-import LimitScreen from "../pages/Custom/LimitScreen"; //范围-设置筛选项
-import DefaultSort from "../pages/Custom/DefaultSort"; //默认排序设置
+import LimitScreen from "../components/LimitScreen"; //范围-设置筛选项
+import DefaultSort from "../components/DefaultSort"; //默认排序设置
 import Setting from "../pages/Setting";
 import ShortcutForms from "../pages/ShortcutKeyForm";
 import Approval from "../pages/Custom/Approval"; //提醒
@@ -32,7 +32,8 @@ import addOpportunity from "../pages/Opportunity/addOpportunity";//新建销售�
 import store from "../store";
 import { getCookie } from "../untils/auth";
 import Team from "../pages/Custom/Team";
-import Associated from "../pages/Contacts/Associated.vue";
+import Associated from "../components/Associated.vue";
+import LinkContacts from "../components/LinkContacts.vue";
 import Xls from "../pages/Xls.vue";
 import BillingInformationDetail from "../pages/Invoice/BillingInformationDetails.vue";
 Vue.use(VueRouter);
@@ -293,6 +294,15 @@ const routes = [
         component: addOpportunity,
         meta: {
             title: "新建销售机会"
+        }
+    },
+    //关联联系人
+    {
+        path: "/linkContacts",
+        name: "LinkContacts",
+        component: LinkContacts,
+        meta: {
+            title: "关联联系人"
         }
     },
     {

@@ -499,7 +499,9 @@
             handleCustomName(){
                 this.$router.push({
                     path: "/associated",
-                    query: {}
+                    query: {
+                      // typeMenu:2,
+                    }
                 });
             },
             //负责人事件
@@ -613,6 +615,11 @@
               // }else{
               //     console.log(123)
               // }
+              this.$router.push({
+                  path: "/linkContacts",
+                  query: {}
+              });
+
             },
             // 销售阶段事件和弹框
             stageChange(){

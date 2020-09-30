@@ -59,7 +59,7 @@
   </div>
 </template>
 <script>
-import { findTemplateList, FindAllCustomer } from '../../services/Associated'
+import { findTemplateList, FindAllCustomer } from '../services/Associated'
 
 export default {
   data() {

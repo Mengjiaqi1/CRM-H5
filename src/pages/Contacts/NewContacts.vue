@@ -38,175 +38,50 @@
               input-align="right"
               :rules="[{ required: true, message: '电话号码不能为空' }]"
               right-icon="add"
-              @click="AdditionalCalls"
+              @click-right-icon="addTels"
               ref="call"
+              disabled
             />
-            <div class="telList" @click="changeDel">
-              <div class="telLi">
-                <div class="tel_left">
-                  <p class="tel">1222222222222</p>
-                  <div class="tel_type" @click="isCategory = true">
-                    {{ telType }}
-                    <div class="triangle"></div>
+            <!-- <tel-list /> -->
+            <div class="tel-list-wrapper" @click="changeDel">
+              <ul id="tel-list">
+                <li class="li_line" v-for="(item, idx) in telList" :key="idx">
+                  <div class="">
+                    <van-field
+                      input-align="right"
+                      v-model="telList[idx].telNum"
+                      :rules="[{ required: true, message: '电话号码不能为空' }]"
+                      @click-right-icon="delTels(idx)"
+                      @blur="handleTelList"
+                    >
+                      <div
+                        class="tel_type"
+                        @click="handleTelType(idx)"
+                        slot="label"
+                      >
+                        {{ telList[curTelTypeIndex].telType}}
+                        <div class="triangle"></div>
+                      </div>
+                      <div
+                        class="tel_right"
+                        slot="right-icon"
+                      >
+                        <img :src="forms_reduce" alt="" />
+                      </div>
+                      <!-- <template #input>
+                        <van-rate
+                          v-model="rate"
+                          color="#ccc"
+                          @change="onRate"
+                        />
+                      </template> -->
+                    </van-field>
+                    <!-- <div class="tel_left">
+                      <p class="tel">{{ item.tel }}</p>
+                    </div> -->
                   </div>
-                </div>
-                <div class="tel_right">
-                  <img :src="forms_reduce" alt="" />
-                </div>
-              </div>
-              <div class="telLi">
-                <div class="tel_left">
-                  <input
-                    class="tel"
-                    v-model="tel2"
-                    type="text"
-                    placeholder="请输入电话号码"
-                  />
-                  <div class="tel_type">
-                    家庭
-                    <div class="triangle"></div>
-                  </div>
-                </div>
-                <div class="tel_right">
-                  <img :src="forms_reduce" alt="" />
-                </div>
-              </div>
-              <div class="telLi">
-                <div class="tel_left">
-                  <input
-                    class="tel"
-                    v-model="tel2"
-                    type="text"
-                    placeholder="请输入电话号码"
-                  />
-                  <div class="tel_type">
-                    家庭
-                    <div class="triangle"></div>
-                  </div>
-                </div>
-                <div class="tel_right">
-                  <img :src="forms_reduce" alt="" />
-                </div>
-              </div>
-              <div class="telLi">
-                <div class="tel_left">
-                  <input
-                    class="tel"
-                    v-model="tel2"
-                    type="text"
-                    placeholder="请输入电话号码"
-                  />
-                  <div class="tel_type">
-                    家庭
-                    <div class="triangle"></div>
-                  </div>
-                </div>
-                <div class="tel_right">
-                  <img :src="forms_reduce" alt="" />
-                </div>
-              </div>
-              <div class="telLi">
-                <div class="tel_left">
-                  <input
-                    class="tel"
-                    v-model="tel2"
-                    type="text"
-                    placeholder="请输入电话号码"
-                  />
-                  <div class="tel_type">
-                    家庭
-                    <div class="triangle"></div>
-                  </div>
-                </div>
-                <div class="tel_right">
-                  <img :src="forms_reduce" alt="" />
-                </div>
-              </div>
-              <div class="telLi">
-                <div class="tel_left">
-                  <input
-                    class="tel"
-                    v-model="tel2"
-                    type="text"
-                    placeholder="请输入电话号码"
-                  />
-                  <div class="tel_type">
-                    家庭
-                    <div class="triangle"></div>
-                  </div>
-                </div>
-                <div class="tel_right">
-                  <img :src="forms_reduce" alt="" />
-                </div>
-              </div>
-              <div class="telLi">
-                <div class="tel_left">
-                  <input
-                    class="tel"
-                    v-model="tel2"
-                    type="text"
-                    placeholder="请输入电话号码"
-                  />
-                  <div class="tel_type">
-                    家庭
-                    <div class="triangle"></div>
-                  </div>
-                </div>
-                <div class="tel_right">
-                  <img :src="forms_reduce" alt="" />
-                </div>
-              </div>
-              <div class="telLi">
-                <div class="tel_left">
-                  <input
-                    class="tel"
-                    v-model="tel2"
-                    type="text"
-                    placeholder="请输入电话号码"
-                  />
-                  <div class="tel_type">
-                    家庭
-                    <div class="triangle"></div>
-                  </div>
-                </div>
-                <div class="tel_right">
-                  <img :src="forms_reduce" alt="" />
-                </div>
-              </div>
-              <div class="telLi">
-                <div class="tel_left">
-                  <input
-                    class="tel"
-                    v-model="tel2"
-                    type="text"
-                    placeholder="请输入电话号码"
-                  />
-                  <div class="tel_type">
-                    家庭
-                    <div class="triangle"></div>
-                  </div>
-                </div>
-                <div class="tel_right">
-                  <img :src="forms_reduce" alt="" />
-                </div>
-              </div>
-              <div class="telLi">
-                <div class="tel_left">
-                  <input
-                    class="tel"
-                    v-model="tel2"
-                    type="text"
-                    placeholder="请输入电话号码"
-                  />
-                  <div class="tel_type">
-                    家庭
-                    <div class="triangle"></div>
-                  </div>
-                </div>
-                <div class="tel_right">
-                  <img :src="forms_reduce" alt="" />
-                </div>
-              </div>
+                </li>
+              </ul>
             </div>
             <div class="none"></div>
             <van-field
@@ -353,6 +228,9 @@
 import area from "../../common/js/area";
 import moment from "moment";
 export default {
+  components: {
+
+  },
   data() {
     return {
       forms_reduce: require("../../common/images/home_reducer.png"),
@@ -393,13 +271,47 @@ export default {
       flag: false,
       minDate: new Date(1960, 0, 1),
       maxDate: new Date(2025, 10, 1),
-      currentDate: new Date()
+      currentDate: new Date(),
+      telList: [],
+      curTelTypeIndex: 0
     };
   },
   created() {
+    console.log("1231");
+    this.customer = this.$route.query.name ? this.$route.query.name : null;
+  },
+  // keepalive 取参数
+  activated() {
+    console.log("activated");
     this.customer = this.$route.query.name ? this.$route.query.name : null;
   },
   methods: {
+    // 增加联系电话
+    addTels() {
+      let currentLi = {
+        telNum: "",
+        telType: '工作'
+      };
+      this.telList.push(currentLi); // 实现动态生成dom的主要操作。将生成的
+    },
+
+    // 删除联系电话
+    delTels(ind) {
+      // alert('点击减少旧机信息')
+      this.telList.splice(ind, 1);
+    },
+    // 电话控制
+    handleTelList(e) {
+      console.log(this.telList, 'tellist');
+
+    },
+    
+    // 电话类型控制
+    handleTelType(idx) {
+      this.isCategory = true;
+      this.curTelTypeIndex = idx;
+    },
+
     // 删除联系电话
     changeDel(e) {
       console.log(e, "err");
@@ -407,7 +319,13 @@ export default {
     },
     // 关联客户
     changecustomer() {
-      this.$router.push({ path: "/associated" });
+      // this.$router.push({ path: "/newContacts" });
+      this.$router.push({
+        path: "/associated",
+        query: {
+            // from: "newContacts"
+        },
+      });
     },
     // 追加联系人电话
     AdditionalCalls() {},
@@ -434,13 +352,15 @@ export default {
       this.isCategory = false;
     },
     ConfirmNew(value, index) {
-      this.telType = value;
+      this.telList[this.curTelTypeIndex].telType = value;
+      // this.telType = value;
       this.isCategory = false;
     },
     onConfirm(values) {
+      
       this.telType = values;
       console.log(values, "v");
-      this.valueArea = values.map(item => item.name).join("/");
+      this.valueArea = values.map((item) => item.name).join("/");
       console.log(this.value, "value");
       this.showArea = false;
     },
@@ -450,10 +370,10 @@ export default {
     onFail() {
       this.$toast({
         message: "表单验证不通过",
-        position: "center"
+        position: "center",
       });
-    }
-  }
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>
@@ -504,6 +424,23 @@ export default {
         width: 100%;
         height: 0.12rem;
         background: #f8f9fa;
+      }
+      .tel_type {
+        // display: flex;
+        display: inline-flex;
+        align-items: center;
+        margin-top: 0.05rem;
+        background: #f2f7ff;
+        border-radius: 0.02rem;
+        border: 0.01rem solid #006aff;
+        font-size: 0.12rem;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #006aff;
+        padding: 0.01rem 0.02rem;
+      }
+      .tel_right {
+        padding-right: 0.1rem;
       }
       .telList {
         width: 100%;
